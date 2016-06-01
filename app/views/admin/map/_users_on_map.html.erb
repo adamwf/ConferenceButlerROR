@@ -1,0 +1,138 @@
+<% @role = params[:role].nil? ? "All Users" : params[:role] ; @users = User.all%>
+<div class="middle-container">
+	<div id="map_wrapper k-border">
+		<div id="map_canvas" class="mapping k-border" style='height: 500px;'></div>
+	</div>
+	<!-- <div id="select_one" class='admin-row' >
+    <!-- <span>
+      <label>Select Users: </label>
+    </span> -->
+    <!-- <span>
+		  <%= select_tag "role", options_for_select([["All", "all"],["User", "user"], ["Organizer", "organizer"],["Manager", "manager"]]), :onchange => "redirectToProjectList(this.value)" %>
+    </span> -->
+	</div> 
+</div>
+
+<script>
+jQuery(function($) {
+  var script = document.createElement('script');
+  script.src = "https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+  document.body.appendChild(script);
+});
+
+var map;
+var markers = [];
+var marker;
+function initialize()
+{
+  var bounds = new google.maps.LatLngBounds();
+  var mapOptions = {
+		center:new google.maps.LatLng(37.773972,-122.431297),
+    zoom:2,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+  map.setTilt(45);
+
+  setmarkers = [
+  <% if !@users.blank? %>
+    <% @users.each do |user| %>
+      <% unless user.address.blank? %>
+      {first_name:"<%= user.first_name %>",id:"<%= user.id %>",latitude:<%= user.latitude%>,longitude:<%= user.longitude %>},
+      <% end %>
+    <% end %>
+  <% end %>
+  ];
+  setmarkers = JSON.stringify(setmarkers)
+  setmarkers = jQuery.parseJSON(setmarkers)
+
+  setInterval(function() {
+   $.ajax({
+    url: '/admin/users_locater',
+    type: 'get',
+    aysnc: false,
+    data: {role: "<%=@role%>"},
+    success: function(data){
+     clearMarkers();
+     markers = [];
+     var sets = JSON.stringify(data)
+     sets =  jQuery.parseJSON(sets)
+     for( i = 0; i < sets.length; i++ ) {
+       var location = new google.maps.LatLng(sets[i].latitude, sets[i].longitude);
+       bounds.extend(location);
+       addMarker(sets[i],location);
+     }
+     setAllMap(map);
+   }
+ });
+ }, 30000);
+  if (setmarkers.length > 0){
+    for( i = 0; i < setmarkers.length; i++ ) {
+      var location = new google.maps.LatLng(setmarkers[i].latitude, setmarkers[i].longitude);
+      bounds.extend(location);
+      marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: setmarkers[i].fullname,
+        customInfo: setmarkers[i].id
+      });
+      markers.push(marker);
+    //  map.fitBounds(bounds); // for making california as a default location
+    }
+  }
+  else{
+    var location = new google.maps.LatLng(37.7833,-122.4167);
+    bounds.extend(location);
+    map.fitBounds(bounds);
+    console.log("No User");
+  }
+   // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+      this.setZoom(12);
+      google.maps.event.removeListener(boundsListener);
+    });
+  }
+
+// Add a marker to the map and push to the array.
+function addMarker(set,location) {
+  marker = new google.maps.Marker({
+    position: location,
+    map: map,
+    title: set.first_name,
+    customInfo: set.id
+  });
+  markers.push(marker);
+}
+ 
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setAllMap(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
+
+function redirectToProjectList(role){
+  console.log(role);
+  window.location = "<%#= url_for(:controller => 'maps', :action => 'index') %>?role=" + role;
+}
+  document.getElementById('role').value = "<%= @role%>";
+  function codeAddress() {
+    // alert('ok');
+  }
+</script>

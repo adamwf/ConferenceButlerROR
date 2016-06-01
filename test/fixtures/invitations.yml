@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sender_email: MyString
+  reciever_email: MyString
+  status: MyString
+  event_name: MyString
+  mode: MyString
+
+two:
+  sender_email: MyString
+  reciever_email: MyString
+  status: MyString
+  event_name: MyString
+  mode: MyString

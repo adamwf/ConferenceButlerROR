@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: shashanktripathi
+  api_key: '412325398299719'
+  api_secret: ITtMIFyzt571VuOj0GwmMs8wOaA
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: shashanktripathi
+  api_key: '412325398299719'
+  api_secret: ITtMIFyzt571VuOj0GwmMs8wOaA
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: shashanktripathi
+  api_key: '412325398299719'
+  api_secret: ITtMIFyzt571VuOj0GwmMs8wOaA
+  enhance_image_tag: true
+  static_image_support: false
