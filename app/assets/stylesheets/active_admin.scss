@@ -5,7 +5,7 @@
 // Active Admin source.
 //
 // For example, to change the sidebar width:
-// $sidebar-width: 242px;
+ //$menubar-width: 250px;
 
 // Active Admin's got SASS!
 @import "active_admin/mixins";
@@ -15,3 +15,11 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+$skinLogo: url("1.png") no-repeat 0 0;
+
+@import "active_skin";
+//@import "wigu/active_admin_theme";
+
+	
+

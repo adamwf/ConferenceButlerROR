@@ -2,7 +2,7 @@ ActiveAdmin.register AdminUser do
   menu priority: 2
   batch_action :destroy, false
   permit_params :email, :password, :password_confirmation, :role, :status
-
+  
   index do
     selectable_column
     id_column
@@ -13,11 +13,7 @@ ActiveAdmin.register AdminUser do
     column "Status" do |user|
       user.status ? '<i class = "status_tag yes"> Active </i>'.html_safe : '<i class = "status_tag no"> Deactive </i>'.html_safe 
     end
-    # if current_admin_user.role == "super-admin"
-
-    #   actions
-    # end
-    column "Actions" do |user|
+    column  do |user|
       links = ''.html_safe
       a do
         if (current_admin_user.role == 'super-admin')
@@ -29,13 +25,14 @@ ActiveAdmin.register AdminUser do
            links += '&nbsp;&nbsp;'.html_safe
           end
         end
-         links += link_to 'View',admin_admin_user_path(user) 
-          links += '&nbsp;&nbsp;'.html_safe
-          links += link_to 'Edit',edit_admin_admin_user_path(user)
-          links += '&nbsp;&nbsp;'.html_safe 
-          links += link_to 'Delete',admin_admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this Admin User?' }
+        # links += link_to 'View',admin_admin_user_path(user) 
+        # links += '&nbsp;&nbsp;'.html_safe
+        # links += link_to 'Edit',edit_admin_admin_user_path(user)
+        # links += '&nbsp;&nbsp;'.html_safe 
+        # links += link_to 'Delete',admin_admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this Admin User?' }
       end
     end
+    actions
   end
 
   collection_action :status, method: :post do
@@ -50,9 +47,9 @@ ActiveAdmin.register AdminUser do
   end
 
   filter :email
-  filter :current_sign_in_at
-  filter :sign_in_count
-  filter :created_at
+  # filter :current_sign_in_at
+  # filter :sign_in_count
+  # filter :created_at
 
   show :title=> "Admin User Details" do
     attributes_table do
@@ -77,10 +74,10 @@ ActiveAdmin.register AdminUser do
   end
 
 
-   controller do
+  controller do
     def create
       super
-      UserMailer.account_confirmation(@admin_user).deliver_now
+      # UserMailer.account_confirmation(@admin_user).deliver_now
     end
   end
 

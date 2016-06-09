@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601073025) do
+ActiveRecord::Schema.define(version: 20160606100533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,20 @@ ActiveRecord::Schema.define(version: 20160601073025) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "activity_type"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.text     "message",       default: ""
+    t.integer  "shared_id"
+    t.boolean  "read",          default: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "",   null: false
@@ -61,8 +75,10 @@ ActiveRecord::Schema.define(version: 20160601073025) do
     t.string   "image"
     t.text     "discription", default: ""
     t.integer  "user_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "status",      default: true
+    t.integer  "priority"
   end
 
   add_index "advertisements", ["user_id"], name: "index_advertisements_on_user_id", using: :btree
@@ -107,6 +123,15 @@ ActiveRecord::Schema.define(version: 20160601073025) do
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
+  create_table "friendships", force: :cascade do |t|
+    t.integer "friendable_id"
+    t.integer "friend_id"
+    t.integer "blocker_id"
+    t.boolean "pending",       default: true
+  end
+
+  add_index "friendships", ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true, using: :btree
+
   create_table "invitations", force: :cascade do |t|
     t.string   "sender_email"
     t.string   "reciever_email"
@@ -127,12 +152,20 @@ ActiveRecord::Schema.define(version: 20160601073025) do
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
+  create_table "otp_infos", force: :cascade do |t|
+    t.string   "email"
+    t.string   "otp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string   "title",      default: ""
     t.text     "content",    default: ""
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "status",     default: true
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
@@ -198,6 +231,10 @@ ActiveRecord::Schema.define(version: 20160601073025) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "status",                 default: true
+    t.string   "phone"
+    t.string   "provider"
+    t.string   "u_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

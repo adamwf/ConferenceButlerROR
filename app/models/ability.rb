@@ -24,7 +24,7 @@ class Ability < ActiveRecord::Base
 	  #       can :read,HowUKnow
 	  #       can :read,ContactU
 	  #       can :read,Discount
-	  #     when 'Mover'
+	  #     when 'manager'
 	  #       can :read, ActiveAdmin::Page, :name => "Dashboard"
 	  #       can :manage, User
 	  #       can :read,LocalMove

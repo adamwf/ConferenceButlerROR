@@ -2,9 +2,18 @@ ActiveAdmin.register User do
 batch_action :destroy, false
 filter :user_name_cont , :as => :string , :label => "Username"
 filter :email_cont , :as => :string , :label => "Email"
- permit_params :email, :password, :password_confirmation, :role, :status
- 
-  index :title => proc { "Total users #{User.count}" }  do
+permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name
+
+
+scope :all, default: true
+scope("Active") { |user| user.where(status: true) }
+scope("Deactive") { |user| user.where(status: false) }
+scope("User") { |user| user.where(role: "user") }
+scope("Manager") { |user| user.where(role: "manager") }
+scope("Organiser") { |user| user.where(role: "organiser") }
+  
+
+  index :title => proc { "Total Users : #{User.count}" }  do
     selectable_column
     column :id
     column :email
@@ -15,20 +24,54 @@ filter :email_cont , :as => :string , :label => "Email"
     # column :otp
     column :tc_accept
     column "Image" do |user|
-      image_tag(user.image.url,:width => 30, :height => 30)
+      image_tag(user.image.url,:width => 50, :height => 50)
     end
     column :address
     column :created_at
     column :updated_at
-    actions
+    column "Status" do |user|
+      user.status ? '<i class = "status_tag yes"> Active </i>'.html_safe : '<i class = "status_tag no"> Deactive </i>'.html_safe 
+    end
+    column "Actions" do |user|
+      links = ''.html_safe
+      a do
+        if (current_admin_user.role == 'super-admin')
+          if user.status?
+           links += link_to 'Deactive',status_admin_users_path(:user_id => user), method: :post,:data => { :confirm => 'Are you sure, you want to Deactive this User?' }
+           links += '&nbsp;&nbsp;'.html_safe
+          else  
+           links += link_to 'Active',status_admin_users_path(:user_id => user), method: :post,:data => { :confirm => 'Are you sure, you want to Active this User?' }
+           links += '&nbsp;&nbsp;'.html_safe
+          end
+        end
+         links += link_to 'View',admin_user_path(user) 
+          links += '&nbsp;&nbsp;'.html_safe
+          links += link_to 'Edit',edit_admin_user_path(user)
+          # links += '&nbsp;&nbsp;'.html_safe 
+          # links += link_to 'Delete',admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this User?' }
+      end
+    end
+  end
+
+  collection_action :status, method: :post do
+    user = User.find(params[:user_id]) 
+    if user.status == false
+       user.update_attributes!(:status=> true)
+       redirect_to  admin_users_path
+    else
+       user.update_attributes!(:status=> false)
+       redirect_to  admin_users_path
+    end
   end
 
   form do |f|
     f.inputs "User" do
       f.input :email
+      f.input :user_name
       f.input :password
       f.input :password_confirmation
-      f.input :role, :as => :select, :collection =>['organizer', 'manager'] 
+      f.input :tc_accept
+      f.input :role, :as => :select, :collection =>['organizer', 'manager', 'user'] 
      
     end
     f.actions

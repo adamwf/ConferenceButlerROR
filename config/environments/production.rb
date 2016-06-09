@@ -84,6 +84,7 @@ Rails.application.configure do
     :authentication => :plain,
     :user_name      => "shashank.tripathi",
     :password       => "Mobiloitte1",
-    :domain         => "sendgrid.com"
+    :domain         => "sendgrid.com",
+    :openssl_verify_mode => "none"
   }
 end

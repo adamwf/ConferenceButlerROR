@@ -27,7 +27,7 @@ function initialize()
 {
   var bounds = new google.maps.LatLngBounds();
   var mapOptions = {
-		center:new google.maps.LatLng(37.773972,-122.431297),
+		center:new google.maps.LatLng(28.6139,77.2090),
     zoom:2,
     mapTypeId:google.maps.MapTypeId.ROADMAP
   };
@@ -81,7 +81,7 @@ function initialize()
     }
   }
   else{
-    var location = new google.maps.LatLng(37.7833,-122.4167);
+    var location = new google.maps.LatLng(28.6139,77.2090);
     bounds.extend(location);
     map.fitBounds(bounds);
     console.log("No User");

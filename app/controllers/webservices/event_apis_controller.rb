@@ -1,4 +1,6 @@
 class Webservices::EventApisController < ApplicationController
+	before_filter :find_user, only: [:notification_list]
+
 
 	def event_create
 		@event = Event.create(event_params)
@@ -8,6 +10,25 @@ class Webservices::EventApisController < ApplicationController
 		    render :json =>  {:responseCode => 500,:responseMessage => @event.errors.full_messages.first}
     	end
 	end
+
+
+	def notification_list
+		activities = []
+		frnd_actity = @user.activities.where(activity_type: "friend_request").order("created_at DESC")
+      	frnd_actity.each do |activity|
+			user_name = activity.user.user_name
+			notification_type = 'friend_request'
+			notification_id = activity.user.id
+			activities << activity.attributes.merge(user_id: activity.user.id, user_name: user_name,notification_type: notification_type,notification_id: notification_id)
+		end
+	
+	  	render :json => {
+          :response_code => 200,
+          :response_message => "Notification list fetched successfully.",
+          :reviews => activities.sort_by{|x| x["created_at"]}.reverse
+        }
+	end
+
 
 	def attendee_create
 		@attendee = Attendee.create(attendee_params)
@@ -26,4 +47,15 @@ class Webservices::EventApisController < ApplicationController
 	def attendee_params
 		params.require(:attendee).permit(:title, :address, :company, :website, :email, :phone, :mobile, :approval_status)
 	end
+
+	def find_user
+		if params[:user][:user_id]
+			@user = User.find_by_id(params[:user][:user_id])
+		    unless @user
+		     render :json =>  {:responseCode => 500,:responseMessage => "Oops! User not found."}
+		    end
+		else
+			render :json =>  {:responseCode => 500,:responseMessage => "Sorry! You are not an authenticated user."}
+	    end
+  	end
 end

@@ -1,9 +1,17 @@
 ActiveAdmin.register Video do
 config.batch_actions = true
 batch_action :destroy, false
-  menu :label => "Videos"
+menu :label => "Videos"
   permit_params :content, :user_id, :title, :discription
   
+  scope :all, default: true
+  scope("Shown") { |video| video.where(status: true) }
+  scope("Hiden") { |video| video.where(status: false) }
+
+  filter :user
+  filter :title
+  # filter :status
+
   index do
     selectable_column
     column :id
@@ -14,7 +22,9 @@ batch_action :destroy, false
     column "Video" do |video|
       video.content.nil? ? "N/A" : video_tag(video.content, :size => "120x120",:controls => true,:fallback_content => "Your browser does not support HTML5 video tags") 
     end
-    column :discription
+    column "Discription" do |body|
+      truncate(body.discription, omision: "...", length: 50)
+    end
     column :created_at
     column :updated_at
     column "Status" do |video|

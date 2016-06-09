@@ -14,7 +14,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -50,6 +50,7 @@ Rails.application.configure do
     :authentication => :plain,
     :user_name      => "shashank.tripathi",
     :password       => "Mobiloitte1",
-    :domain         => "sendgrid.com"
+    :domain         => "sendgrid.com",
+    :openssl_verify_mode => "none"
   }
 end
