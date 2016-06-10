@@ -22,9 +22,11 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :advertisements, dependent: :destroy
   has_many :activities, dependent: :destroy
+  has_one :trending, dependent: :destroy
+  has_many :profile_views, dependent: :destroy
    
   validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 }#,:with => /^[A-Za-z\d_]+$/, :message => "Username can only be alphanumeric with no spaces."
-  validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ } 
+  validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
   validates :password, presence: true, length: { maximum: 20 }, on: :create
   validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
 
@@ -44,6 +46,11 @@ class User < ActiveRecord::Base
       # this should reflect real content type, but for this example it's ok
       "image/jpeg"
     end 
+  end
+
+  def self.send_password_reset(user)
+    user.update_attributes(:password => SecureRandom.hex(4)) 
+    UserMailer.password_reset(user).deliver_now
   end
 
   def to_s

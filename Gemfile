@@ -39,7 +39,9 @@ gem 'gcm'
 gem 'grocer'
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+gem 'rqrcode_png'
+gem 'kaminari'
+gem 'will_paginate'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

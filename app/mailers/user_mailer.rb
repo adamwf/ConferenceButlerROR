@@ -11,4 +11,9 @@ class UserMailer < ApplicationMailer
     	p"-------------#{@user.inspect}--------------"
     	mail(:to => @user.email, :subject => "Handle-QR - Signup Confirmation Email")          
     end 
+
+    def password_reset(user)
+        @user = user 
+        mail(:to => user.email, :subject => "Handle-QR - Password Reset Instructions") 
+    end
 end

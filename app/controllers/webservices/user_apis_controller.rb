@@ -1,5 +1,5 @@
 class Webservices::UserApisController < ApplicationController
-	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login]
+	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password]
 
 	def sign_up
 		if @user_param = User.find_by(email: params[:user][:email].downcase)
@@ -8,7 +8,7 @@ class Webservices::UserApisController < ApplicationController
 	    	@otp = OtpInfo.find_or_create_by(email: params[:user][:email].downcase)
 	    	@otp.otp =  rand(1000..9999)
 	    	if @otp.save
-		    	UserMailer.send_otp(@otp).deliver
+		    	UserMailer.send_otp(@otp).deliver_now
 			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:user => @otp }
    			end
    		end
@@ -21,7 +21,7 @@ class Webservices::UserApisController < ApplicationController
   			@user_param.role = "user"
   			if @user_param.save
 	    		@device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type], user_id: @user_param.id)
-	  			UserMailer.signup_confirmation(@user_param).deliver
+	  			UserMailer.signup_confirmation(@user_param).deliver_now
 	  			render :json =>  {:responseCode => 200,:responseMessage =>"You are successfully verify your OTP and account created successfully.",:user => @user_param }
 			else
 		    	render :json =>  {:responseCode => 500,:responseMessage => @user_param.errors.full_messages.first}
@@ -73,7 +73,7 @@ class Webservices::UserApisController < ApplicationController
 			@otp = OtpInfo.find_or_create_by(email: params[:user][:email])
 	    	@otp.otp =  rand(1000..9999)
 	    	if @otp.save
-		    	UserMailer.send_otp(@otp).deliver
+		    	UserMailer.send_otp(@otp).deliver_now
 			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:user => @otp }
    			end
 		end
@@ -86,6 +86,28 @@ class Webservices::UserApisController < ApplicationController
 	      @device.update(device_id: "")
 	      render :json => {:responseCode => 200,:responseMessage => "You've successfully logged out."}
 	    end     
+	end
+
+	def forget_password
+		@user = User.find_by(:email => params[:email].downcase)
+		if @user
+			User.send_password_reset(@user)
+			render :json => {:responseCode => 200,:responseMessage => "Your new password send to your email, please find and reset password."}
+		else
+			render :json => {:responseCode => 500,:responseMessage => "Your email doesn't exist, please verify your email."}
+		end	 
+	end
+
+	def change_password
+		if @user.valid_password?(params[:user][:old_password])
+	    	if @user.update_attributes(password: params[:user][:new_password], password_confirmation: params[:user][:new_password_confirmation])
+			  	render :json => {:responseCode => 200,:responseMessage => "Your Password has been reset successfully"}
+	    	else
+	      		render :json => {:responseCode => 500,:responseMessage => "Your password can't be reset, please try again."}
+	    	end
+	  	else
+	  		render :json => {:responseCode => 500,:responseMessage => "Your old password has not been matched."	}
+	  	end  
 	end
 
   	private

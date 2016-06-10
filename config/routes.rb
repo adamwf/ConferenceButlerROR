@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  get 'activities/index'
+  # get 'activities/index'
 
   devise_for :users
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -17,17 +17,27 @@ Rails.application.routes.draw do
   post '/user_profile' => 'webservices/user_apis#profile_show'
   post '/sign_in' => "webservices/user_apis#sign_in"
   post '/sign_out' => "webservices/user_apis#sign_out"
+  post '/forget_password' => "webservices/user_apis#forget_password"
+  post '/change_password' => "webservices/user_apis#change_password"
+
   
-# API's for request methods
+# API's for request methods 
   
   post '/send_request' => "webservices/request_apis#send_request"
   post '/accept_request' => "webservices/request_apis#accept_request"
   post '/reject_request' => "webservices/request_apis#reject_request"
   post '/pending_request' => "webservices/request_apis#pending_request"
+  post '/contact_list' => "webservices/request_apis#contact_list"
 
 #API's for finding activities notification.
 
+  get '/home' => "webservices/event_apis#home"
   post '/notification_list' => "webservices/event_apis#notification_list"
+  post '/generate_qr' => "webservices/event_apis#generate_qr"
+  post '/scan_qr' => "webservices/event_apis#scan_qr"
+  get '/trending' => "webservices/event_apis#trending"
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

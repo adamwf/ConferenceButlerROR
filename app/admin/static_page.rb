@@ -17,7 +17,16 @@ permit_params :title, :content
     	end
 	    column :created_at
     	column :updated_at
-	    actions
+	    column "Actions" do |page|
+	    	links = ''.html_safe
+		    a do
+			   	links += link_to 'View',admin_static_page_path(page) 
+		        links += '&nbsp;&nbsp;'.html_safe
+		        links += link_to 'Edit',edit_admin_static_page_path(page)
+		        links += '&nbsp;&nbsp;'.html_safe 
+		        links += link_to 'Delete',admin_static_page_path(page), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this Static Page?' }
+	    	end
+	    end
   	end
 # permit_params do
 #   permitted = [:permitted, :attributes]

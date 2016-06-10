@@ -13,7 +13,7 @@ ActiveAdmin.register AdminUser do
     column "Status" do |user|
       user.status ? '<i class = "status_tag yes"> Active </i>'.html_safe : '<i class = "status_tag no"> Deactive </i>'.html_safe 
     end
-    column  do |user|
+    column "Actions" do |user|
       links = ''.html_safe
       a do
         if (current_admin_user.role == 'super-admin')
@@ -25,14 +25,14 @@ ActiveAdmin.register AdminUser do
            links += '&nbsp;&nbsp;'.html_safe
           end
         end
-        # links += link_to 'View',admin_admin_user_path(user) 
-        # links += '&nbsp;&nbsp;'.html_safe
-        # links += link_to 'Edit',edit_admin_admin_user_path(user)
-        # links += '&nbsp;&nbsp;'.html_safe 
+        links += link_to 'View',admin_admin_user_path(user) 
+        links += '&nbsp;&nbsp;'.html_safe
+        links += link_to 'Edit',edit_admin_admin_user_path(user)
+        links += '&nbsp;&nbsp;'.html_safe 
         # links += link_to 'Delete',admin_admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this Admin User?' }
       end
     end
-    actions
+    #actions
   end
 
   collection_action :status, method: :post do

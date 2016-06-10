@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606100533) do
+ActiveRecord::Schema.define(version: 20160610094013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 20160606100533) do
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
+  create_table "profile_views", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "viewer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "profile_views", ["user_id"], name: "index_profile_views_on_user_id", using: :btree
+
   create_table "social_codes", force: :cascade do |t|
     t.string   "code"
     t.string   "image"
@@ -197,6 +206,15 @@ ActiveRecord::Schema.define(version: 20160606100533) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "trendings", force: :cascade do |t|
+    t.integer  "count"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "trendings", ["user_id"], name: "index_trendings_on_user_id", using: :btree
 
   create_table "user_invitations", force: :cascade do |t|
     t.integer  "user_id"
@@ -259,8 +277,10 @@ ActiveRecord::Schema.define(version: 20160606100533) do
   add_foreign_key "events", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "profile_views", "users"
   add_foreign_key "social_codes", "users"
   add_foreign_key "social_logins", "users"
+  add_foreign_key "trendings", "users"
   add_foreign_key "user_invitations", "invitations"
   add_foreign_key "user_invitations", "users"
   add_foreign_key "videos", "users"
