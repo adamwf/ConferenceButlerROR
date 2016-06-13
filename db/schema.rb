@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610094013) do
+ActiveRecord::Schema.define(version: 20160613142809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,10 @@ ActiveRecord::Schema.define(version: 20160610094013) do
     t.datetime "updated_at",                            null: false
     t.string   "role"
     t.boolean  "status",                 default: true
+    t.boolean  "feeds",                  default: true
+    t.boolean  "adds",                   default: true
+    t.boolean  "shop",                   default: true
+    t.boolean  "discover",               default: true
   end
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
@@ -128,6 +132,7 @@ ActiveRecord::Schema.define(version: 20160610094013) do
     t.integer "friend_id"
     t.integer "blocker_id"
     t.boolean "pending",       default: true
+    t.string  "keyword",       default: ""
   end
 
   add_index "friendships", ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true, using: :btree

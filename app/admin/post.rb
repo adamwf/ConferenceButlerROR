@@ -1,16 +1,18 @@
 ActiveAdmin.register Post do
-batch_action :destroy, false
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  scope :all, default: true
-  scope("Shown") { |post| post.where(status: true) }
-  scope("Hiden") { |post| post.where(status: false) }
+  menu parent: "Feeds"
 
-  filter :user
-  filter :title
-# permit_params :list, :of, :attributes, :on, :model
+	
+	batch_action :destroy, false
+
+  	scope :all, default: true
+  	scope("Shown") { |post| post.where(status: true) }
+  	scope("Hiden") { |post| post.where(status: false) }
+
+  	filter :user
+  	filter :title
+
  	permit_params :content, :user_id, :title
-# or
+
 	index do 
 		selectable_column
 		column :id
@@ -56,11 +58,28 @@ batch_action :destroy, false
          redirect_to  admin_posts_path
       	end
 	end
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
 
 
+	form do |f|
+	    f.inputs "Advertisement" do
+	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
+	      f.input :title
+	      f.input :content
+	    end
+	    f.actions
+	end
+
+	show :title=> "Post Details" do
+	    attributes_table do
+	      row :id
+	      row :title
+	      row :user_id
+	      row :content
+	      row :created_at 
+	      row :updated_at
+	    end 	
+  	end
+  	action_item :view, only: :show do
+    	link_to 'Back',admin_videos_path
+  	end
 end

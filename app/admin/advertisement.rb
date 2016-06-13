@@ -1,18 +1,18 @@
 ActiveAdmin.register Advertisement do
-batch_action :destroy, false
+	
+	batch_action :destroy, false
+  	config.sort_order = 'priority_asc'
+	
+	permit_params :image, :user_id, :title, :discription, :priority
 
-permit_params :image, :user_id, :title, :discription, :priority
 
+  	scope :all, default: true
+  	scope("Shown") { |ads| ads.where(status: true) }
+  	scope("Hiden") { |ads| ads.where(status: false) }
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  scope :all, default: true
-  scope("Shown") { |ads| ads.where(status: true) }
-  scope("Hiden") { |ads| ads.where(status: false) }
+  	filter :user
+  	filter :title
 
-  filter :user
-  filter :title
-# permit_params :list, :of, :attributes, :on, :model
 	index do
 		selectable_column
 		column :id 
@@ -26,7 +26,7 @@ permit_params :image, :user_id, :title, :discription, :priority
 	    column "Discription" do |body|
         	truncate(body.discription, omision: "...", length: 50)
       	end
-	    column :priority, sortable: :priority
+	    # column :priority, sortable: :priority
 	    column :created_at
 	    column :updated_at
 	   	column "Status" do |advertisement|
@@ -44,14 +44,11 @@ permit_params :image, :user_id, :title, :discription, :priority
 		           links += link_to 'Show',status_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to Show this advertisement?' }
 		           links += '&nbsp;&nbsp;'.html_safe
 		          end
-
 		          advertisement.priority?
 		           links += link_to 'Up',uppriority_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to move up this advertisement?' }
-		           links += '&nbsp;&nbsp;'.html_safe
- 
+		           links += '&nbsp;&nbsp;'.html_safe 
 		           links += link_to 'Down',downpriority_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to move down this advertisement?' }
-		           links += '&nbsp;&nbsp;'.html_safe
-		         
+		           links += '&nbsp;&nbsp;'.html_safe		         
 		        end
 		        links += link_to 'View',admin_advertisement_path(advertisement) 
 		        links += '&nbsp;&nbsp;'.html_safe
@@ -75,26 +72,30 @@ permit_params :image, :user_id, :title, :discription, :priority
 
     collection_action :uppriority, method: :post do
         advertisement = Advertisement.find(params[:advertisement_id]) 
-        advertisement.decrement(:priority)
-		advertisement.save
-		# ads = Advertisement.all.order("priority asc")
-		# ads.each_with_index do |k,v|
-  # 			if advertisement.eql?(k.id)
-  #    			k.update_attributes(priority: k.priority-1)
-  #   			# ads[v-1].update_attributes(priority: ads[v-1].priority+1)
-  #   		end
-  #   	end
+		unless advertisement.priority === 1
+			ads = Advertisement.all.order("priority asc")
+			ads.each_with_index do |k,v|
+	  			if advertisement.eql?(k)
+	     			k.update_attributes(priority: k.priority-1)
+	    			ads[v-1].update_attributes(priority: ads[v-1].priority+1)
+	    		end
+	    	end
+    	end
 		redirect_to  admin_advertisements_path
-
     end
 
-     collection_action :downpriority, method: :post do
-      advertisement = Advertisement.find(params[:advertisement_id]) 
-		advertisement.increment(:priority)
-		advertisement.save
-		# if advertisement.priority.eql?
+    collection_action :downpriority, method: :post do
+		advertisement = Advertisement.find(params[:advertisement_id]) 
+		unless advertisement.priority == Advertisement.pluck(:priority).max
+			ads = Advertisement.all.order("priority asc")
+			ads.each_with_index do |k,v|
+	  			if advertisement.eql?(k)
+	     			k.update_attributes(priority: k.priority+1)
+	    			ads[v+1].update_attributes(priority: ads[v+1].priority-1)
+	    		end
+	    	end
+    	end
 		redirect_to  admin_advertisements_path
-
     end
 
 	show :title=> "Advertisement Details" do
@@ -110,20 +111,41 @@ permit_params :image, :user_id, :title, :discription, :priority
 	      row :updated_at
 	    end 
 	end
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+
 	form do |f|
 	    f.inputs "Advertisement" do
-	      f.input :user
+	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
 	      f.input :image
 	      f.input :discription
-	      f.input :priority
+	      f.input :priority, placeholder: "Ex. 1..10"
 	    end
 	    f.actions
 	end
 
+
+	# controller do
+	#     def create
+	#     	ads = Advertisement.all.order("priority desc")
+	#     	ads.each do |x|
+	#     		p "-==-=-=-=-=-=-#{params[:advertisement][:priority].inspect}=-=-=-=-=-=-=-=-=-"
+	#     		p "-------------#{x.priority}---------------"
+	# 	    	if x.priority.to_s >= params[:advertisement][:priority]
+	# 			    if x.priority.eql? params[:advertisement][:priority]
+	# 			        x.update_attributes(priority: x.priority+1)
+	# 			        p x.priority, "shahshshsh"
+	# 			        super
+	# 			    else
+	# 			        x.update_attributes(priority: x.priority+1)
+	# 			     	p x.priority
+	# 			    end
+	# 	    	end
+	# 	    end
+	# 	    redirect_to  admin_advertisements_path
+	#     end
+	# end
+
+	action_item :view, only: :show do
+    	link_to 'Back',admin_videos_path
+  	end
 end

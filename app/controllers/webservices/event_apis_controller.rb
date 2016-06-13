@@ -1,5 +1,5 @@
 class Webservices::EventApisController < ApplicationController
-	before_filter :find_user, only: [:notification_list, :generate_qr]
+	before_filter :find_user, only: [:notification_list, :generate_qr, :add_social_login]
 
 
 	def home
@@ -34,6 +34,7 @@ class Webservices::EventApisController < ApplicationController
 	def scan_qr
 		if @qr = SocialCode.find_by(code: params[:code])
 			@user = User.find_by_id(@qr.user_id)
+			@social_profile = SocialLogin.find_by_user_id(@qr.user_id)
 			if @user
 				unless ProfileView.find_by(viewer_id: params[:viewer_id], user_id: @user.id)
 					ProfileView.create(viewer_id: params[:viewer_id], user_id: @user.id)
@@ -43,7 +44,7 @@ class Webservices::EventApisController < ApplicationController
 						@trend = Trending.create(user_id: @user.id, count: 1)
 					end
 				end
-				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:profile => @user}
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:profile => @user, :social_profile => @social_profile}
 	    	else
 			    render :json =>  {:responseCode => 500,:responseMessage => "Oops! User not found."}
 			end
@@ -57,6 +58,14 @@ class Webservices::EventApisController < ApplicationController
 		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend }
 	end
 
+	def add_social_login
+		@social_profile = SocialLogin.find_or_create_by(provider: params[:user][:provider], u_id: params[:user][:u_id], user_name: params[:user][:user_name], user_id: @user.id)
+		if @social_profile
+			render :json => {:responseCode => 200, :responseMessage => "Your social login is add in your social profile.", :profile => @user, :social_profile => @social_profile}
+		else
+			render :json => {:responseCode => 500, :responseMessage => "Your social login is not added in your social profile, Please try again." }
+		end
+	end
 
 	def attendee_create
 		@attendee = Attendee.create(attendee_params)

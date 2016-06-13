@@ -1,7 +1,9 @@
 ActiveAdmin.register Video do
-config.batch_actions = true
-batch_action :destroy, false
-menu :label => "Videos"
+  menu parent: "Feeds"
+
+  config.batch_actions = true
+  batch_action :destroy, false
+  # menu :label => "Videos"
   permit_params :content, :user_id, :title, :discription
   
   scope :all, default: true
@@ -68,6 +70,7 @@ menu :label => "Videos"
       row :user_id
       row :discription
       row :created_at 
+      row :updated_at
       row :content do |video|
         video.content.nil? ? "N/A" : video_tag(video.content, :size => "320x240", :controls=> true,:fallback_content => "Your browser does not support HTML5 video tags")
       end
@@ -77,18 +80,13 @@ menu :label => "Videos"
   form do |f|
     f.inputs "Video" do
       f.input :title
-      f.input :user
+      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
       f.input :content
       f.input :discription
     end
     f.actions
   end
-
   action_item :view, only: :show do
     link_to 'Back',admin_videos_path
   end
-
-
-  
-
 end

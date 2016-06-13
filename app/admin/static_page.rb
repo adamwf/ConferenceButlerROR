@@ -1,13 +1,10 @@
 ActiveAdmin.register StaticPage do
-batch_action :destroy, false
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-permit_params :title, :content
-#
-  filter :title
+	batch_action :destroy, false
 
-# or
+	permit_params :title, :content
+
+	filter :title
+
  	index do 
 		selectable_column
 		column :id
@@ -28,11 +25,7 @@ permit_params :title, :content
 	    	end
 	    end
   	end
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
-
-
+  	action_item :view, only: :show do
+    	link_to 'Back',admin_videos_path
+  	end
 end

@@ -21,12 +21,12 @@ class Webservices::RequestApisController < ApplicationController
 			render :json => {:responseCode => 200,:responseMessage => "You invited #{@friend.first_name} successfully."}
 		end
 	end
-	
 
 	def accept_request
 		if @friend.invited?(@user) 
 			if !@user.friend_with?(@friend)
 				@user.approve(@friend)
+				@user.friendships.find_by(friend_id: @friend.id).update_attributes(keyword: params[:user][:keyword])
 				alert = @user.user_name+' '+'accepted your request.'
 	 			activity = @friend.activities.find_or_create_by(activity_type: 'friend_request',item_id: @user.id,item_type: 'User', user_id: @user.id, message: alert)
 			    PushWorker.perform_async(@friend.id,alert,@user.id,'User',@user.user_name,activity.id)
@@ -52,14 +52,11 @@ class Webservices::RequestApisController < ApplicationController
 	end
 
 	def pending_request
-		render :json => {:response_code => 200,:response_message => "Pending invitations fetched successfully.",:invitaions => @user.pending_invited_by.order("created_at desc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}
-
-            }
+		render :json => {:response_code => 200,:response_message => "Pending invitations fetched successfully.",:invitaions => @user.pending_invited_by.order("created_at desc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}}
 	end
 	
 	def contact_list
-		render :json => {:response_code => 200,:response_message => "Your contact(GAB) list fetched successfully.",:contacts_list => @user.friends.order("created_at desc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}
-            }
+		render :json => {:response_code => 200,:response_message => "Your contact(GAB) list fetched successfully.",:contacts_list => @user.friends.order("created_at desc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}}
 	end
 
 	private

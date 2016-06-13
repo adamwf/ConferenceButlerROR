@@ -17,7 +17,18 @@
 //   .status_tag { background: #6090DB; }
 
 $skinLogo: url("1.png") no-repeat 5px 5px;
+#header{width:104% !important;padding:4px 0.5px !important;} 
 
-@import "active_skin";
-//@import "wigu/active_admin_theme";
+//$skinActiveColor: #00FF00;
+//$skinHeaderBck: #002744;
+//$panelHeaderBck: #002744;
+
+//@import "active_skin";
+
+
+//$skinMainFirstColor: #002744;
+//$skinMainSecondColor: #00FF00;
+//$skinBorderWindowColor: #002744;
+
+@import "wigu/active_admin_theme";
 

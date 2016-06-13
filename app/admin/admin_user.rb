@@ -1,7 +1,7 @@
 ActiveAdmin.register AdminUser do
   menu priority: 2
   batch_action :destroy, false
-  permit_params :email, :password, :password_confirmation, :role, :status
+  permit_params :email, :password, :password_confirmation, :role, :status, :feeds, :adds, :shop, :discover
   
   index do
     selectable_column
@@ -16,7 +16,7 @@ ActiveAdmin.register AdminUser do
     column "Actions" do |user|
       links = ''.html_safe
       a do
-        if (current_admin_user.role == 'super-admin')
+        if (current_admin_user.role == 'super-admin' && user.role.eql?("corporate-user"))
           if user.status?
            links += link_to 'Deactive',status_admin_admin_users_path(:user_id => user), method: :post,:data => { :confirm => 'Are you sure, you want to Deactive this Admin User?' }
            links += '&nbsp;&nbsp;'.html_safe
@@ -67,12 +67,19 @@ ActiveAdmin.register AdminUser do
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :role, :as => :select, :collection =>['super-admin', 'corporate-user'] 
+      f.input :role, :as => :select, :collection =>['corporate-user'] 
       f.input :status
+      f.input :feeds
+      f.input :adds
+      f.input :shop
+      f.input :discover
     end
     f.actions
   end
 
+  action_item :view, only: :show do
+    link_to 'Back',admin_videos_path
+  end
 
   controller do
     def create

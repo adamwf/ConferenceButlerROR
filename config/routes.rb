@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   post '/generate_qr' => "webservices/event_apis#generate_qr"
   post '/scan_qr' => "webservices/event_apis#scan_qr"
   get '/trending' => "webservices/event_apis#trending"
+  post '/add_social_login' => "webservices/event_apis#add_social_login"
 
 
 

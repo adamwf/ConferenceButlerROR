@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   has_one :trending, dependent: :destroy
   has_many :profile_views, dependent: :destroy
+  has_many :friendships, dependent: :destroy
    
   validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 }#,:with => /^[A-Za-z\d_]+$/, :message => "Username can only be alphanumeric with no spaces."
   validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 

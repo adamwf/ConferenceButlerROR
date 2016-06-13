@@ -1,16 +1,18 @@
 ActiveAdmin.register User do
-batch_action :destroy, false
-filter :user_name_cont , :as => :string , :label => "Username"
-filter :email_cont , :as => :string , :label => "Email"
-permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name
+  batch_action :destroy, false
+  actions :all, :except => [:new, :destroy]
 
+  filter :user_name_cont , :as => :string , :label => "Username"
+  filter :email_cont , :as => :string , :label => "Email"
+  
+  permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name, :address
 
-scope :all, default: true
-scope("Active") { |user| user.where(status: true) }
-scope("Deactive") { |user| user.where(status: false) }
-scope("User") { |user| user.where(role: "user") }
-scope("Manager") { |user| user.where(role: "manager") }
-scope("Organiser") { |user| user.where(role: "organiser") }
+  scope :all, default: true
+  scope("Active") { |user| user.where(status: true) }
+  scope("Deactive") { |user| user.where(status: false) }
+  scope("User") { |user| user.where(role: "user") }
+  scope("Manager") { |user| user.where(role: "manager") }
+  scope("Organiser") { |user| user.where(role: "organiser") }
   
 
   index :title => proc { "Total Users : #{User.count}" }  do
@@ -21,14 +23,12 @@ scope("Organiser") { |user| user.where(role: "organiser") }
     column :first_name
     column :last_name
     column :role
-    # column :otp
-    column :tc_accept
     column "Image" do |user|
       image_tag(user.image.url,:width => 50, :height => 50)
     end
     column :address
-    column :created_at
-    column :updated_at
+    # column :created_at
+    # column :updated_at
     column "Status" do |user|
       user.status ? '<i class = "status_tag yes"> Active </i>'.html_safe : '<i class = "status_tag no"> Deactive </i>'.html_safe 
     end
@@ -44,11 +44,11 @@ scope("Organiser") { |user| user.where(role: "organiser") }
            links += '&nbsp;&nbsp;'.html_safe
           end
         end
-         links += link_to 'View',admin_user_path(user) 
-          links += '&nbsp;&nbsp;'.html_safe
-          links += link_to 'Edit',edit_admin_user_path(user)
-          # links += '&nbsp;&nbsp;'.html_safe 
-          # links += link_to 'Delete',admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this User?' }
+        links += link_to 'View',admin_user_path(user) 
+        links += '&nbsp;&nbsp;'.html_safe
+        links += link_to 'Edit',edit_admin_user_path(user)
+        # links += '&nbsp;&nbsp;'.html_safe 
+        # links += link_to 'Delete',admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this User?' }
       end
     end
   end
@@ -71,28 +71,36 @@ scope("Organiser") { |user| user.where(role: "organiser") }
       f.input :password
       f.input :password_confirmation
       f.input :tc_accept
-      f.input :role, :as => :select, :collection =>['organizer', 'manager', 'user'] 
-     
+      f.input :address
+      f.input :role, :as => :select, :collection =>['organizer', 'manager'] 
     end
     f.actions
   end
 
-
   show :title=> "User Details" do
-        attributes_table do
-          row :id
-          row :user_name
-          row :first_name
-          row :last_name
-          row :email
-          row :address          
-          row :image do |user|
-            user.image.nil? ? "N/A" : image_tag(user.image.url, :size => "320x240", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
-          end
-          row :role
-          row :tc_accept
-          row :created_at 
-          row :updated_at
-        end 
+    attributes_table do
+      row :id
+      row :user_name
+      row :first_name
+      row :last_name
+      row :email
+      row :address          
+      row :image do |user|
+        user.image.nil? ? "N/A" : image_tag(user.image.url, :size => "320x240", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
+      end
+      row :role
+      row :tc_accept
+      row :created_at 
+      row :updated_at
+      # row 'Social Code' do
+      #   image_tag(user.social_code.image)
+      # end
+      # row 'Social Logins' do
+      #   user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(',')
+      # end
+    end 
+  end
+  action_item :view, only: :show do
+    link_to 'Back',admin_videos_path
   end
 end

@@ -37,6 +37,7 @@ gem 'unicorn'
 gem 'redis'
 gem 'gcm'
 gem 'grocer'
+# gem 'quickblox'
 # Use Unicorn as the app server
 # gem 'unicorn'
 gem 'rqrcode_png'
