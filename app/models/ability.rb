@@ -3,6 +3,7 @@ class Ability < ActiveRecord::Base
 
 	def initialize(admin_user)
 	    if admin_user.role.eql?('super-admin')
+	    	p"-------#{admin_user.role.eql?('super-admin').inspect}------------"
 	        can :manage, :all
 	        cannot :destroy, AdminUser, id: 1 
 
