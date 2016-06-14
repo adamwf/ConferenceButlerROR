@@ -17,7 +17,7 @@ ActiveAdmin.register Post do
 		selectable_column
 		column :id
 		column :title
-		column "Discription" do |body|
+		column "Description" do |body|
       		truncate(body.content, omision: "...", length: 50)
     	end
 		# column "User Name" do |user|
@@ -64,7 +64,7 @@ ActiveAdmin.register Post do
 	    f.inputs "Advertisement" do
 	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
-	      f.input :content
+	      f.input :content, label: "Description"
 	    end
 	    f.actions
 	end
@@ -74,12 +74,14 @@ ActiveAdmin.register Post do
 	      row :id
 	      row :title
 	      row :user_id
-	      row :content
+	      row "Description" do 
+	      	post.content
+	      end
 	      row :created_at 
 	      row :updated_at
 	    end 	
   	end
   	action_item :view, only: :show do
-    	link_to 'Back',admin_videos_path
+    	link_to 'Back',admin_posts_path
   	end
 end

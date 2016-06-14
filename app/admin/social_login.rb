@@ -45,6 +45,6 @@ ActiveAdmin.register SocialLogin do
 	    end 	
 	end
 	action_item :view, only: :show do
-    	link_to 'Back',admin_videos_path
+    	link_to 'Back',admin_social_logins_path
   	end
 end

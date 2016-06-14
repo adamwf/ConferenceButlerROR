@@ -47,6 +47,6 @@ ActiveAdmin.register SocialCode do
 	    end 
 	end
 	action_item :view, only: :show do
-    	link_to 'Back',admin_videos_path
+    	link_to 'Back',admin_social_codes_path
   	end
 end

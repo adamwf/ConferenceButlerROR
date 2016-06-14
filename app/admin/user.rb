@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   batch_action :destroy, false
-  actions :all, :except => [:new, :destroy]
+  actions :all, :except => [:new, :destroy, :edit]
 
   filter :user_name_cont , :as => :string , :label => "Username"
   filter :email_cont , :as => :string , :label => "Email"
@@ -46,7 +46,7 @@ ActiveAdmin.register User do
         end
         links += link_to 'View',admin_user_path(user) 
         links += '&nbsp;&nbsp;'.html_safe
-        links += link_to 'Edit',edit_admin_user_path(user)
+        # links += link_to 'Edit',edit_admin_user_path(user)
         # links += '&nbsp;&nbsp;'.html_safe 
         # links += link_to 'Delete',admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this User?' }
       end
@@ -93,14 +93,14 @@ ActiveAdmin.register User do
       row :created_at 
       row :updated_at
       row 'Social Code' do
-        image_tag(user.social_code.image)
+       user.social_code.nil? ? "N/A" : image_tag(user.social_code.image)
       end
       row 'Social Logins' do
-        user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
+       user.social_logins.nil? ? "N/A" : user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
       end
     end 
   end
   action_item :view, only: :show do
-    link_to 'Back',admin_videos_path
+    link_to 'Back',admin_users_path
   end
 end

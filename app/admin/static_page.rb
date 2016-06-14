@@ -26,6 +26,6 @@ ActiveAdmin.register StaticPage do
 	    end
   	end
   	action_item :view, only: :show do
-    	link_to 'Back',admin_videos_path
+    	link_to 'Back',admin_static_pages_path
   	end
 end

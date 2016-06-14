@@ -56,7 +56,9 @@ ActiveAdmin.register AdminUser do
       row :id
       row :email
       row :role
-      row :status
+      row :status do |status|
+        admin_user.status? ? "Active" : "Deactive"
+      end
       row :created_at 
       row :updated_at
     end 
@@ -70,7 +72,7 @@ ActiveAdmin.register AdminUser do
       f.input :role, :as => :select, :collection =>['corporate-user'] 
       f.input :status
       f.input :feeds
-      f.input :adds
+      f.input :adds, label: "Ads"
       f.input :shop
       f.input :discover
     end
@@ -78,7 +80,7 @@ ActiveAdmin.register AdminUser do
   end
 
   action_item :view, only: :show do
-    link_to 'Back',admin_videos_path
+    link_to 'Back',admin_admin_users_path
   end
 
   controller do

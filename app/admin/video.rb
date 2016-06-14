@@ -24,7 +24,7 @@ ActiveAdmin.register Video do
     column "Video" do |video|
       video.content.nil? ? "N/A" : video_tag(video.content, :size => "120x120",:controls => true,:fallback_content => "Your browser does not support HTML5 video tags") 
     end
-    column "Discription" do |body|
+    column "Description" do |body|
       truncate(body.discription, omision: "...", length: 50)
     end
     column :created_at
@@ -68,7 +68,9 @@ ActiveAdmin.register Video do
       row :id
       row :title
       row :user_id
-      row :discription
+      row "Description" do |video|
+        video.discription
+      end
       row :created_at 
       row :updated_at
       row :content do |video|
@@ -82,7 +84,7 @@ ActiveAdmin.register Video do
       f.input :title
       f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
       f.input :content
-      f.input :discription
+      f.input :discription, label: "Description"
     end
     f.actions
   end

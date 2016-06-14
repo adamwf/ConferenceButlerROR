@@ -23,7 +23,7 @@ ActiveAdmin.register Advertisement do
 		column "Image" do |add|
 	      image_tag(add.image.url,:width => 50, :height => 50)
 	    end
-	    column "Discription" do |body|
+	    column "Description" do |body|
         	truncate(body.discription, omision: "...", length: 50)
       	end
 	    # column :priority, sortable: :priority
@@ -102,11 +102,15 @@ ActiveAdmin.register Advertisement do
 	    attributes_table do
 	      row :id
 	      row :title
-	      row :user_id
+	      row :user_id do |user|
+	      	user.user_id.nil? ? "Created by Conference-Butler" : User.find_by(id: user.user_id).email
+	      end
 	      row :image do |img|
 	        img.image.nil? ? "N/A" : image_tag(img.image.url, :size => "320x240", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
 	      end
-	      row :discription
+	      row 'Description' do
+        	advertisement.discription
+      	  end
 	      row :created_at 
 	      row :updated_at
 	    end 
@@ -117,7 +121,8 @@ ActiveAdmin.register Advertisement do
 	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
 	      f.input :image
-	      f.input :discription
+
+	      f.input :discription, label: "Description"
 	      f.input :priority, placeholder: "Ex. 1..10"
 	    end
 	    f.actions
@@ -146,6 +151,6 @@ ActiveAdmin.register Advertisement do
 	# end
 
 	action_item :view, only: :show do
-    	link_to 'Back',admin_videos_path
+    	link_to 'Back',admin_advertisements_path
   	end
 end
