@@ -92,12 +92,12 @@ ActiveAdmin.register User do
       row :tc_accept
       row :created_at 
       row :updated_at
-      # row 'Social Code' do
-      #   image_tag(user.social_code.image)
-      # end
-      # row 'Social Logins' do
-      #   user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
-      # end
+      row 'Social Code' do
+        image_tag(user.social_code.image)
+      end
+      row 'Social Logins' do
+        user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
+      end
     end 
   end
   action_item :view, only: :show do
