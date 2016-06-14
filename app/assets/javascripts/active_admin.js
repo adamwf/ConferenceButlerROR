@@ -1,7 +1,7 @@
 //= require active_admin/base
 $(document).ready(function(){
 
-$("#login").find('h2').text("Forgot your password");
+
 $("#admin_user_password_confirmation_input").find('label').text('Password confirmation*');
 $("#user_password_confirmation_input").find('label').text('Password confirmation*');
 $("#admin_user_email_input").append("<span class= 'email-error' style='color:red;padding-left:90px;'></span>");
