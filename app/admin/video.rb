@@ -18,9 +18,9 @@ ActiveAdmin.register Video do
     selectable_column
     column :id
     column :title
-    column "User Name" do |user|
-      User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
-    end
+    # column "User Name" do |user|
+    #   User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
+    # end
     column "Video" do |video|
       video.content.nil? ? "N/A" : video_tag(video.content, :size => "120x120",:controls => true,:fallback_content => "Your browser does not support HTML5 video tags") 
     end

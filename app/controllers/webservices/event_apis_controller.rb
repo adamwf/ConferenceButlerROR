@@ -24,7 +24,8 @@ class Webservices::EventApisController < ApplicationController
 
 	def generate_qr
 		if @qr_image = SocialCode.generate_qr
-			@social_code = SocialCode.create(code: @qr_image["public_id"], image: @qr_image["url"], user_id: @user.id)
+			@social_code = SocialCode.find_or_create_by!(user_id: @user.id)
+			@social_code.update_attributes(code: @qr_image["public_id"], image: @qr_image["url"])
 			render :json =>  {:responseCode => 200,:responseMessage =>"Your QR Code created successfully.",:social_code => @social_code}
     	else
 		    render :json =>  {:responseCode => 500,:responseMessage => "Sorry! Your QR code not generated, Please try again."}

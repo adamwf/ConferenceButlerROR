@@ -16,9 +16,9 @@ ActiveAdmin.register Advertisement do
 	index do
 		selectable_column
 		column :id 
-		column "User Name" do |user|
-     	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
-    	end
+		# column "User Name" do |user|
+  #    	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
+  #   	end
 		column :title
 		column "Image" do |add|
 	      image_tag(add.image.url,:width => 50, :height => 50)

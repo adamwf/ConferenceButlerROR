@@ -96,7 +96,7 @@ ActiveAdmin.register User do
       #   image_tag(user.social_code.image)
       # end
       # row 'Social Logins' do
-      #   user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(',')
+      #   user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
       # end
     end 
   end

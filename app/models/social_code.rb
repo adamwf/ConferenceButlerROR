@@ -1,8 +1,8 @@
+require 'rqrcode_png'
 class SocialCode < ActiveRecord::Base
   belongs_to :user
   has_many :social_logins
-	require 'rqrcode_png'
-
+	
 
  	def self.generate_qr
 		random_name = SecureRandom.hex(8)

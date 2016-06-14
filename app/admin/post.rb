@@ -20,9 +20,9 @@ ActiveAdmin.register Post do
 		column "Discription" do |body|
       		truncate(body.content, omision: "...", length: 50)
     	end
-		column "User Name" do |user|
-	      User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
-	    end
+		# column "User Name" do |user|
+	 #      User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
+	 #    end
 	    column :created_at
     	column :updated_at
     	column "Status" do |post|
