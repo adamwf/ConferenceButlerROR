@@ -2,8 +2,11 @@ class Ability < ActiveRecord::Base
 	include CanCan::Ability
 
 	def initialize(admin_user)
-	    case admin_user.role
-	      when 'corporate-user'
+	    if admin_user.role.eql?('super-admin')
+	        can :manage, :all
+	        cannot :destroy, AdminUser, id: 1 
+
+	    else
 	        can :read, ActiveAdmin::Page, :name => "Dashboard"
 	        # if admin_user.adds.eql?(true) 
 	        	can :manage, Advertisement 
@@ -13,9 +16,7 @@ class Ability < ActiveRecord::Base
 		        can :manage,Post 
 		        can :manage,Video
 		    # end
-	      when 'super-admin'
-	        can :manage, :all
-	        cannot :destroy, AdminUser, id: 1 
+	      
 	    end
   	end
 
