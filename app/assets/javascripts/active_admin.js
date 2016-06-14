@@ -1,7 +1,4 @@
 //= require active_admin/base
-
-
-
 $(document).ready(function(){
 
 $("#login").find('h2').text("Forgot your password");
