@@ -5,14 +5,14 @@ class Ability < ActiveRecord::Base
 	    case admin_user.role
 	      when 'corporate-user'
 	        can :read, ActiveAdmin::Page, :name => "Dashboard"
-	        if admin_user.adds.eql?(true) 
+	        # if admin_user.adds.eql?(true) 
 	        	can :manage, Advertisement 
-	        end
+	        # end
 	        can :manage, Trending 
-	        if admin_user.feeds.eql?(true)
+	        # if admin_user.feeds.eql?(true)
 		        can :manage,Post 
 		        can :manage,Video
-		    end
+		    # end
 	      when 'super-admin'
 	        can :manage, :all
 	        cannot :destroy, AdminUser, id: 1 
