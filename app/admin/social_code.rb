@@ -35,7 +35,7 @@ ActiveAdmin.register SocialCode do
 	      row :id
 	      row :user_id
 	      row :image do |code|
-	        code.image.nil? ? "N/A" : image_tag(code.image, :size => "320x240", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
+	        code.image.nil? ? "N/A" : image_tag(code.image, :size => "300x250", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
 	      end
 	      row :code
 	      row :created_at 

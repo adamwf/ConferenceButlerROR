@@ -1,7 +1,7 @@
 <% @role = params[:role].nil? ? "All Users" : params[:role] ; @users = User.all%>
 <div class="middle-container">
 	<div id="map_wrapper k-border">
-		<div id="map_canvas" class="mapping k-border" style='height: 500px;'></div>
+		<div id="map_canvas" class="mapping k-border" style='height: 590px;'></div>
 	</div>
 	<!-- <div id="select_one" class='admin-row' >
     <!-- <span>
@@ -88,7 +88,7 @@ function initialize()
   }
    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
      var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-      this.setZoom(12);
+      this.setZoom(2);
       google.maps.event.removeListener(boundsListener);
     });
   }
