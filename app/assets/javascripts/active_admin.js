@@ -2,8 +2,8 @@
 $(document).ready(function(){
 
 
-$("#admin_user_password_confirmation_input").find('label').text('Password confirmation*');
-$("#user_password_confirmation_input").find('label').text('Password confirmation*');
+$("#admin_user_password_confirmation_input").find('label').text('Password Confirmation*');
+$("#user_password_confirmation_input").find('label').text('Password Confirmation*');
 $("#admin_user_email_input").append("<span class= 'email-error' style='color:red;padding-left:90px;'></span>");
 $("#admin_user_password_input").append("<span class= 'pass-error' style='color:red;padding-left:90px;'></span>");
 

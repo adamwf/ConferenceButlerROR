@@ -2,7 +2,7 @@
 
 en:
  active_admin:
-
+    
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
