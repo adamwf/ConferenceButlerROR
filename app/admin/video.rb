@@ -22,7 +22,7 @@ ActiveAdmin.register Video do
     #   User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
     # end
     column "Video" do |video|
-      video.content.nil? ? "N/A" : video_tag(video.content, :size => "150x150",:controls => true,:fallback_content => "Your browser does not support HTML5 video tags") 
+      video.content.nil? ? "N/A" : video_tag(video.content, :size => "250x150",:controls => true,:fallback_content => "Your browser does not support HTML5 video tags") 
     end
     column "Description" do |body|
       truncate(body.discription, omision: "...", length: 50)
@@ -74,7 +74,7 @@ ActiveAdmin.register Video do
       row :created_at 
       row :updated_at
       row :content do |video|
-        video.content.nil? ? "N/A" : video_tag(video.content, :size => "320x240", :controls=> true,:fallback_content => "Your browser does not support HTML5 video tags")
+        video.content.nil? ? "N/A" : video_tag(video.content, :size => "400x250", :controls=> true,:fallback_content => "Your browser does not support HTML5 video tags")
       end
     end 
   end

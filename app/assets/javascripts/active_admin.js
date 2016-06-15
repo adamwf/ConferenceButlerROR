@@ -2,13 +2,13 @@
 $(document).ready(function(){
 
 
-$("#admin_user_password_confirmation_input").find('label').text('Password Confirmation*');
-$("#user_password_confirmation_input").find('label').text('Password Confirmation*');
-$("#admin_user_email_input").append("<span class= 'email-error' style='color:red;padding-left:90px;'></span>");
-$("#admin_user_password_input").append("<span class= 'pass-error' style='color:red;padding-left:90px;'></span>");
+    $("#admin_user_password_confirmation_input").find('label').text('Password Confirmation*');
+    $("#user_password_confirmation_input").find('label').text('Password Confirmation*');
+    $("#admin_user_email_input").append("<span class= 'email-error' style='color:red;padding-left:90px;'></span>");
+    $("#admin_user_password_input").append("<span class= 'pass-error' style='color:red;padding-left:90px;'></span>");
 
 
-var reg = /^[a-zA-Z0-9_\.\-]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;   
+    var reg = /^[a-zA-Z0-9_\.\-]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;   
    
     $('#session_new > .actions > ol > li > input[type="submit"]').click(function(e){
         e.preventDefault();

@@ -121,7 +121,6 @@ ActiveAdmin.register Advertisement do
 	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
 	      f.input :image
-
 	      f.input :discription, label: "Description"
 	      f.input :priority, placeholder: "Ex. 1..10"
 	    end
