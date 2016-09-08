@@ -71,6 +71,7 @@ ActiveAdmin.setup do |config|
   # You can customize your CanCan Ability class name here.
   config.cancan_ability_class = "Ability"
 
+  
 
   # You can specify a method to be called on unauthorized access.
   # This is necessary in order to prevent a redirect loop which happens
@@ -269,4 +270,7 @@ ActiveAdmin.setup do |config|
   # of those filters by default here.
   #
   config.include_default_association_filters = true
+ 
 end
+
+

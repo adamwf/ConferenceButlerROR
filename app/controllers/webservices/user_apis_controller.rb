@@ -1,4 +1,4 @@
-class Webservices::UserApisController < ApplicationController
+ class Webservices::UserApisController < ApplicationController
 	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password]
 
 	def sign_up
@@ -31,16 +31,20 @@ class Webservices::UserApisController < ApplicationController
 		end	
   	end
 
-  	def otp_resend
-  		@user = OtpInfo.find_by(email: params[:user][:email])
-  		@user.otp = rand(1000..9999)
-  		if @user.save
-  			UserMailer.send_otp(@user).deliver_now
-  			render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your account.",:user => @user}
+  	def otp_resend                
+  		if @user = OtpInfo.find_by(email: params[:user][:email])
+	  		@otp = rand(1000..9999)
+	  	    if @user.save
+	  			@user.update_attributes(otp: @otp)
+	  			UserMailer.send_otp(@user).deliver_now
+	  			render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your account.",:user => @user}
+			else
+	  			render :json =>  {:responseCode => 500,:responseMessage => @user.errors.full_messages.first }
+			end	
 		else
-  			render :json =>  {:responseCode => 500,:responseMessage => @user.errors.full_messages.first }
-		end	
-  	end
+		   	render :json =>  {:responseCode => 500,:responseMessage => "Oops! User does not exists." }
+		end
+	end
 
   	def update_user
   		if @user.update_attributes(user_params)
@@ -126,3 +130,4 @@ class Webservices::UserApisController < ApplicationController
 	    end
   	end
 end
+

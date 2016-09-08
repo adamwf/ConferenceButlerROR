@@ -1,0 +1,32 @@
+<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head">
+						<h3>Notification</h3>
+					</div>
+					<div class="box-body">
+						<% @notifications.each do |notification|%>
+							<% if current_manager.id.eql?(notification.user_id)%>
+								<div class="notice-block">
+									<div class="tab-content">
+										<div class="row">
+											<div class="col-xs-3 col-sm-2 col-md-1">
+												<div class="notice-img">
+													<img src="/notification.png" class="img-responsive" alt="image">
+												</div>
+											</div>
+											<div class="col-xs-9 col-sm-10 col-md-11">
+												<div><b>Lorem Ipsume</b>
+												<p><%= notification.content %></p>
+												<span class="f-s-12 m-r-30"><%= notification.created_at.strftime("%B %d at %I : %M %p") %></span><span class="gray-a"><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,  forward_info_event_path(notification.id), method: :delete, data: {confirm: 'Are you sure to delete notification?' }%></span></div>		
+											</div>
+										</div>
+									</div>
+								</div>
+							<%end%>
+						<%end%>
+						<%= will_paginate @notifications %>
+					</div>
+				</div>
+			</div>
+		</section>

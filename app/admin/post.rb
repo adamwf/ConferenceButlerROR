@@ -1,8 +1,8 @@
 ActiveAdmin.register Post do
-  menu parent: "Feeds"
+  menu parent: "Curate Feeds"
 
 	
-	batch_action :destroy, false
+   	batch_action :destroy, false
 
   	scope :all, default: true
   	scope("Shown") { |post| post.where(status: true) }
@@ -15,7 +15,7 @@ ActiveAdmin.register Post do
 
 	index do 
 		selectable_column
-		column :id
+		# column :id
 		column :title
 		column "Description" do |body|
       		truncate(body.content, omision: "...", length: 50)

@@ -1,0 +1,143 @@
+Script started on Thursday 04 August 2016 03:35:01 PM IST
+]0;pratham@sys-83: ~/world_faxpratham@sys-83:~/world_fax$ rails cke db:setupexit[Kgem list railsexit[Krake db:setup[6Pils c[Krails c[Kscript install git://github.com/p8/table_builder.git
+Script started, file is install
+]0;pratham@sys-83: ~/world_faxpratham@sys-83:~/world_fax$ 
+]0;pratham@sys-83: ~/world_faxpratham@sys-83:~/world_fax$ rails c[Kplugin install git://github.com/p8/table_builder.git
+
+plugin: command not found
+]0;pratham@sys-83: ~/world_faxpratham@sys-83:~/world_fax$ 
+]0;pratham@sys-83: ~/world_faxpratham@sys-83:~/world_fax$ re[Kake routes
+                           Prefix Verb       URI Pattern                                  Controller#Action
+                 new_user_session GET        /users/sign_in(.:format)                     devise/sessions#new
+                     user_session POST       /users/sign_in(.:format)                     devise/sessions#create
+             destroy_user_session DELETE     /users/sign_out(.:format)                    devise/sessions#destroy
+                    user_password POST       /users/password(.:format)                    devise/passwords#create
+                new_user_password GET        /users/password/new(.:format)                devise/passwords#new
+               edit_user_password GET        /users/password/edit(.:format)               devise/passwords#edit
+                                  PATCH      /users/password(.:format)                    devise/passwords#update
+                                  PUT        /users/password(.:format)                    devise/passwords#update
+         cancel_user_registration GET        /users/cancel(.:format)                      devise/registrations#cancel
+                user_registration POST       /users(.:format)                             devise/registrations#create
+            new_user_registration GET        /users/sign_up(.:format)                     devise/registrations#new
+           edit_user_registration GET        /users/edit(.:format)                        devise/registrations#edit
+                                  PATCH      /users(.:format)                             devise/registrations#update
+                                  PUT        /users(.:format)                             devise/registrations#update
+                                  DELETE     /users(.:format)                             devise/registrations#destroy
+           new_admin_user_session GET        /admin/login(.:format)                       active_admin/devise/sessions#new
+               admin_user_session POST       /admin/login(.:format)                       active_admin/devise/sessions#create
+       destroy_admin_user_session DELETE|GET /admin/logout(.:format)                      active_admin/devise/sessions#destroy
+              admin_user_password POST       /admin/password(.:format)                    active_admin/devise/passwords#create
+          new_admin_user_password GET        /admin/password/new(.:format)                active_admin/devise/passwords#new
+         edit_admin_user_password GET        /admin/password/edit(.:format)               active_admin/devise/passwords#edit
+                                  PATCH      /admin/password(.:format)                    active_admin/devise/passwords#update
+                                  PUT        /admin/password(.:format)                    active_admin/devise/passwords#update
+                       admin_root GET        /admin(.:format)                             admin/dashboard#index
+ batch_action_admin_notifications POST       /admin/notifications/batch_action(.:format)  admin/notifications#batch_action
+              admin_notifications GET        /admin/notifications(.:format)               admin/notifications#index
+                                  POST       /admin/notifications(.:format)               admin/notifications#create
+           new_admin_notification GET        /admin/notifications/new(.:format)           admin/notifications#new
+          edit_admin_notification GET        /admin/notifications/:id/edit(.:format)      admin/notifications#edit
+               admin_notification GET        /admin/notifications/:id(.:format)           admin/notifications#show
+                                  PATCH      /admin/notifications/:id(.:format)           admin/notifications#update
+                                  PUT        /admin/notifications/:id(.:format)           admin/notifications#update
+                                  DELETE     /admin/notifications/:id(.:format)           admin/notifications#destroy
+  batch_action_admin_social_codes POST       /admin/social_codes/batch_action(.:format)   admin/social_codes#batch_action
+               admin_social_codes GET        /admin/social_codes(.:format)                admin/social_codes#index
+                                  POST       /admin/social_codes(.:format)                admin/social_codes#create
+                admin_social_code GET        /admin/social_codes/:id(.:format)            admin/social_codes#show
+                                  PATCH      /admin/social_codes/:id(.:format)            admin/social_codes#update
+                                  PUT        /admin/social_codes/:id(.:format)            admin/social_codes#update
+                  admin_dashboard GET        /admin/dashboard(.:format)                   admin/dashboard#index
+     batch_action_admin_trendings POST       /admin/trendings/batch_action(.:format)      admin/trendings#batch_action
+                  admin_trendings GET        /admin/trendings(.:format)                   admin/trendings#index
+                                  POST       /admin/trendings(.:format)                   admin/trendings#create
+                   admin_trending GET        /admin/trendings/:id(.:format)               admin/trendings#show
+                                  PATCH      /admin/trendings/:id(.:format)               admin/trendings#update
+                                  PUT        /admin/trendings/:id(.:format)               admin/trendings#update
+  batch_action_admin_static_pages POST       /admin/static_pages/batch_action(.:format)   admin/static_pages#batch_action
+               admin_static_pages GET        /admin/static_pages(.:format)                admin/static_pages#index
+                                  POST       /admin/static_pages(.:format)                admin/static_pages#create
+            new_admin_static_page GET        /admin/static_pages/new(.:format)            admin/static_pages#new
+           edit_admin_static_page GET        /admin/static_pages/:id/edit(.:format)       admin/static_pages#edit
+                admin_static_page GET        /admin/static_pages/:id(.:format)            admin/static_pages#show
+                                  PATCH      /admin/static_pages/:id(.:format)            admin/static_pages#update
+                                  PUT        /admin/static_pages/:id(.:format)            admin/static_pages#update
+                                  DELETE     /admin/static_pages/:id(.:format)            admin/static_pages#destroy
+                        admin_map GET        /admin/map(.:format)                         admin/map#index
+              status_admin_videos POST       /admin/videos/status(.:format)               admin/videos#status
+        batch_action_admin_videos POST       /admin/videos/batch_action(.:format)         admin/videos#batch_action
+                     admin_videos GET        /admin/videos(.:format)                      admin/videos#index
+                                  POST       /admin/videos(.:format)                      admin/videos#create
+                  new_admin_video GET        /admin/videos/new(.:format)                  admin/videos#new
+                 edit_admin_video GET        /admin/videos/:id/edit(.:format)             admin/videos#edit
+                      admin_video GET        /admin/videos/:id(.:format)                  admin/videos#show
+                                  PATCH      /admin/videos/:id(.:format)                  admin/videos#update
+                                  PUT        /admin/videos/:id(.:format)                  admin/videos#update
+                                  DELETE     /admin/videos/:id(.:format)                  admin/videos#destroy
+      status_admin_advertisements POST       /admin/advertisements/status(.:format)       admin/advertisements#status
+  uppriority_admin_advertisements POST       /admin/advertisements/uppriority(.:format)   admin/advertisements#uppriority
+downpriority_admin_advertisements POST       /admin/advertisements/downpriority(.:format) admin/advertisements#downpriority
+batch_action_admin_advertisements POST       /admin/advertisements/batch_action(.:format) admin/advertisements#batch_action
+             admin_advertisements GET        /admin/advertisements(.:format)              admin/advertisements#index
+                                  POST       /admin/advertisements(.:format)              admin/advertisements#create
+          new_admin_advertisement GET        /admin/advertisements/new(.:format)          admin/advertisements#new
+         edit_admin_advertisement GET        /admin/advertisements/:id/edit(.:format)     admin/advertisements#edit
+              admin_advertisement GET        /admin/advertisements/:id(.:format)          admin/advertisements#show
+                                  PATCH      /admin/advertisements/:id(.:format)          admin/advertisements#update
+                                  PUT        /admin/advertisements/:id(.:format)          admin/advertisements#update
+                                  DELETE     /admin/advertisements/:id(.:format)          admin/advertisements#destroy
+ batch_action_admin_social_logins POST       /admin/social_logins/batch_action(.:format)  admin/social_logins#batch_action
+              admin_social_logins GET        /admin/social_logins(.:format)               admin/social_logins#index
+                                  POST       /admin/social_logins(.:format)               admin/social_logins#create
+               admin_social_login GET        /admin/social_logins/:id(.:format)           admin/social_logins#show
+                                  PATCH      /admin/social_logins/:id(.:format)           admin/social_logins#update
+                                  PUT        /admin/social_logins/:id(.:format)           admin/social_logins#update
+               status_admin_posts POST       /admin/posts/status(.:format)                admin/posts#status
+         batch_action_admin_posts POST       /admin/posts/batch_action(.:format)          admin/posts#batch_action
+                      admin_posts GET        /admin/posts(.:format)                       admin/posts#index
+                                  POST       /admin/posts(.:format)                       admin/posts#create
+                   new_admin_post GET        /admin/posts/new(.:format)                   admin/posts#new
+                  edit_admin_post GET        /admin/posts/:id/edit(.:format)              admin/posts#edit
+                       admin_post GET        /admin/posts/:id(.:format)                   admin/posts#show
+                                  PATCH      /admin/posts/:id(.:format)                   admin/posts#update
+                                  PUT        /admin/posts/:id(.:format)                   admin/posts#update
+                                  DELETE     /admin/posts/:id(.:format)                   admin/posts#destroy
+               status_admin_users POST       /admin/users/status(.:format)                admin/users#status
+         batch_action_admin_users POST       /admin/users/batch_action(.:format)          admin/users#batch_action
+                      admin_users GET        /admin/users(.:format)                       admin/users#index
+                                  POST       /admin/users(.:format)                       admin/users#create
+                       admin_user GET        /admin/users/:id(.:form      /admin/admin_users/status(.:format)          admin/admin_users#status
+   batch_action_admin_admin_users POST       /admin/admin_users/batch_action(.:format)    admin/admin_users#batch_action
+                admin_admin_users GET        /admin/admin_users(.:format)                 admin/admin_users#index
+                                  POST       /admin/admin_users(.:format)                 admin/admin_users#create
+             new_admin_admin_user GET        /admin/admin_users/new(.:format)             admin/admin_users#new
+            edit_admin_admin_user GET        /admin/admin_users/:id/edit(.:format)        admin/admin_users#edit
+                 admin_admin_user GET        /admin/admin_users/:id(.:format)             admin/admin_users#show
+                                  PATCH      /admin/admin_users/:id(.:format)             admin/admin_users#update
+                                  PUT        /admin/admin_users/:id(.:format)             admin/admin_users#update
+                                  DELETE     /admin/admin_users/:id(.:format)             admin/admin_users#destroy
+                   admin_comments GET        /admin/comments(.:format)                    admin/comments#index
+                                  POST       /admin/comments(.:format)                    admin/comments#create
+                    admin_comment GET        /admin/comments/:id(.:format)                admin/comments#show
+                                  DELETE     /admin/comments/:id(.:format)                admin/comments#destroy
+                          sign_up POST       /sign_up(.:format)                           webservices/user_apis#sign_up
+                   sign_up_verify POST       /sign_up/verify(.:format)                    webservices/user_apis#otp_confirm
+                       otp_resend POST       /otp_resend(.:format)                        webservices/user_apis#otp_resend
+                     social_login POST       /social_login(.:format)                      webservices/user_apis#social_login
+                      user_update PUT        /user_update(.:format)                       webservices/user_apis#update_user
+                     user_profile POST       /user_profile(.:format)                      webservices/user_apis#profile_show
+                          sign_in POST       /sign_in(.:format)                           webservices/user_apis#sign_in
+                         sign_out POST       /sign_out(.:format)                          webservices/user_apis#sign_out
+                  forget_password POST       /forget_password(.:format)                   webservices/user_apis#forget_password
+                  change_password POST       /change_password(.:format)                   webservices/user_apis#change_password
+                     send_request POST       /send_request(.:format)                      webservices/request_apis#send_request
+                   accept_request POST       /accept_request(.:format)                    webservices/request_apis#accept_request
+                   reject_request POST       /reject_request(.:format)                    webservices/request_apis#reject_request
+                  pending_request POST       /pending_request(.:format)                   webservices/request_apis#pending_request
+                     contact_list POST       /contact_list(.:format)                      webservices/request_apis#contact_list
+                             home GET        /home(.:format)                              webservices/event_apis#home
+                notification_list POST       /notification_list(.:format)                 webservices/event_apis#notification_list
+                      generate_qr POST       /generate_qr(.:format)                       webservices/event_apis#generate_qr
+                          scan_qr POST       /scan_qr(.:format)                           webservices/event_apis#scan_qr
+                         trending GET        /trending(.:format)                          webservices/event_apis#trending
+    

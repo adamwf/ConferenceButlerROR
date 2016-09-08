@@ -1,0 +1,93 @@
+
+<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head">
+				<h3>
+					<div class="pull-right">
+						<%= link_to "Edit",  edit_forward_info_profile_path(current_manager.id), :class => "btn btn-edit" %>
+					</div>
+					My Profile
+				</h3>
+				
+			</div>
+			<div class="box-body">						
+				<div class="content-block">
+					<div class="detail-form">
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">User Name</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.user_name %>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Company Name</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.company_name %>					
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Company Website</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.company_website %>					
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Phone</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.phone %>					
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Fax</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.fax %>					
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Email</label>
+								<div class="col-sm-8 col-md-7">			
+									<%= current_manager.email %>					
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Profile Picture</label>
+								<div class="col-sm-8 col-md-7">
+									<%= image_tag(current_manager.image.try(:url), size: "80*80") %>					
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<div class="row">
+								<label class="col-sm-4 col-md-3 control-label">Confirm Password</label>
+								<div class="col-sm-8 col-md-7">
+									<%= current_manager.email %>					
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="form-group">
+							<div class="row">
+								<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+									<button type="button" class="btn btn-blue">Save Changes</button>
+								</div>
+							</div>
+						</div> -->
+					</div>						
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	

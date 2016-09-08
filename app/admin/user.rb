@@ -1,11 +1,11 @@
 ActiveAdmin.register User do
   batch_action :destroy, false
-  actions :all, :except => [:new, :destroy, :edit]
+  actions :all, :except => [ :destroy]
 
   filter :user_name_cont , :as => :string , :label => "Username"
   filter :email_cont , :as => :string , :label => "Email"
   
-  permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name, :address
+  permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name, :address,:image
 
   scope :all, default: true
   scope("Active") { |user| user.where(status: true) }
@@ -13,11 +13,13 @@ ActiveAdmin.register User do
   scope("User") { |user| user.where(role: "user") }
   scope("Manager") { |user| user.where(role: "manager") }
   scope("Organiser") { |user| user.where(role: "organiser") }
+  scope("Employee") { |user| user.where(role: "employee") }
+  scope("Attendee") { |user| user.where(role: "attendee") }
   
 
   index :title => proc { "Total Users : #{User.count}" }  do
     selectable_column
-    column :id
+    # column :id
     column :email
     column :user_name
     column :first_name
@@ -46,7 +48,7 @@ ActiveAdmin.register User do
         end
         links += link_to 'View',admin_user_path(user) 
         links += '&nbsp;&nbsp;'.html_safe
-        # links += link_to 'Edit',edit_admin_user_path(user)
+        links += link_to 'Edit',edit_admin_user_path(user)
         # links += '&nbsp;&nbsp;'.html_safe 
         # links += link_to 'Delete',admin_user_path(user), method: :delete,:data => { :confirm => 'Are you sure, you want to delete this User?' }
       end
@@ -73,6 +75,7 @@ ActiveAdmin.register User do
       f.input :tc_accept
       f.input :address
       f.input :role, :as => :select, :collection =>['organizer', 'manager'] 
+      f.input :image
     end
     f.actions
   end
@@ -93,10 +96,10 @@ ActiveAdmin.register User do
       row :created_at 
       row :updated_at
       row 'Social Code' do
-       user.social_code.nil? ? "N/A" : image_tag(user.social_code.image)
+      user.social_code.nil? ? "N/A" : image_tag(user.social_code.image)
       end
       row 'Social Logins' do
-       user.social_logins.nil? ? "N/A" : user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ')
+      user.social_logins.present? ? user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ') : "N/A"
       end
     end 
   end

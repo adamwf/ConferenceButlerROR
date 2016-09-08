@@ -1,11 +1,11 @@
 ActiveAdmin.register AdminUser do
   menu priority: 2
   batch_action :destroy, false
-  permit_params :email, :password, :password_confirmation, :role, :status, :feeds, :adds, :shop, :discover
+  permit_params :email,:user_name, :password, :password_confirmation, :role, :status, :feeds, :adds, :shop, :discover
   
   index do
     selectable_column
-    id_column
+    # id_column
     column :email
     column :role
     column :current_sign_in_at
@@ -67,6 +67,7 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs "Admin Details" do
       f.input :email
+      f.input :user_name
       f.input :password
       f.input :password_confirmation
       f.input :role, :as => :select, :collection =>['corporate-user'] 
@@ -86,7 +87,7 @@ ActiveAdmin.register AdminUser do
   controller do
     def create
       super
-      # UserMailer.account_confirmation(@admin_user).deliver_now
+       UserMailer.account_confirmation(@admin_user, current_admin_user).deliver_now
     end
   end
 

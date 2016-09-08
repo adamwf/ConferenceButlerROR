@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Forward Info</title>	
+		
+	</head>
+	<body class="login-bg">
+	
+		
+		<div class="login-box">
+			<div class="container">
+				<div class="login-logo">
+					<img src="/logo.png" alt="logo" />
+				</div>		 
+				
+				<%= form_for User.new, url: forward_info_home_index_path do |f|%>
+
+					<div class="login-box-body">
+						<h1 class="login-heading text-center">Sign Up</h1>
+						<div class="row">
+							<div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">											
+								<div class="login-form">								
+									<div class="form-group">
+										<%= f.text_field :user_name, class: 'form-control', required: true, placeholder: "User Name"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :company_name, class: 'form-control', required: true,placeholder: "Company Name" %>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :company_website, class: 'form-control', required: true,placeholder: "Company Website"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :phone, class: 'form-control', required: true, placeholder: "Phone"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :fax, class: 'form-control', required: true, placeholder: "Fax"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :email, class: 'form-control', required: true,placeholder: "Email"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :password, class: 'form-control', required: true, placeholder: "Password"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :password_confirmation, class: 'form-control', required: true,placeholder: "Confirm Password"%>
+									</div>
+									<button type="submit" class="btn btn-submit btn-block">Sign Up</button>
+								</div>
+								<div class="separator"></div>
+								<div class="text-center login-msg m-t-20">
+									Already have an account? <a href="/forward_info/login" class="blue-a"><strong>Login</strong></a> Here
+								</div>		
+							</div>
+						</div>
+					</div>
+				<%end%>
+			</div>						
+		</div>
+		<!-- /.login-box -->
+	</body>
+</html>

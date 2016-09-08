@@ -1,0 +1,98 @@
+
+		<!--box-->
+		<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head">
+						<h3>
+							<div class="pull-right">
+								<%= link_to "Back",  forward_info_profile_path, :class => "btn btn-edit" %>
+							</div>
+							Edit Profile
+						</h3>
+					</div>
+					<div class="box-body">						
+						<div class="content-block">     															    <%= form_for @profile, url: forward_info_profile_path, class: "form-control" do |f| %>
+							<div class="detail-form">
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">User Name*</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.text_field :user_name, class: 'form-control'%>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Company Name</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.text_field :company_name, class: 'form-control' %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Company Website</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.text_field :company_website, class: 'form-control' %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Phone</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.text_field :phone, class: 'form-control' %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Fax</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.text_field :fax, class: 'form-control' %>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Email*</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.email_field :email, class: 'form-control'%>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Profile Picture</label>
+										<div class="col-sm-8 col-md-5">
+										<%= f.file_field :image, class: 'form-control' %>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="form-group">
+									<div class="row">
+										<label class="col-sm-4 col-md-3 control-label">Confirm Password</label>
+										<div class="col-sm-8 col-md-7">
+										<%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Password Confirmation" %>
+										</div>
+									</div>
+								</div> -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+											<button type="submit" class="btn btn-blue">Save Changes</button>
+											<%#= f.submit "Save Changes", class: "btn btn-blue" %>
+
+										</div>
+									</div>
+								</div>
+							</div>	
+							<%end%>			
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		

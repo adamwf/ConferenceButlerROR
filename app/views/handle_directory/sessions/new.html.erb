@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+        <meta name="author" content="">
+		<title>Handle Directory</title>	
+		
+        <!-- Bootstrap Core CSS -->
+		<link href="assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Theme Custom CSS -->
+		<link href="assets/stylesheets/style.css" rel="stylesheet">
+		
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<!-- Web Fonts  -->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
+
+	</head>
+	<body>
+       
+		
+		<div class="login-bg">
+			<div class="container">
+				<div class="login-box">					
+						<div class="login-left text-center">
+							<img src="/logo-a1.png" class="img-responsive" alt="Logo" />
+						</div>
+						<div class="login-middle">
+							<h3 class="login-heading">Login</h3>
+							<div class="login-form">
+								<div class="login-msg">Fill your detail to get in</div>
+								<%= form_for(:session, url: handle_directory_login_path) do |f| %>
+								<div class="form-group">
+									<%= f.email_field :email, class: 'form-control', placeholder: "Email/Username" %>
+								</div>
+	
+								<div class="form-group">
+									<%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+								</div>
+								<a href="#" class="login-msg">Forgot Password?</a>
+								<div class="m-t-20"><button type="submit" class="btn btn-send">Sign In</button></div>
+    							<% end %>
+							</div>
+							<div class="login-or text-center hidden-xs">
+								<img src="/or.png" alt="Logo" />
+							</div>
+							<div class="login-right">
+								<div class="or-sec"></div>
+								<div class="login-msg">Don’t have an account?</div>
+								<%= link_to "Create Account", handle_directory_login_path,  class: "btn btn-send", type: "button"%>
+								<div class="login-msg m-t-20">Sign in with your Facebook or Linkedin accounts</div>
+								<div>
+									<a href="" class="btn btn-primary"><i class="fa fa-facebook"></i></a>
+									<a href="" class="btn btn-info"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+								</div>
+							</div>
+						</div>
+											
+				</div>
+			</div>
+		</div>
+		
+		<!--footer-->
+		<footer class="main-footer white-a">
+			<div class="text-center">© 2016 ConferenceButler Allright reserved 2016</div>
+		</footer>
+		
+	    <script src="assets/javascripts/jquery.js"></script>
+		<script src="assets/javascripts/bootstrap.min.js"></script>
+		
+	</body>
+</html>

@@ -10,7 +10,7 @@ ActiveAdmin.register SocialLogin do
 
 	index do
 		selectable_column
-		column :id 
+		# column :id 
 		column "Personal User Name" do |user|
      	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
     	end

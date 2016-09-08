@@ -1,0 +1,9 @@
+<%= month_calendar events: @events do |date, events| %>
+  <%= date.strftime("%d") %>
+
+  <% events.each do |event| %>
+    <div>
+     <a class="btn btn-blue"<%= link_to "#{event.name}" %></a>
+    </div>
+  <% end %>
+<% end %>

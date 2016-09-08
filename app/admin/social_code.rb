@@ -8,7 +8,7 @@ ActiveAdmin.register SocialCode do
     
 	index do
 		selectable_column
-		column :id 
+		# column :id 
 		column "User Name" do |user|
      	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
     	end

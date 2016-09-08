@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+        <meta name="author" content="">
+		<title>Handle Directory</title>	
+		
+        <!-- Bootstrap Core CSS -->
+		<link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom Fonts -->
+		<link rel="stylesheets" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<!-- Web Fonts  -->
+		<link rel="stylesheets" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
+
+	</head>
+	<body>
+       <!--navbar-->
+	   <nav class="navbar top-nav">
+		  <div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="/handle_directory"><img src="/logo.png" alt="" /></a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav navbar-right top-nav-right">
+				<li><a href="/handle_directory/messages"><img src="/mail_ic.png" alt="" /></a></li>
+				<li><a href="#"><img src="/contact_ic.png" alt="" /></a></li>
+				<li><a href="#"><img src="/profile_ic.png" alt="" /></a></li>
+				<li><a href="#"><img src="/home_ic.png" alt="" /></a></li>
+
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag(current_user.image.url(:thumb), :class => "img-circle")%>
+					<%= current_user.first_name.capitalize %> <%= current_user.last_name %>
+					<span class="caret"></span></a></li><li><%= link_to "Log out", handle_directory_logout_path, method: "delete" %></li> 
+				  <ul class="dropdown-menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		
+		<!--box-->
+		<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head">
+						<h3>My Account</h3>
+					</div>
+					<div class="box-body">
+						<div class="account-detail">
+							<div class="detail-block">
+								<div class="detail-left xs-m-b-20">
+									<div class="profile">
+										<div class="profile-img">
+											<%= image_tag(current_user.image.try(:url), :class => "img-circle")%>
+										</div>
+										<div class="m-0 profile-info white-a">
+											<h3 class="f-w-700"><%= current_user.first_name.capitalize %> <%= current_user.last_name.capitalize %></h3>
+											<h4 class="f-w-700"><%= current_user.address %></h4>
+											<ul class="profile-list list-inline">
+												<li><a href="/users/edit" class="white-a"><span class="m-r-10"><i class="fa fa-pencil"></i></span>Edit</a></li>
+												<li><a href="" class="green-a"><span class="m-r-10"><i class="fa fa-share"></i></span>Forward Profile</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="detail-right">
+									<ul class="social-icons list-inline">
+										<li><a href="https://accounts.google.com/ServiceLogin?service=oz&passive=1209600&continue=https://plus.google.com/?gpsrc%3Dogpy0%26tab%3DwX#identifier"><i class="fa fa-google-plus"></i></a></li>
+										<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+										<li><a href="https://www.linkedin.com/uas/login"><i class="fa fa-linkedin"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-sm-4 col-md-3 xs-m-b-20">
+									<h4 class="m-0 f-w-700">About</h4>
+									<div class="separator"></div>
+									<% current_user.social_logins.each do |social|%>
+										<ul class="m-0 p-0 mail-icons">
+											<% if social.provider == "facebook"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-facebook"></i></span><%= social.user_name%></a></li>
+											<%elsif social.provider == "linkedin"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-linkedin"></i></span><%= social.user_name%></a></li>
+											<%elsif social.provider == "twitter"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-linkedin"></i></span><%= social.user_name%></a></li>
+											<%end%>
+										</ul>
+									<%end%>
+									<div class="separator"></div>
+									<p class="text-muted">Hi I'm Shashank,has been the industry's standard dummy text ever since the 1500s, when an from 45 BC.</p>
+								</div>
+								<div class="col-sm-5 col-md-6 xs-m-b-20">
+									<%= render partial: "calender"%>	
+								</div>
+								<div class="col-sm-3 col-md-3">
+									<div class="qr-code">
+										<%= image_tag(current_user.social_code.image, size: "250*250") %> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!--footer-->
+		<footer class="main-footer white-a">
+			<div class="text-center">© 2015 ConferenceButler Allright reserved 2015</div>
+		</footer>
+		
+		
+	</body>
+</html>

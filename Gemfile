@@ -10,6 +10,7 @@ gem 'rails', '4.2.5.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -21,6 +22,7 @@ gem 'carrierwave'
 gem 'cloudinary'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-validation-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -44,6 +46,10 @@ gem 'grocer'
 gem 'rqrcode_png'
 gem 'kaminari'
 gem 'will_paginate'
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
+gem "simple_calendar", "~> 2.0"
+gem 'alertify-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

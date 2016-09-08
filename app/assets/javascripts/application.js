@@ -13,4 +13,25 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require moment 
+//= require fullcalendar
+//= require bootstrap/dropdown
+//= require alertify
 //= require_tree .
+
+
+
+
+$(document).ready(function(){
+	$("[class^=flash_notice]").each(function(){
+		if ($(this).html() != ''){
+			alertify.dismissAll();
+			if ($(this).data('type') == "notice") {
+				alertify.success($(this).text());
+			}
+			else{
+				alertify.error($(this).text());
+			}
+		}
+	});
+});

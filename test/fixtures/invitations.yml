@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  sender_email: MyString
-  reciever_email: MyString
-  status: MyString
-  event_name: MyString
-  mode: MyString
+  sender_id: 1
+  reciever_id: 1
+  status: false
+  event_id: 
+  mode: false
 
 two:
-  sender_email: MyString
-  reciever_email: MyString
-  status: MyString
-  event_name: MyString
-  mode: MyString
+  sender_id: 1
+  reciever_id: 1
+  status: false
+  event_id: 
+  mode: false

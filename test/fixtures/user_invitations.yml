@@ -2,8 +2,8 @@
 
 one:
   user_id: 
-  invitation_id: 
+  event_id: 
 
 two:
   user_id: 
-  invitation_id: 
+  event_id: 

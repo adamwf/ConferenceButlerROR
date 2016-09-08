@@ -22,11 +22,11 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :advertisements, dependent: :destroy
   has_many :activities, dependent: :destroy
-  has_one :trending, dependent: :destroy
+  has_one  :trending, dependent: :destroy
   has_many :profile_views, dependent: :destroy
-  has_many :friendships, dependent: :destroy
+  # has_many :friendships, dependent: :destroy
    
-  validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 },:format => {:with => /\A(^[A-Za-z][A-Za-z0-9.@_-]*$)\z/}
+  # validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 },:format => {:with => /\A(^[A-Za-z][A-Za-z0-9.@_-]*$)\z/}
   validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
   validates :password, presence: true, length: { maximum: 20 }, on: :create
   validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create

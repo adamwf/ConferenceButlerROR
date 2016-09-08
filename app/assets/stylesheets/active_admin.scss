@@ -32,3 +32,12 @@ $skinLogo: url("1.png") no-repeat 5px 5px;
 
 @import "wigu/active_admin_theme";
 
+form input[type="text"], form input[type="password"], form input[type="email"], form input[type="number"], form input[type="url"], form input[type="tel"], form input[type="date"], form textarea {
+    border: 1px solid #b1b1b1 !important;
+    border-radius: 3px;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 0.95em;
+    outline: medium none;
+    padding: 8px 10px 7px;
+    width: calc(80% - 22px);
+}

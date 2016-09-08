@@ -1,0 +1,125 @@
+	<% if current_manager.role.eql?("employee") %>
+<!--box-->
+	<section class="main-block">
+		<div class="container">
+			<div class="box">
+				<div class="box-head p-0">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs nav-justified box-nav" role="tablist">
+						<li role="presentation" class="active"><a href="#event" aria-controls="event" role="tab" data-toggle="tab">Event Invitations</a></li>
+						<li role="presentation"><a href="#pastdetail" aria-controls="pastdetail" role="tab" data-toggle="tab">Past Events Details</a></li>
+						<li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Change Password</a></li>
+					</ul>
+				</div>
+				<div class="box-body">
+					<div class="content-block">
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active clearfix" id="event">
+								<h3 class="tab-cont-head">Event Invitation</h4>
+								<!-- <div> -->
+								<% @invitations.each do |invitation| %>
+
+									<% if invitation.event.time.to_date >= Date.today && invitation.status.eql?("pending") %>
+									
+										<div class="event-block">
+											<div class="row">
+												<div class="col-sm-8 col-md-8">
+													<div class="event-detail">
+														<div class="event-left">Event Name</div>
+														<div class="event-right"><%= invitation.event.name%></div>
+													</div>
+													<div class="event-detail">
+														<div class="event-left">Event  Organiser</div>
+														<div class="event-right"><%= invitation.event.organizer%></div>
+													</div>
+													<div class="event-detail">
+														<div class="event-left">Event  Date & Time</div>
+														<div class="event-right"><%= invitation.event.time.strftime("%B %d at %I:%M %p")%></div>
+													</div>
+													<div class="event-detail">
+														<div class="event-left">Event  Address</div>
+														<div class="event-right"><%= invitation.event.location%></div>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4">
+													<div class="event-btn">
+														<%= link_to "<span class='m-r-10'><i class='fa fa-check'></i></span>Accept</a>".html_safe, accept_invitation_forward_info_home_path(invitation.id), method: :post, :class => "btn btn-invite xs-m-b-10 sm-m-b-5"%>
+														<%= link_to "<span class='m-r-10'><i class='fa fa-times'></i></span>Decline</a>".html_safe, decline_invitation_forward_info_home_path(invitation.id), method: :post, :class => "btn btn-decline xs-m-b-10 sm-m-b-5"%>
+													</div>
+												</div>
+											</div>
+										</div>
+																	
+									<%end%>
+									
+								<%end%>
+								<!-- </div>	 -->
+								<%= will_paginate @invitations%>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="pastdetail">
+								<%= render partial: "past_event"%>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="password">
+								<%= render template: "/forward_info/passwords/change_password"%>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<%elsif current_manager.role.eql?("manager")%>
+	<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head p-0">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs nav-justified box-nav" role="tablist">
+					<li role="presentation" class="active"><a href="#emp1" aria-controls="emp1" role="tab" data-toggle="tab">All Employees</a></li>
+					<li role="presentation"><a href="#emp2" aria-controls="emp2" role="tab" data-toggle="tab">Employee Check</a></li>
+					<li role="presentation"><a href="#emp3" aria-controls="emp3" role="tab" data-toggle="tab">Add Employee</a></li>
+				</ul>
+			</div>
+			<div class="box-body">
+				<div class="content-block">
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="emp1">
+							<h3 class="tab-cont-head">All Employees</h3>
+							<% count = 0%>
+							<% if @employees.present?%>
+								<div class="table-responsive m-t-40">
+									<table class="table table-bordered custom-table">
+										<thead>
+										  <tr>
+											<th>S. NO</th>
+											<th>Name</th>
+										  </tr>
+										</thead>
+										<% @employees.each do |employee| %>
+											<% count = count+1%>
+											<tbody>
+											  <tr>
+												<td><%= count%></td>
+												<td><%= employee.user_name %></td>
+											  </tr>
+											</tbody>
+										<%end%>	
+									</table>
+								</div>
+							<%end%>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="emp2">
+							<%= render partial: "/forward_info/home/employee"%>				
+						</div>
+						<div role="tabpanel" class="tab-pane" id="emp3">					
+							<%= render template: "/forward_info/profiles/new"%>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+<%end%>		

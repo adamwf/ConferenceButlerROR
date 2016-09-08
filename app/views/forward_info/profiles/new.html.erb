@@ -1,0 +1,104 @@
+<%= form_for User.new, url: forward_info_profiles_path do |f|%>
+	<h3 class="tab-cont-head">Add Employee</h3>
+		<div class="detail-form m-t-40 m-b-40">
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">User Name*</label>
+					<div class="col-sm-8 col-md-7">
+						<%= f.text_field :user_name, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Company Name</label>
+					<div class="col-sm-8 col-md-7">
+					  	<%= f.text_field :company_name, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Company Website</label>
+					<div class="col-sm-8 col-md-7">
+					  	<%= f.text_field :company_website, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Phone</label>
+					<div class="col-sm-8 col-md-7">
+					  	<%= f.text_field :phone, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Email*</label>
+					<div class="col-sm-8 col-md-7">
+				  		<%= f.text_field :email, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Fax</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :fax, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Password*</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :password, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label">Confirm Password*</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :password_confirmation, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h3 class="tab-cont-head">Company Social Media</h3>
+		<div class="detail-form m-t-40">
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label"><a href="" class="m-r-20"><img src="/social_ic1.png" alt="" /></a>Facebook</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :facebook, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label"><a href="" class="m-r-20"><img src="/social_ic2.png" alt="" /></a>Instagram</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :instagram, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label class="col-sm-4 col-md-3 control-label"><a href="" class="m-r-20"><img src="/social_ic3.png" alt="" /></a>Youtube</label>
+					<div class="col-sm-8 col-md-7">
+					  <%= f.text_field :youtube, class: 'form-control'%>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+					  <button type="submit" class="btn btn-blue">Add Employee</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<%end%>

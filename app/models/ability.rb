@@ -19,7 +19,7 @@ class Ability < ActiveRecord::Base
 	    end
   	end
 
-  	# def initialize(user)
+  	  # def initialize(user)
 	  #   case user.role
 	  #     when 'organizer'
 	  #       can :read, ActiveAdmin::Page, :name => "Dashboard"
@@ -41,5 +41,5 @@ class Ability < ActiveRecord::Base
 	  #       can :manage, :all
 	  #       cannot :destroy, AdminUser, id: 1 
 	  #   end
-  	# end
+      # end
 end

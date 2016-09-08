@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613142809) do
+ActiveRecord::Schema.define(version: 20160819104012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160613142809) do
     t.boolean  "adds",                   default: true
     t.boolean  "shop",                   default: true
     t.boolean  "discover",               default: true
+    t.string   "user_name"
   end
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
@@ -138,21 +139,24 @@ ActiveRecord::Schema.define(version: 20160613142809) do
   add_index "friendships", ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true, using: :btree
 
   create_table "invitations", force: :cascade do |t|
-    t.string   "sender_email"
-    t.string   "reciever_email"
-    t.string   "status"
-    t.string   "event_name"
-    t.string   "mode"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "sender_id"
+    t.integer  "reciever_id"
+    t.string   "status",      default: "pending"
+    t.integer  "event_id"
+    t.boolean  "mode",        default: true
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
+
+  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.string   "notification_type"
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "status",            default: false
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
@@ -223,12 +227,12 @@ ActiveRecord::Schema.define(version: 20160613142809) do
 
   create_table "user_invitations", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "invitation_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "user_invitations", ["invitation_id"], name: "index_user_invitations_on_invitation_id", using: :btree
+  add_index "user_invitations", ["event_id"], name: "index_user_invitations_on_event_id", using: :btree
   add_index "user_invitations", ["user_id"], name: "index_user_invitations_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -258,6 +262,12 @@ ActiveRecord::Schema.define(version: 20160613142809) do
     t.string   "phone"
     t.string   "provider"
     t.string   "u_id"
+    t.string   "company_name"
+    t.string   "company_website"
+    t.string   "fax"
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "youtube"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -280,13 +290,14 @@ ActiveRecord::Schema.define(version: 20160613142809) do
   add_foreign_key "attendees", "users"
   add_foreign_key "devices", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "invitations", "events"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "profile_views", "users"
   add_foreign_key "social_codes", "users"
   add_foreign_key "social_logins", "users"
   add_foreign_key "trendings", "users"
-  add_foreign_key "user_invitations", "invitations"
+  add_foreign_key "user_invitations", "events"
   add_foreign_key "user_invitations", "users"
   add_foreign_key "videos", "users"
 end

@@ -7,7 +7,7 @@ ActiveAdmin.register StaticPage do
 
  	index do 
 		selectable_column
-		column :id
+		# column :id
 		column :title
 		column "Content" do |body|
       		truncate(body.content, omision: "...", length: 50)
@@ -25,7 +25,7 @@ ActiveAdmin.register StaticPage do
 	    	end
 	    end
   	end
-  	action_item :view, only: :show do
+  	action_item :view, only: :show , priority:1 do
     	link_to 'Back',admin_static_pages_path
   	end
 end

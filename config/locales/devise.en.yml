@@ -1,7 +1,7 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
- active_admin:
+  # active_admin:
     
   devise:
     confirmations:

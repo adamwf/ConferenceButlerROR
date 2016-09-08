@@ -6,7 +6,7 @@ class SocialCode < ActiveRecord::Base
 
  	def self.generate_qr
 		random_name = SecureRandom.hex(8)
-		qr = RQRCode::QRCode.new(random_name, :size => 20)
+		qr = RQRCode::QRCode.new(random_name, :size => 10)
 		png = qr.to_img  
 		File.open(Rails.root.join("public/#{random_name}.png"), 'wb'){|f| f.write png }
 		image = Cloudinary::Uploader.upload(Rails.root.join("public/#{random_name}.png"))

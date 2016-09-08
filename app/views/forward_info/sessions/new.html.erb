@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		
+		<title>Forward Info</title>	
+		
+        <!-- Bootstrap Core CSS -->
+		
+	</head>
+	<body class="login-bg">
+	
+		<div class="login-box">
+			<div class="container">
+				<div class="login-logo">
+					<img src="/logo.png" alt="logo" />
+				</div>		 
+				
+				<div class="login-box-body">
+					<h1 class="login-heading text-center">Sign In</h1>
+					<div class="row">
+						<div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">											
+							<div class="login-form">								
+								<%= form_for(:session, url: forward_info_login_path, :class => "form-control") do |f| %>
+									<div class="form-group">
+										<%= f.email_field :email, class: 'form-control', placeholder: "Email", required: true %>
+									</div>
+		
+									<div class="form-group">
+										<%= f.password_field :password, class: 'form-control', placeholder: "Password" , required: true%>
+									</div>								
+									<div class="row">
+										<div class="col-xs-6 col-sm-6">
+											<div class="checkbox">
+												<label>
+												    <%= f.check_box :remember_me %>
+    							                    <%= f.label :remember_me, "Remember me" %>
+												</label>
+											</div>	
+										</div>
+										<div class="col-xs-6 col-sm-6">
+											<a href="/forward_info/passwords/forget_password" class="login-msg pull-right">Forgot Password?</a>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-submit btn-block m-b-30">Sign In</button>
+								<%end%>
+							</div>
+							<div class="separator"></div>
+								<div class="text-center login-msg m-t-20">
+									New User? <a href=" /forward_info/home/new" class="blue-a"><strong>Sign Up</strong></a> Here
+								</div>
+							</div>		
+		
+						</div>
+					</div>
+				</div>
+			</div>						
+		</div>
+		<!-- /.login-box -->
+	</body>
+</html>
+		
+
+
+

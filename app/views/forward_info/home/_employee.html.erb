@@ -1,0 +1,27 @@
+<h3 class="tab-cont-head clearfix">Employee Check
+<!-- 	<div class="btn-right"><button type="button" class="btn btn-blue">Add Employee</button></div>
+ --></h3>
+<div class="table-responsive m-t-40">
+	 <table class="table table-bordered custom-table">
+		<thead>
+		  <tr>
+			<th>Employees Name</th>
+			<th>Scans/ContactExchanges</th>
+			<th>Profiles Forwarded</th>
+			<th>Profiles Received</th>
+			<th>View Details</th>
+		  </tr>
+		</thead>
+		<% @employees.each do |employee|%>
+			<tbody>
+			  <tr>
+				<td><%= employee.user_name%></td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td><a href="/forward_info/events/<%= employee.id%>" class="blue-a">Details</a></td>
+			  </tr>
+			</tbody>
+		<%end%>
+	  </table>
+</div>

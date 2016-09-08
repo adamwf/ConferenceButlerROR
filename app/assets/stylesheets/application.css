@@ -10,6 +10,18 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require simple_calendar
  *= require_tree .
  *= require_self
+ *= require fullcalendar
  */
+ @import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'alertify/core';
+@import 'alertify/themes/default';
+
+.flash{
+	color:red;
+	font-family: fonte;
+}
+
