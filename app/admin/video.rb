@@ -4,20 +4,28 @@ ActiveAdmin.register Video do
   config.batch_actions = true
   batch_action :destroy, false
  # menu :label => "Videos"
-  permit_params :content, :user_id, :title, :discription
+  permit_params :content, :user_id, :title, :discription, :category
   
   scope :all, default: true
-  scope("Shown") { |video| video.where(status: true) }
-  scope("Hiden") { |video| video.where(status: false) }
+  scope("Published") { |video| video.where(status: true) }
+  scope("Not Published") { |video| video.where(status: false) }
+  scope("Home Videos") { |video| video.where(category: "home") }
+  scope("Event Videos") { |video| video.where(category: "event") }
+  scope("Discover Videos") { |video| video.where(category: "discover") }
+  scope("Trending Videos") { |video| video.where(category: "trending") }
+  scope("Shop Videos") { |video| video.where(category: "shop") }
 
   filter :user
-  filter :title
+  filter :category_cont , :as => :string , :label => "Category"
+  filter :title_cont , :as => :string , :label => "Video Title"
   # filter :status
 
   index do
     selectable_column
     # column :id
-    column :title
+    column "Title" do |body|
+      truncate(body.title, omision: "...", length: 10)
+    end
     # column "User Name" do |user|
     #   User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
     # end
@@ -27,10 +35,11 @@ ActiveAdmin.register Video do
     column "Description" do |body|
       truncate(body.discription, omision: "...", length: 50)
     end
-    column :created_at
-    column :updated_at
+    # column :created_at
+    # column :updated_at
+    column :category
     column "Status" do |video|
-      video.status ? '<i class = "status_tag yes"> Show </i>'.html_safe : '<i class = "status_tag no"> Hide </i>'.html_safe 
+      video.status ? '<i class = "status_tag yes"> Published </i>'.html_safe : '<i class = "status_tag no"> Do Not Published </i>'.html_safe 
     end
     # actions
     column "Actions" do |video|
@@ -38,10 +47,10 @@ ActiveAdmin.register Video do
       a do
         if (current_admin_user.role == 'super-admin')
           if video.status?
-           links += link_to 'Hide',status_admin_videos_path(:video_id => video), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this video?' }
+           links += link_to 'Do Not Published',status_admin_videos_path(:video_id => video), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this video?' }
            links += '&nbsp;&nbsp;'.html_safe
           else  
-           links += link_to 'Show',status_admin_videos_path(:video_id => video), method: :post,:data => { :confirm => 'Are you sure, you want to Show this video?' }
+           links += link_to 'Published',status_admin_videos_path(:video_id => video), method: :post,:data => { :confirm => 'Are you sure, you want to Show this video?' }
            links += '&nbsp;&nbsp;'.html_safe
           end
         end
@@ -68,6 +77,7 @@ ActiveAdmin.register Video do
       row :id
       row :title
       row :user_id
+      row :category
       row "Description" do |video|
         video.discription
       end
@@ -84,6 +94,7 @@ ActiveAdmin.register Video do
       f.input :title
       f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
       f.input :content
+      f.input :category, :as => :select, :collection =>  ['home', "event", 'feeds', 'discover','shop', 'trending']
       f.input :discription, label: "Description"
     end
     f.actions

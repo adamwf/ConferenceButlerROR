@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
   has_many :devices, dependent: :destroy
   has_many :social_logins, dependent: :destroy
   has_many :events, dependent: :destroy
-  has_many :notifications, dependent: :destroy
   has_one  :social_code, dependent: :destroy
   has_many :videos, dependent: :destroy
   has_many :invitations , through: :user_invitations
@@ -24,9 +23,16 @@ class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   has_one  :trending, dependent: :destroy
   has_many :profile_views, dependent: :destroy
-  # has_many :friendships, dependent: :destroy
-   
-  # validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 },:format => {:with => /\A(^[A-Za-z][A-Za-z0-9.@_-]*$)\z/}
+  has_one  :reminder, dependent: :destroy
+  has_many :notifications, :as => :notifiable, :dependent => :destroy 
+  has_many :groups,:dependent => :destroy
+  has_many :group_memberships, :through => :groups , :dependent => :destroy
+  has_many :send_messages,:class_name => 'Message',:foreign_key => 'sender_id',:dependent => :destroy
+  has_many :recieved_messages, -> { where(is_group: false) },:class_name => 'Message',:foreign_key => 'assoc_id',:dependent => :destroy
+  has_many :group_messages, -> { where(is_group: true) },:class_name => 'Message',:foreign_key => 'assoc_id',:dependent => :destroy
+
+
+  validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 },:format => {:with => /\A(^[A-Za-z][A-Za-z0-9.@_-]*$)\z/}
   validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
   validates :password, presence: true, length: { maximum: 20 }, on: :create
   validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
@@ -56,5 +62,11 @@ class User < ActiveRecord::Base
 
   def to_s
     "#{user_name}"
+  end
+
+  def generate_auth_token
+    begin
+      self.access_token = SecureRandom.hex
+    end while User.where(access_token: access_token).exists?
   end
 end

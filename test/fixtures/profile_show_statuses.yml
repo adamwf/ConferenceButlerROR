@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: false
+  email: false
+  phone: false
+  other_info: false
+  hobbies: false
+  relation_status: false
+  children: false
+  image: false
+  facebook: false
+  google: false
+  linked_in: false
+  instagram: false
+  twitter: false
+  social_code: false
+
+two:
+  name: false
+  email: false
+  phone: false
+  other_info: false
+  hobbies: false
+  relation_status: false
+  children: false
+  image: false
+  facebook: false
+  google: false
+  linked_in: false
+  instagram: false
+  twitter: false
+  social_code: false

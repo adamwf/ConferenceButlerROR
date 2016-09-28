@@ -3,7 +3,23 @@
 class VideoUploader < CarrierWave::Uploader::Base
 
   include Cloudinary::CarrierWave
+  include CarrierWave::Video 
+  include CarrierWave::Video::Thumbnailer
 
+
+  # def store_dir
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
+
+  version :thumb do
+    process thumbnail: [{format: 'jpg', quality: 8, size: 360, logger: Rails.logger}]
+    def full_filename for_file
+      jpg_name for_file, version_name
+    end
+  end
+  def jpg_name for_file, version_name
+    %Q{#{version_name}_#{for_file.chomp(File.extname(for_file))}.jpg}
+  end
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -40,9 +56,9 @@ class VideoUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(mp4)
-  # end
+  def extension_white_list
+    %w(mp4 webm mkv flv vob ogv ogg drc gifv mng avi mov qt wmv yuv rm rmvb asf amv m4p m4v m2v mpg mp2 mpeg mpe mpv 3gp svi 3g2 mxf roq nsv flv f4v f4p f4a f4b)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

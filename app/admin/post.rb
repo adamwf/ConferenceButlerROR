@@ -5,38 +5,47 @@ ActiveAdmin.register Post do
    	batch_action :destroy, false
 
   	scope :all, default: true
-  	scope("Shown") { |post| post.where(status: true) }
-  	scope("Hiden") { |post| post.where(status: false) }
+  	scope("Published") { |post| post.where(status: true) }
+  	scope("Not Published") { |post| post.where(status: false) }
+  	scope("Home Posts") { |post| post.where(category: "home") }
+    scope("Event Posts") { |post| post.where(category: "event") }
+    scope("Discover Posts") { |post| post.where(category: "discover") }
+    scope("Trending Posts") { |post| post.where(category: "trending") }
+    scope("Shop Posts") { |post| post.where(category: "shop") }
 
   	filter :user
-  	filter :title
+  	filter :category_cont , :as => :string , :label => "Category"
+  	filter :title_cont , :as => :string , :label => "Post Title"
 
- 	permit_params :content, :user_id, :title
+ 	permit_params :content, :user_id, :title, :category
 
 	index do 
 		selectable_column
 		# column :id
-		column :title
+		column "Title" do |body|
+      		truncate(body.title, omision: "...", length: 10)
+    	end
 		column "Description" do |body|
       		truncate(body.content, omision: "...", length: 50)
     	end
 		# column "User Name" do |user|
 	 #      User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
 	 #    end
-	    column :created_at
-    	column :updated_at
+	    # column :created_at
+    	# column :updated_at
+    	column :category
     	column "Status" do |post|
-      		post.status ? '<i class = "status_tag yes"> Show </i>'.html_safe : '<i class = "status_tag no"> Hide </i>'.html_safe 
+      		post.status ? '<i class = "status_tag yes"> Published </i>'.html_safe : '<i class = "status_tag no"> Do Not Published </i>'.html_safe 
     	end
 	    column "Actions" do |post|
 		    links = ''.html_safe
 		    a do
 		        if (current_admin_user.role == 'super-admin')
 		          if post.status?
-		           links += link_to 'Hide',status_admin_posts_path(:post_id => post), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this post?' }
+		           links += link_to 'Do Not Published',status_admin_posts_path(:post_id => post), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this post?' }
 		           links += '&nbsp;&nbsp;'.html_safe
 		          else  
-		           links += link_to 'Show',status_admin_posts_path(:post_id => post), method: :post,:data => { :confirm => 'Are you sure, you want to Show this post?' }
+		           links += link_to 'Published',status_admin_posts_path(:post_id => post), method: :post,:data => { :confirm => 'Are you sure, you want to Show this post?' }
 		           links += '&nbsp;&nbsp;'.html_safe
 		          end
 		        end
@@ -64,6 +73,7 @@ ActiveAdmin.register Post do
 	    f.inputs "Advertisement" do
 	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
+	      f.input :category, :as => :select, :collection =>  ['home', "event", 'feeds', 'discover','shop', 'trending']
 	      f.input :content, label: "Description"
 	    end
 	    f.actions
@@ -74,6 +84,7 @@ ActiveAdmin.register Post do
 	      row :id
 	      row :title
 	      row :user_id
+	      row :category
 	      row "Description" do 
 	      	post.content
 	      end

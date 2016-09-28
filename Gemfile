@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'carrierwave-video-thumbnailer'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-validation-rails'
@@ -33,6 +34,7 @@ gem 'geocoder'
 gem 'amistad'
 gem 'public_activity'
 gem 'rails_12factor', group: :production
+gem "rails-erd"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq'
@@ -40,6 +42,9 @@ gem 'unicorn'
 gem 'redis'
 gem 'gcm'
 gem 'grocer'
+gem "em-websocket"
+gem 'httparty'
+
 # gem 'quickblox'
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -50,6 +55,8 @@ gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem "simple_calendar", "~> 2.0"
 gem 'alertify-rails'
+gem 'link_thumbnailer'
+# gem 'ransack'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

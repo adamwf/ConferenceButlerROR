@@ -1,17 +1,23 @@
 ActiveAdmin.register Advertisement do
-	
+	menu label: "Advertiser Queue"
 	batch_action :destroy, false
   	config.sort_order = 'priority_asc'
 	
-	permit_params :image, :user_id, :title, :discription, :priority
+	permit_params :image, :user_id, :title, :discription, :priority, :category
 
 
   	scope :all, default: true
-  	scope("Shown") { |ads| ads.where(status: true) }
-  	scope("Hiden") { |ads| ads.where(status: false) }
+  	scope("Published") { |ads| ads.where(status: true) }
+  	scope("Not Published") { |ads| ads.where(status: false) }
+  	scope("Home Ad's") { |ads| ads.where(category: "home") }
+    scope("Event Ad's") { |ads| ads.where(category: "event") }
+    scope("Discover Ad's") { |ads| ads.where(category: "discover") }
+    scope("Trending Ad's") { |ads| ads.where(category: "trending") }
+    scope("Shop Ad's") { |ads| ads.where(category: "shop") }
 
-  	filter :user
-  	filter :title
+  	 filter :user , :label => "User Name"
+  	 filter :category_cont , :as => :string , :label => "Category"
+  	filter :title_cont, :as => :string , :label => "Advertisement Title"
 
 	index do
 		selectable_column
@@ -27,10 +33,11 @@ ActiveAdmin.register Advertisement do
         	truncate(body.discription, omision: "...", length: 50)
       	end
 	    # column :priority, sortable: :priority
-	    column :created_at
-	    column :updated_at
+	    # column :created_at
+	    # column :updated_at
+	    column :category
 	   	column "Status" do |advertisement|
-      		advertisement.status ? '<i class = "status_tag yes"> Show </i>'.html_safe : '<i class = "status_tag no"> Hide </i>'.html_safe 
+      		advertisement.status ? '<i class = "status_tag yes"> Published </i>'.html_safe : '<i class = "status_tag no"> Do Not Published </i>'.html_safe 
 		end
 	    # actions
 	    column "Actions" do |advertisement|
@@ -38,10 +45,10 @@ ActiveAdmin.register Advertisement do
 		    a do
 		        if (current_admin_user.role == 'super-admin')
 		          if advertisement.status?
-		           links += link_to 'Hide',status_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this advertisement?' }
+		           links += link_to 'Do Not Published',status_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to Hide this advertisement?' }
 		           links += '&nbsp;&nbsp;'.html_safe
 		          else  
-		           links += link_to 'Show',status_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to Show this advertisement?' }
+		           links += link_to 'Published',status_admin_advertisements_path(:advertisement_id => advertisement), method: :post,:data => { :confirm => 'Are you sure, you want to Show this advertisement?' }
 		           links += '&nbsp;&nbsp;'.html_safe
 		          end
 		          advertisement.priority?
@@ -108,6 +115,7 @@ ActiveAdmin.register Advertisement do
 	      row :image do |img|
 	        img.image.nil? ? "N/A" : image_tag(img.image.url, :size => "320x240", :controls=> true,:fallback_image => "Your browser does not support HTML5 image tags")
 	      end
+	      row :category
 	      row 'Description' do
         	advertisement.discription
       	  end
@@ -121,6 +129,7 @@ ActiveAdmin.register Advertisement do
 	      f.input :user, :as => :select, :collection => User.where(role: ['manager', "organizer"])
 	      f.input :title
 	      f.input :image
+	      f.input :category, :as => :select, :collection =>  ['home', "event", 'feeds', 'discover','shop', 'trending']
 	      f.input :discription, label: "Description"
 	      f.input :priority, placeholder: "Ex. 1..10"
 	    end

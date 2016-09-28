@@ -40,7 +40,7 @@ ActiveAdmin.register SocialLogin do
 	      row :updated_at
 	      row 'Social Code' do
 	      	@social = User.find_by_id(social_login.user_id)
-	      	image_tag(@social.social_code.image)
+	      	image_tag(@social.social_code.try(:image))
 	      end
 	    end 	
 	end

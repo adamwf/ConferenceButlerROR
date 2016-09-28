@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819104012) do
+ActiveRecord::Schema.define(version: 20160928054225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.datetime "updated_at",                 null: false
     t.boolean  "status",      default: true
     t.integer  "priority"
+    t.string   "category"
   end
 
   add_index "advertisements", ["user_id"], name: "index_advertisements_on_user_id", using: :btree
@@ -119,11 +120,15 @@ ActiveRecord::Schema.define(version: 20160819104012) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.datetime "time"
-    t.string   "organizer"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "category"
+    t.string   "event_type"
+    t.integer  "no_of_availability"
+    t.boolean  "availability"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
@@ -138,6 +143,27 @@ ActiveRecord::Schema.define(version: 20160819104012) do
 
   add_index "friendships", ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true, using: :btree
 
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.boolean  "is_mute",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "group_memberships", ["group_id"], name: "index_group_memberships_on_group_id", using: :btree
+  add_index "group_memberships", ["user_id"], name: "index_group_memberships_on_user_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "group_name"
+    t.string   "group_image"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
+
   create_table "invitations", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "reciever_id"
@@ -150,6 +176,24 @@ ActiveRecord::Schema.define(version: 20160819104012) do
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id", using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "assoc_id"
+    t.text     "body"
+    t.string   "image"
+    t.string   "video"
+    t.boolean  "read_status",       default: true
+    t.boolean  "is_group",          default: true
+    t.integer  "room_id"
+    t.string   "upload_type"
+    t.string   "read_by",           default: [],                array: true
+    t.string   "created_timestamp"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "messages", ["room_id"], name: "index_messages_on_room_id", using: :btree
+
   create_table "notifications", force: :cascade do |t|
     t.string   "notification_type"
     t.string   "content"
@@ -157,6 +201,10 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.boolean  "status",            default: false
+    t.string   "subject"
+    t.integer  "reciever_id"
+    t.integer  "notifiable_id"
+    t.string   "notifiable_type"
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
@@ -175,9 +223,33 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.boolean  "status",     default: true
+    t.string   "category"
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
+  create_table "profile_show_statuses", force: :cascade do |t|
+    t.boolean  "name",            default: true
+    t.boolean  "email",           default: true
+    t.boolean  "phone",           default: true
+    t.boolean  "other_info",      default: true
+    t.boolean  "hobbies",         default: true
+    t.boolean  "relation_status", default: true
+    t.boolean  "children",        default: true
+    t.boolean  "image",           default: true
+    t.boolean  "facebook",        default: true
+    t.boolean  "google",          default: true
+    t.boolean  "linked_in",       default: true
+    t.boolean  "instagram",       default: true
+    t.boolean  "twitter",         default: true
+    t.boolean  "social_code",     default: true
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "address",         default: true
+    t.integer  "user_id"
+  end
+
+  add_index "profile_show_statuses", ["user_id"], name: "index_profile_show_statuses_on_user_id", using: :btree
 
   create_table "profile_views", force: :cascade do |t|
     t.integer  "user_id"
@@ -187,6 +259,24 @@ ActiveRecord::Schema.define(version: 20160819104012) do
   end
 
   add_index "profile_views", ["user_id"], name: "index_profile_views_on_user_id", using: :btree
+
+  create_table "reminders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "status",     default: false
+    t.string   "delay_time"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "reminders", ["user_id"], name: "index_reminders_on_user_id", using: :btree
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "assoc_id"
+    t.boolean  "is_group",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "social_codes", force: :cascade do |t|
     t.string   "code"
@@ -203,8 +293,9 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.string   "u_id"
     t.string   "user_name"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.boolean  "login_status"
   end
 
   add_index "social_logins", ["user_id"], name: "index_social_logins_on_user_id", using: :btree
@@ -215,6 +306,16 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string   "last_seen"
+    t.string   "current_status"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "statuses", ["user_id"], name: "index_statuses_on_user_id", using: :btree
 
   create_table "trendings", force: :cascade do |t|
     t.integer  "count"
@@ -236,29 +337,29 @@ ActiveRecord::Schema.define(version: 20160819104012) do
   add_index "user_invitations", ["user_id"], name: "index_user_invitations_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "email",                                  default: "",    null: false
+    t.string   "encrypted_password",                     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",                          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.string   "user_name",              default: ""
-    t.string   "first_name",             default: ""
-    t.string   "last_name",              default: ""
-    t.boolean  "tc_accept",              default: false
+    t.string   "user_name",                              default: ""
+    t.string   "first_name",                             default: ""
+    t.string   "last_name",                              default: ""
+    t.boolean  "tc_accept",                              default: false
     t.string   "image"
     t.string   "otp"
-    t.string   "role",                   default: ""
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.string   "role",                                   default: ""
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
-    t.boolean  "status",                 default: true
+    t.boolean  "status",                                 default: true
     t.string   "phone"
     t.string   "provider"
     t.string   "u_id"
@@ -268,6 +369,15 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "youtube"
+    t.string   "access_token"
+    t.string   "hobbies"
+    t.string   "relation_status"
+    t.string   "children"
+    t.boolean  "availability",                           default: true
+    t.text     "other_info"
+    t.boolean  "profile_view_to_requested_users"
+    t.boolean  "profile_view_to_handle_directory_users"
+    t.boolean  "profile_view_to_gab_users"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -281,6 +391,7 @@ ActiveRecord::Schema.define(version: 20160819104012) do
     t.string   "title"
     t.text     "discription"
     t.boolean  "status",      default: true
+    t.string   "category"
   end
 
   add_index "videos", ["user_id"], name: "index_videos_on_user_id", using: :btree
@@ -290,12 +401,19 @@ ActiveRecord::Schema.define(version: 20160819104012) do
   add_foreign_key "attendees", "users"
   add_foreign_key "devices", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "group_memberships", "groups"
+  add_foreign_key "group_memberships", "users"
+  add_foreign_key "groups", "users"
   add_foreign_key "invitations", "events"
+  add_foreign_key "messages", "rooms"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "profile_show_statuses", "users"
   add_foreign_key "profile_views", "users"
+  add_foreign_key "reminders", "users"
   add_foreign_key "social_codes", "users"
   add_foreign_key "social_logins", "users"
+  add_foreign_key "statuses", "users"
   add_foreign_key "trendings", "users"
   add_foreign_key "user_invitations", "events"
   add_foreign_key "user_invitations", "users"

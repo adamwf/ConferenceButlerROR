@@ -1,7 +1,8 @@
 require 'gcm'
+require 'grocer'
 class PushWorker
   include Sidekiq::Worker
-    sidekiq_options  :retry => false
+  # sidekiq_options  :retry => false
   def perform(user_id,alert,id,nt,name,activity_id)
     user = User.find(user_id)
     user.devices.each do |device|
@@ -17,7 +18,7 @@ class PushWorker
       p"=====activity_id========#{activity_id.inspect}================="
 
       p "device_id: #{device.device_id}===========device_type: #{device.device_type}"
-      if device.device_type == 'iOS'
+      if (device.device_type == 'iOS')
          p "device_id: #{device.device_id}===========device_type: #{device.device_type}"
         pusher = Grocer.pusher(
           certificate: Rails.root.join('MobiloitteDevelopment.pem'),    
@@ -39,7 +40,7 @@ class PushWorker
           :content_available => true              
           )
          push = pusher.push(notification)
-      else
+      elsif (device.device_type == 'android')
         p "deviceandroid_id: #{device.device_id}===========device_type: #{device.device_type}"
         gcm = GCM.new("AIzaSyAigkMoPSiWg2vq-CQJZNYM5Hvh3-Qu9MQ")
         registration_ids= ["#{device.device_id}"]

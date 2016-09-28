@@ -2,7 +2,9 @@ ActiveAdmin.register User do
   batch_action :destroy, false
   actions :all, :except => [ :destroy]
 
-  filter :user_name_cont , :as => :string , :label => "Username"
+  filter :user_name_cont , :as => :string , :label => "User Name"
+  filter :first_name_cont , :as => :string , :label => "First Name"
+  filter :last_name_cont , :as => :string , :label => "Last Name"
   filter :email_cont , :as => :string , :label => "Email"
   
   permit_params :email, :password, :password_confirmation, :role, :status, :tc_accept, :user_name, :address,:image
