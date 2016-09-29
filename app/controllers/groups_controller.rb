@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
 	def create
 	  member_id=JSON.parse(params[:member_ids]).split("\"").flatten
 		return render_message 500, "Please select atleast one member." if !member_id or member_id.length < 1
-		@group = @user.groups.build(group_name: params[:group_name],group_image: params[:group_image])
+		@group = @user.groups.build(group_name: params[:group_name],remote_group_image_url: params[:group_image])
 		members = User.where(id: member_id)
 		if @group.save 
 			members.each do |member|
@@ -39,14 +39,14 @@ class GroupsController < ApplicationController
         end
       	unread_messages = unread_count
       	group = group.as_json(only: [:id,:group_name]).merge(group_image: group.group_image.url, 
-               is_owner: Group.find_by(id: group.id,
-               user_id: @user.id).present? ? true : false ,
-               group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id , :username , :photo]) ,
-               message_id: last_message.present? ? last_message.id : 0 ,
-               message: last_message.present? ? last_message.body.nil? ? "*Image-Icon*" : last_message.body : "" , 
-               created_timestamp:  last_message.present? ? last_message.created_timestamp.nil? ? "0000000000" : last_message.created_timestamp : "0000000000" , 
-               unread_messages: unread_messages
-               )
+         is_owner: Group.find_by(id: group.id,
+         user_id: @user.id).present? ? true : false ,
+         group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id , :username , :photo]) ,
+         message_id: last_message.present? ? last_message.id : 0 ,
+         message: last_message.present? ? last_message.body.nil? ? "*Image-Icon*" : last_message.body : "" , 
+         created_timestamp:  last_message.present? ? last_message.created_timestamp.nil? ? "0000000000" : last_message.created_timestamp : "0000000000" , 
+         unread_messages: unread_messages
+        )
       	array << group
       end
     else
@@ -71,8 +71,8 @@ class GroupsController < ApplicationController
       if group.present?
 	       group.destroy
          render :json => { 
-             :response_code => 200,
-             :response_message => "Leaved Group successfully."
+           :response_code => 200,
+           :response_message => "Leaved Group successfully."
          }  
       else
     		render_message 500, "Something went wrong."
@@ -90,33 +90,33 @@ class GroupsController < ApplicationController
   	end
   end
   
-	def update
-    member_id=JSON.parse(params[:member_ids]).split("\"").flatten
-    group = Group.find_by(id: params[:group_id],user_id: params[:id])
-    return render_message 500, "You are not allowed to edit the group." if !group.present?
-    return render_message 500, "Please select atleast one member." if !member_id or member_id.length < 1
-    group.update(group_name: params[:group_name],group_image: params[:group_image]) 
-    already_present_users=group.group_memberships.pluck(:user_id)	          
+	# def update
+ #    member_id=JSON.parse(params[:member_ids]).split("\"").flatten
+ #    group = Group.find_by(id: params[:group_id],user_id: params[:id])
+ #    return render_message 500, "You are not allowed to edit the group." if !group.present?
+ #    return render_message 500, "Please select atleast one member." if !member_id or member_id.length < 1
+ #    group.update(group_name: params[:group_name],group_image: params[:group_image]) 
+ #    already_present_users=group.group_memberships.pluck(:user_id)	          
 
-    or_operation = (already_present_users | member_id)
-    removed_user =(or_operation-member_id) 
-    GroupMembership.where(user_id: removed_user).destroy_all if removed_user.present?
-    and_operation = (already_present_users & member_id)
-    added_user=(member_id-and_operation)
+ #    or_operation = (already_present_users | member_id)
+ #    removed_user =(or_operation-member_id) 
+ #    GroupMembership.where(user_id: removed_user).destroy_all if removed_user.present?
+ #    and_operation = (already_present_users & member_id)
+ #    added_user=(member_id-and_operation)
        
-    if !added_user.blank?
-       added_user.each do |member|
-      		group_memberships=group.group_memberships.create(user_id: member)
-       end
-    end
-    render :json => { 
-      :response_code => 200,
-      :group_id => params[:group_id],
-      :member_id => member_id,
-      :users => User.where("id IN (?)", member_id).as_json(only: [:id,:username,:photo,:photo_link]),
-      :response_message => "Group updated successfully."
-    }  
-  end
+ #    if !added_user.blank?
+ #       added_user.each do |member|
+ #      		group_memberships=group.group_memberships.create(user_id: member)
+ #       end
+ #    end
+ #    render :json => { 
+ #      :response_code => 200,
+ #      :group_id => params[:group_id],
+ #      :member_id => member_id,
+ #      :users => User.where("id IN (?)", member_id).as_json(only: [:id,:username,:photo,:photo_link]),
+ #      :response_message => "Group updated successfully."
+ #    }  
+ #  end
 
 	def search_group
 	  group_created=@user.groups

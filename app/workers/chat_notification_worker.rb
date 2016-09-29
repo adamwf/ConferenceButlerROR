@@ -7,7 +7,7 @@ class ChatNotificationWorker
     content = "MESSAGECHAT"+"-"+receiver.to_s+"-"+sender.to_s+"-"+is_group.to_s
     if ( device_type == 'iOS')
       pusher = Grocer.pusher(
-      certificate: Rails.root.join('MobiloitteEnterprise.pem'),      # required
+      certificate: Rails.root.join('MobiloitteEnterprise.pem'),  
       passphrase:  "Mobiloitte1",                       # optional
       gateway:     "gateway.push.apple.com", # optional; See note below.
       port:        2195,                     # optional

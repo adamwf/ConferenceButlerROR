@@ -66,10 +66,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resource  :groups ,except: [:update, :destroy] do
+  resource  :groups ,except: [:destroy] do
     collection do
       get :group_list
-      post :update
+      put :update
       post :mute_group
       post :search_group
       post :group_destroy
