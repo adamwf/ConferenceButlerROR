@@ -10,60 +10,62 @@
         <meta name="author" content="">
 		<title>Handle Directory</title>	
 		
-        <!-- Bootstrap Core CSS -->
-		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+       <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-		<link rel="stylesheets" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		
 		<!-- Web Fonts  -->
-		<link rel="stylesheets" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
 
 	</head>
 	<body>
-       <!--navbar-->
-	   <nav class="navbar top-nav">
-		  <div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="/handle_directory"><img src="/logo1.png" alt="" /></a>
-			</div>
+		<!--navbar-->
+		<% if current_handle_user.present?%>
+		<nav class="navbar top-nav">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand handle-logo" href="#"><img src="/handle_logo.png" class="img-responsive" alt="" /></a>
+				</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			  <ul class="nav navbar-nav navbar-right top-nav-right">
-				<li><a href="/handle_directory/messages"><img src="/mail_ic.png" alt="" /></a></li>
-				<li><a href="#"><img src="/contact_ic.png" alt="" /></a></li>
-				<li><a href="#"><img src="/profile_ic.png" alt="" /></a></li>
-				<li><a href="#"><img src="/home_ic.png" alt="" /></a></li>
-
-				
-				  <ul class="dropdown-menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#">Separated link</a></li>
-				  </ul>
-				</li>
-			  </ul>
-			</div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right top-nav-right handle-navbar">
+						<li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+						<li><a href="#"><i class="fa fa-phone-square" aria-hidden="true"></i></a></li>
+						<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+						<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag(current_handle_user.image.url(:thumb), :class => "img-circle")%> 	<%= current_handle_user.user_name%><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
+								<li><%= link_to "<i class='fa fa-sign-out'></i> Logout</a>".html_safe, forward_info_logout_path, method: "delete" %></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-->
 		</nav>
+		<%end%>
+		<% flash.each do |key, value| %>
+		<%= content_tag(:div, value, class: "flash_notice hide", 'data-type' => "#{key}") %>
+		<% flash.discard(key)%>
+		<% end %>
 		
-		<!--box-->
 		<%= yield %>
 		
 		<!--footer-->
-		<footer class="main-footer white-a">
-			<div class="text-center">© ConferenceButler Allright reserved 2016</div>
+		<footer class="main-footer white-a black-bg">
+			<div class="text-center">© All right reserved 2016</div>
 		</footer>
-		
 		
 	</body>
 </html>

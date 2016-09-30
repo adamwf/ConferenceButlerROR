@@ -72,12 +72,15 @@ ActiveAdmin.register User do
     f.inputs "User" do
       f.input :email
       f.input :user_name
-      f.input :password
-      f.input :password_confirmation
-      f.input :tc_accept
+      ed = request.original_fullpath.split('/').last
+      if ed != 'edit'
+        f.input :password
+        f.input :password_confirmation
+      end
       f.input :address
-      f.input :role, :as => :select, :collection =>['organizer', 'manager'] 
+      f.input :role, :as => :select, :collection =>['organizer', 'manager','employee','attendee','user'] 
       f.input :image
+      f.input :tc_accept
     end
     f.actions
   end
