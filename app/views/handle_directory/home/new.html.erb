@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+        <meta name="author" content="">
+		<title>Handle Directory</title>	
+		
+        <!-- Bootstrap Core CSS -->
+		 <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<!-- Web Fonts  -->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
+
+	</head>
+	<body>
+	
+		<div class="handle-login-bg">
+			<div class="container">
+				<div class="handle-login-box handle-signup-box">
+					<div class="login-left text-center">
+						<img src="/handle_logo.png" class="img-responsive" alt="Logo" />
+					</div>
+					<div class="login-middle">
+						<%= form_for User.new, url: handle_directory_home_index_path do |f|%>
+							<h3 class="handle-login-heading">Create Profile/HandleQR<sup>TM</sup></h3>
+							<div class="handle-login-form">
+								<div class="form-group">
+									<%= f.file_field :image, class: 'form-control', required: true, placeholder: "Profile Image"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :user_name, class: 'form-control', required: true, placeholder: "User Name"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :first_name, class: 'form-control', required: true, placeholder: "First Name"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :last_name, class: 'form-control', required: true, placeholder: "Last Name"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :email, class: 'form-control', required: true, placeholder: "Email Address"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :password, class: 'form-control', required: true, placeholder: "Password"%>
+								</div>
+								<div class="form-group">
+									<%= f.text_field :password_confirmation, class: 'form-control', required: true, placeholder: "Confirm Password"%>
+								</div>
+
+								<div class="checkbox">
+									<label>
+										<%= f.check_box :tc_accept%>By creating an account, you agree to HandleDirectory<sup>TM</sup> <%= link_to 'Terms of services'%>.
+									</label>
+								</div>
+								<div class="m-t-20">
+									<button type="submit" class="btn btn-send link-msg">Sign Up</button>
+								</div>
+								
+							</div>
+							<div class="login-or text-center hidden-xs">
+								<img src="/or.png" alt="" />
+							</div>
+							<div class="login-right">
+								<div class="or-sec"></div>
+								<div class="handle-login-msg">Already have an account?</div>
+								<%= link_to "Sign In", handle_directory_login_path,  class: "btn btn-send link-msg", type: "button"%>
+							</div>
+						<%end%>
+					</div>					
+				</div>						
+			</div>
+		</div>
+
+		
+	</body>
+</html>

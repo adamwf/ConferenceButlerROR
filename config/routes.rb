@@ -103,11 +103,16 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
   namespace :handle_directory do
     root :to => "home#index"
-    get '/signup' => 'users#new'
+    get '/signup' => 'profiles#new'
     get '/login' => 'sessions#new'
     post '/login' => 'sessions#create'
     delete '/logout' => 'sessions#destroy'
     resources :messages
+    resources :home
+    resources :profiles
+    get '/passwords/forget_password' => 'passwords#forget_password'
+    post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
+    post 'passwords/change_password/:id' => 'passwords#change_password'
   end
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

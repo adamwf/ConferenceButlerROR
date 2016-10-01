@@ -19,7 +19,7 @@
 											<h3 class="f-w-700"><%= current_handle_user.first_name.capitalize %> <%= current_handle_user.last_name.capitalize %></h3>
 											<h4 class="f-w-700"><%= current_handle_user.address %></h4>
 											<ul class="profile-list list-inline">
-												<li><a href="/users/edit" class="white-a"><span class="m-r-10"><i class="fa fa-pencil"></i></span>Edit</a></li>
+												<li><a href="/handle_directory/profiles/<%= current_handle_user.id %>/edit" class="white-a"><span class="m-r-10"><i class="fa fa-pencil"></i></span>Edit</a></li>
 												<li><a href="" class="green-a"><span class="m-r-10"><i class="fa fa-share"></i></span>Forward Profile</a></li>
 											</ul>
 										</div>
@@ -51,15 +51,17 @@
 										</ul>
 									<%end%>
 									<div class="separator"></div>
-									<p class="text-muted">Hi I'm Shashank,has been the industry's standard dummy text ever since the 1500s, when an from 45 BC.</p>
+									<p class="text-muted">Hi I'm <%= current_handle_user.first_name.capitalize%>,has been the industry's standard dummy text ever since the 1500s, when an from 45 BC.</p>
 								</div>
 								<div class="col-sm-5 col-md-6 xs-m-b-20">
 									<%= render partial: "calender"%>	
 								</div>
 								<div class="col-sm-3 col-md-3">
-									<div class="qr-code">
-										<%= image_tag(current_handle_user.social_code.try(:image), size: "250*250") %> 
-									</div>
+									<%if current_handle_user.social_code.present? %>
+										<div class="qr-code">
+											<%= image_tag(current_handle_user.social_code.try(:image), size: "250*250") %> 
+										</div>
+									<%end%>
 								</div>
 							</div>
 						</div>

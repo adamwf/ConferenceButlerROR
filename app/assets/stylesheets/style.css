@@ -152,7 +152,7 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .detail-right{display:inline-block;width:19%;}
 .profile{position:relative;padding: 20px;}
 .profile-img{position:absolute;top:5;left:0;bottom:5;}
-.profile-img img{width:100px;height:100px;border:2px solid #fff;}
+.profile-img img{width:120px;height:120px;border:2px solid #fff;}
 .profile-info{padding-left:120px;}
 .profile-list>li{padding-right:20px;}
 .social-icons>li>a{background-color:#fff;border-radius: 100%;display: block;font-size: 20px;height: 30px;margin: 0 5px;padding: 1px 3px;text-align: center;width: 30px;}
@@ -182,8 +182,8 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .btn-invite:hover{background:#7b7a79;color:#38678B;border-color:#10abb9;}
 .btn-decline{background:#ca0d0d;color:#fff!important;border:1px solid #ca0d0d;padding:8px 16px;font-size:16px;text-decoration: none!important;}
 .btn-decline:hover{background:#7b7a79;color:#38678B;border-color:#991a1a;}
-.btn-event{background:#df2f0d;color:#fff!important;border:1px solid #df2f0d;padding:0px 4px;font-size:16px;text-decoration: none!important;border-radius: 30px!important;}
-.btn-event:hover{background:#10abb9!important;color:#fff;border-color:#df2f0d;}
+.btn-event{background:#df2f0d;color:#fff!important;border:1px solid #df2f0d;padding:0px 4px;font-size:10px;text-decoration: none!important;border-radius: 30px!important;}
+.btn-event:hover{background:#8bbbbb!important;color:#fff;border-color:#df2f0d;}
 
 /*---color--*/
 .white-a,.white-a:hover{color:#fff;}
@@ -356,5 +356,18 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .y-mtb{margin:10px 0;}
 
 
+form input[type="text"], form input[type="password"], form input[type="email"], form input[type="number"], form input[type="url"], form input[type="tel"], form input[type="date"], form textarea {
+    border: 1px solid #B1B1B1 !important;border-radius: 30px!important;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 0.95em;outline: medium none;padding: 8px 10px 7px;width: 100%;}
+.handle-navbar > li > a > i {color: #8B8B8B !important;}
 
+a, a:link, a:visited {color: #000 ;text-decoration: none;}
 
+.simple-calendar {border: 2px solid #A1A1A1;padding: 0px 10px;}
+table {border: 2px solid #DDDDDD !important;}
+.calendar-title {font-size: 30px;padding: 5px 55px;}
+.calendar-heading > a {font-size: 20px;text-decoration: none;}
+
+.qr-code > img {border: 20px solid #30c1db;}
+.forget-msg {color: #000!important}
+.link-msg{color:#fff!important;}

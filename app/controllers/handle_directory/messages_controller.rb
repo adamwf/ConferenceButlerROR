@@ -1,5 +1,5 @@
 class HandleDirectory::MessagesController < HandleDirectory::BaseController
-	before_filter :require_user
+	before_filter :current_handle_user
 
 	def index 
 	end
