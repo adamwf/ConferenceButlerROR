@@ -82,21 +82,21 @@
 										<div class="row">
 											<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
 												<div class="checkbox">												
-													<label class="myCheckbox">
-													<input type="checkbox" name="test"/>
-													<span ></span></label>
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_requested_users%>
+													<!-- <span ></span></label> -->
 													<div class="checkbox-text">To have your Profile visible to those that request to Follow you and that you accept.</div>
 												</div>
 												<div class="checkbox">												
-													<label class="myCheckbox">
-													<input type="checkbox" name="test"/>
-													<span ></span></label>
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_handle_directory_users%>
+													<!-- <span ></span></label> -->
 													<div class="checkbox-text">To have your Profile info appear in our Handle Directory of registered Users.</div>
 												</div>
 												<div class="checkbox">												
-													<label class="myCheckbox">
-													<input type="checkbox" name="test"/>
-													<span ></span></label>
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_gab_users%>  
+													<!-- <span ></span></label> -->
 													<div class="checkbox-text">To have your profile info appear to those users in your GAB-only.</div>
 												</div>
 												<div class="form-group">

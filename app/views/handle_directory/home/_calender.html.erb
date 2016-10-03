@@ -2,8 +2,10 @@
   <%= date.strftime("%d") %>
 
   <% events.each do |event| %>
-    <div>
-     <a class="btn btn-event"<%= link_to "#{truncate(event.name, omision: "...", length: 8)}" %></a>
-    </div>
+  	<%if event.end_time > Time.current %>
+	    <div>
+	     <a class="btn btn-event"<%= link_to "#{truncate(event.name, omision: "...", length: 8)}" %></a>
+	    </div>
+	<%end%>
   <% end %>
 <% end %>

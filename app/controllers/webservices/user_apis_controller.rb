@@ -1,7 +1,9 @@
  class Webservices::UserApisController < ApplicationController
+	
 	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password]
 	before_filter :authentication, :except => [:sign_up,:otp_confirm, :otp_resend,:sign_in, :social_login, :forget_password]
 	before_filter :find_friend,only: [:privacy_status, :update_privacy_status]
+	
 	def sign_up
 		if @user_param = User.find_by(email: params[:user][:email].downcase)
 			render :json =>  {:responseCode => 200,:responseMessage =>"Email has already been taken."}
@@ -10,7 +12,7 @@
 	    	@otp.otp =  rand(1000..9999)
 	    	if @otp.save
 		    	UserMailer.send_otp(@otp).deliver_now
-			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:user => @otp }
+			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:otp => @otp }
    			end
    		end
    	end
@@ -78,19 +80,37 @@
 	    end
   	end
 
-  	def social_login
+ #  def social_login
+	# 	@user = User.find_by(email: params[:user][:email].downcase, provider: params[:user][:provider], u_id: params[:user][:u_id])
+	# 	if @user
+	# 	    @user.update_attributes(first_name: params[:user][:first_name],last_name: params[:user][:last_name])
+	# 	    @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type], user_id: @user.id)
+	# 	    render :json => {responseCode: 200,responseMessage: "User login successfully.",user: @user }
+	# 	else
+	# 		@otp = OtpInfo.find_or_create_by(email: params[:user][:email])
+	#     	@otp.otp =  rand(1000..9999)
+	#     	if @otp.save
+	# 	    	UserMailer.send_otp(@otp).deliver_now
+	# 		    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:otp => @otp }
+    #  		end
+	# 	end
+	# end
+	
+	def social_login
 		@user = User.find_by(email: params[:user][:email].downcase, provider: params[:user][:provider], u_id: params[:user][:u_id])
 		if @user
-		    @user.update_attributes(first_name: params[:user][:first_name],last_name: params[:user][:last_name])
 		    @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type], user_id: @user.id)
 		    render :json => {responseCode: 200,responseMessage: "User login successfully.",user: @user }
 		else
-			@otp = OtpInfo.find_or_create_by(email: params[:user][:email])
-	    	@otp.otp =  rand(1000..9999)
-	    	if @otp.save
-		    	UserMailer.send_otp(@otp).deliver_now
-			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:user => @otp }
-   			end
+			@user = User.new(social_user_params)
+			@user.generate_auth_token
+			@user.update_attributes(password: params[:user][:u_id], password_confirmation: params[:user][:u_id], remote_image_url: params[:user][:image])
+	  		if @user.save
+	    		@device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type], user_id: @user.id)
+	  			UserMailer.signup_confirmation(@user).deliver_now
+			else
+		    	render_message 500, @user.errors.full_messages.first
+			end
 		end
 	end
 
@@ -115,14 +135,37 @@
 
 	def change_password
 		if @user.valid_password?(params[:user][:old_password])
-	    	if @user.update_attributes(password: params[:user][:new_password], password_confirmation: params[:user][:new_password_confirmation])
-			  	render :json => {:responseCode => 200,:responseMessage => "Your Password has been reset successfully"}
-	    	else
-	      		render_message 500, "Your password can't be reset, please try again."
-	    	end
+	    	if params[:user][:new_password].eql?(params[:user][:new_password_confirmation])
+	    		if @user.update_attributes(password: params[:user][:new_password], password_confirmation: params[:user][:new_password_confirmation])
+				  	render_message 200, "Your Password has been reset successfully"
+		    	else
+		      		render_message 500, "Your password can't be reset, please try again."
+		    	end
+		    else
+		    	render_message 500, "Your new password and confirm password doesn't match, please try again."
+		    end
 	  	else
 	  		render_message 500, "Your old password has not been matched."
 	  	end  
+	end
+
+	def change_email
+		if @user.valid?(params[:user][:email])
+			if params[:user][:new_email].eql?(params[:user][:email_confirmation])
+				@otp = rand(1000..9999)
+	    		if @user.update_attributes(email: params[:user][:new_email],otp: @otp)
+	  				UserMailer.send_otp(@user).deliver_now
+				  	render_message 200,"An OTP send to your new email successfully,please verify and logged in account."
+		    	else
+		      		render_message 500, "Your email can't be reset(#{@user.errors.full_messages.first}), please try again."
+		    	end
+		    else
+		    	render_message 500, "Your new email and confirm email doesn't match together, please try again."
+		    end
+	  	else
+	  		render_message 500, "Your old password has not been matched."
+	  	end  
+
 	end
 
 	def availability
@@ -187,6 +230,9 @@
 	def user_params
 		params[:user][:image] = User.image_data(params[:user][:image].to_s.gsub("\\r\\n","")) if params[:user][:image]
 	    params.require(:user).permit(:first_name, :last_name, :user_name, :email, :password, :password_confirmation, :otp, :tc_accept, :image, :role, :address, :provider, :u_id, :phone, :hobbies, :relation_status, :children, :availability, :other_info, :profile_view_to_requested_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users)
+	end 
+	def social_user_params
+	    params.require(:user).permit(:first_name, :last_name, :user_name, :email, :password, :password_confirmation, :otp, :tc_accept, :image, :role, :address, :provider, :u_id, :phone, :hobbies, :relation_status, :children, :availability, :other_info, :profile_view_to_gab_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users)
 	end 
 	def find_user
 		if params[:user][:user_id]

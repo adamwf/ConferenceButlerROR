@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         post :sign_out
         post :forget_password
         post :change_password
+        post :change_email
         post :availability
         post :update_availability
         post :privacy_status
@@ -117,6 +118,19 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
+  namespace :attendee_central do
+    root :to => "home#index"
+    get '/signup' => 'profiles#new'
+    get '/login' => 'sessions#new'
+    post '/login' => 'sessions#create'
+    delete '/logout' => 'sessions#destroy'
+    # resources :messages
+    resources :home
+    resources :profiles
+    get '/passwords/forget_password' => 'passwords#forget_password'
+    post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
+    post 'passwords/change_password/:id' => 'passwords#change_password'
+  end
   # Example resource route with options:
   #   resources :products do
   #     member do
