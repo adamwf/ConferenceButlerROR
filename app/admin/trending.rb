@@ -1,4 +1,5 @@
 ActiveAdmin.register Trending do
+	menu label: "Trending Users"
 	batch_action :destroy, false
 	actions :all, :except => [:new, :destroy, :edit]
 	config.sort_order = 'count_desc'
@@ -7,7 +8,7 @@ ActiveAdmin.register Trending do
 		selectable_column
 		# column :id 
 		column "User Name" do |user|
-     	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
+     	 User.find_by(id: user.user_id) || "Created by Handel QR" 
     	end
 	    column :count
 	

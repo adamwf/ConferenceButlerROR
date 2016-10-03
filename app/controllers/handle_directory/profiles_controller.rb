@@ -33,7 +33,7 @@ class HandleDirectory::ProfilesController < HandleDirectory::BaseController
 	  @profile = User.find_by_id(params[:id])
 	  if @profile
 	  	@profile.update_attributes(user_params)
-	  	 redirect_to handle_directory_home_path,:notice => 'Profile is successfully updated.'
+	  	 redirect_to handle_directory_profile_path,:notice => 'Profile is successfully updated.'
 	  else
 	    flash[:alert] = "Sorry! Profile can't updated, try again."
 	  end
@@ -42,6 +42,6 @@ class HandleDirectory::ProfilesController < HandleDirectory::BaseController
 	private
 
 	def user_params
-      params.require(:user).permit(:user_name,:first_name,:email,:password,:password_confirmation,:phone,:fax,:company_name,:company_website,:facebook,:instagram,:youtube,:image)
+      params.require(:user).permit(:user_name,:first_name,:email,:password,:password_confirmation,:phone,:facebook,:instagram,:youtube,:image, :other_info, :hobbies, :last_name, :address)
 	end
 end

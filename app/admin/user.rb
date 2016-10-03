@@ -101,7 +101,7 @@ ActiveAdmin.register User do
       row :created_at 
       row :updated_at
       row 'Social Code' do
-      user.social_code.nil? ? "N/A" : image_tag(user.social_code.image)
+      user.social_code.nil? ? "N/A" : image_tag(user.social_code.image, :size => "320x240")
       end
       row 'Social Logins' do
       user.social_logins.present? ? user.social_logins.map{|x|x.provider+"-"+x.user_name}.join(', ') : "N/A"

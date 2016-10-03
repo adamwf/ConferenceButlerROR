@@ -12,7 +12,7 @@ ActiveAdmin.register SocialLogin do
 		selectable_column
 		# column :id 
 		column "Personal User Name" do |user|
-     	 User.where(id: user.user_id).map(&:user_name) || "Created by Handel QR" 
+     	 User.find_by(id: user.user_id) || "Created by Handel QR" 
     	end
 	    column :provider
 	    column :user_name

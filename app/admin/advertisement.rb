@@ -16,7 +16,7 @@ ActiveAdmin.register Advertisement do
     scope("Shop Ad's") { |ads| ads.where(category: "shop") }
 
   	 filter :user , :label => "User Name"
-  	 filter :category,:label => "Category"
+  	 filter :category, :label => "Category"
   	filter :title_cont, :as => :string , :label => "Advertisement Title"
 
 	index do

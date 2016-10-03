@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
   validates :password, presence: true, length: { maximum: 20 }, on: :create
   validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
+  validates :other_info, length: { maximum: 300}
 
 
   def self.image_data(data)
