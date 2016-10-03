@@ -4,7 +4,7 @@ class HandleDirectory::BaseController < ApplicationController
    helper_method :current_handle_user
    
    def current_handle_user
-  	 current_handle_user ||= User.find(session[:user_id]) if session[:user_id]
+  	 current_handle_user ||= User.find(session[:handle_user_id]) if session[:handle_user_id]
    end
 
    def require_user

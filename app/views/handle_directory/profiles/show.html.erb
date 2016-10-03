@@ -1,0 +1,153 @@
+<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head brown-bg">
+						<div class="pull-right">
+						<%= link_to "Edit", edit_handle_directory_profile_path(current_handle_user.id), :class => "btn btn-edit btn-handleedit" %>
+					</div>
+						<h3>Edit Profile</h3>
+					</div>
+					<div class="box-body">
+						<div class="content-block detail-form-block">
+							<%#= form_for @profile,url: handle_directory_home_path, method: :put, class: "form-control" do |f| %>
+								<div class="detail-form m-b-40">
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Profile Picture</label>
+											<div class="col-sm-8 col-md-7">
+												<div class="profile-pic">
+													<%= current_handle_user.image.present? ? image_tag(current_handle_user.image.url, :width => 120, :height => 120, :class => 'img-circle') : image_tag("/profile.png", :width => 120, :height => 120, :class => 'img-circle')%>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">First Name</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.first_name %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Last Name</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.last_name %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Phone</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.phone %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Email Address</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.email %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Address (optional)</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.address %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Hobbies</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.hobbies %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Other info</label>
+											<div class="col-sm-8 col-md-7">
+												<%= current_handle_user.other_info %>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="form-group">
+										<div class="row">
+											<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+												<div class="checkbox">												
+													<label class="myCheckbox">
+													<input type="checkbox" name="test"/>
+													<span ></span></label>
+													<div class="checkbox-text">To have your Profile visible to those that request to Follow you and that you accept.</div>
+												</div>
+												<div class="checkbox">												
+													<label class="myCheckbox">
+													<input type="checkbox" name="test"/>
+													<span ></span></label>
+													<div class="checkbox-text">To have your Profile info appear in our Handle Directory of registered Users.</div>
+												</div>
+												<div class="checkbox">												
+													<label class="myCheckbox">
+													<input type="checkbox" name="test"/>
+													<span ></span></label>
+													<div class="checkbox-text">To have your profile info appear to those users in your GAB-only.</div>
+												</div>
+												<div class="form-group">
+													<div class="row">
+														<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+															<button type="submit" class="btn btn-file">Save Changes</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> -->
+								</div>
+							<%#end%>
+							<h3 class="tab-cont-head">Add your Social Profile</h3>
+							<div class="row">
+							<div class="col-md-9">
+								<div class="row">
+									<% current_handle_user.social_logins.each do |social|%>
+										<div class="col-xs-6 col-sm-3 col-md-2">
+											<% if social.provider == "facebook"%>
+												<div class="social_profile">
+													<a href=""><span class="m-r-10"><img src="/social_ic1.png" alt=""></i></span><%= truncate(social.user_name, omision: "...", length: 7)%></a>
+													<!-- <a href=""><img src="/add.png" alt=""></a> -->
+												</div>
+											<%elsif social.provider == "linkedin"%>
+												<div class="social_profile">
+													<a href=""><span class="m-r-10"><img src="/social_ic2.png" alt=""></i></span><%= truncate(social.user_name, omision: "..", length: 7)%></a>
+													<!-- <a href=""><img src="/add.png" alt=""></a> -->
+												</div>
+											<%elsif social.provider == "twitter"%>
+												<div class="social_profile">
+													<a href=""><span class="m-r-10"><img src="/social_ic11.png" alt=""></span><%= truncate(social.user_name, omision: "...", length: 7)%></a>
+													<!-- <a href=""><img src="/add.png" alt=""></a> -->
+												</div>
+											<%elsif social.provider == "instagram"%>
+												<div class="social_profile">
+													<a href=""><span class="m-r-10"><img src="/social_ic4.png" alt=""></span><%= truncate(social.user_name, omision: "...", length: 7)%></a>
+													<!-- <a href=""><img src="/add.png" alt=""></a> -->
+												</div>
+											<%end%>
+										</div>
+									<%end%>						
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="image-block"><%= image_tag(current_handle_user.social_code.try(:image), size: "250*250") %></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

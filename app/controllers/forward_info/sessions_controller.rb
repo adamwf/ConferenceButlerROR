@@ -4,11 +4,11 @@ class ForwardInfo::SessionsController < ForwardInfo::BaseController
     @user = User.find_by_email(params[:session][:email])|| @user = User.find_by_user_name(params[:session][:username])
     if @user && @user.valid_password?(params[:session][:password])
       if @user.role.eql?"manager"
-        session[:user_id] = @user.id
+        session[:forward_user_id] = @user.id
          flash[:notice] = "You are successfully login!"
         redirect_to '/forward_info'
       elsif @user.role.eql?"employee"
-        session[:user_id] = @user.id
+        session[:forward_user_id] = @user.id
          flash[:notice] = "You are successfully login!"
         redirect_to '/forward_info'
       else
@@ -22,7 +22,7 @@ class ForwardInfo::SessionsController < ForwardInfo::BaseController
   end
 
   def destroy
-    session[:user_id] = nil
+    session[:forward_user_id] = nil
     flash[:notice] = "You are successfully logout!" 
     redirect_to '/forward_info/login'
   end

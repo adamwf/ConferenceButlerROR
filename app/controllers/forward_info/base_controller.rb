@@ -6,7 +6,7 @@ class ForwardInfo::BaseController < ApplicationController
 	helper_method :current_manager
 	  
 	def current_manager
-	  current_manager ||= User.find(session[:user_id]) if session[:user_id]
+	  current_manager ||= User.find(session[:forward_user_id]) if session[:forward_user_id]
 	end
 
 	def require_manager

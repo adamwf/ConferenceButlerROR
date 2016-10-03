@@ -184,6 +184,8 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .btn-decline:hover{background:#7b7a79;color:#38678B;border-color:#991a1a;}
 .btn-event{background:#df2f0d;color:#fff!important;border:1px solid #df2f0d;padding:0px 4px;font-size:10px;text-decoration: none!important;border-radius: 30px!important;}
 .btn-event:hover{background:#8bbbbb!important;color:#fff;border-color:#df2f0d;}
+.btn-handle-edit{background:#fff;color:#000!important;border:1px solid #df2f0d;padding:0px 4px;font-size:10px;text-decoration: none!important;border-radius: 30px!important;}
+.btn-handle-edit:hover{background:#8bbbbb!important;color:#fff;border-color:#df2f0d;}
 
 /*---color--*/
 .white-a,.white-a:hover{color:#fff;}
@@ -371,3 +373,5 @@ table {border: 2px solid #DDDDDD !important;}
 .qr-code > img {border: 20px solid #30c1db;}
 .forget-msg {color: #000!important}
 .link-msg{color:#fff!important;}
+.image-block{margin-top:20px;}
+.image-block > img {border: 4px solid #30C1DB;}

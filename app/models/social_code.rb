@@ -8,7 +8,7 @@ class SocialCode < ActiveRecord::Base
 		random_name = SecureRandom.hex(8)
 		qr = RQRCode::QRCode.new(random_name, :size => 10)
 		png = qr.as_png(color: '30c1db')
-		# png = svg.to_img  
+		# png = qr.to_img  
 		File.open(Rails.root.join("public/#{random_name}.png"), 'wb'){|f| f.write png }
 		image = Cloudinary::Uploader.upload(Rails.root.join("public/#{random_name}.png"))
 		File.delete("./public/#{random_name}.png")
