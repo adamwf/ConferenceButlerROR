@@ -5,6 +5,12 @@ class UserMailer < ApplicationMailer
     	mail(:to => @user.email, :subject => "Handle-QR - OTP Confirmation Email")    
     end 
 
+    def verify_otp(user, email) 
+        @user = user  
+        @email = email    
+        mail(:to => email, :subject => "Handle-QR - OTP Confirmation Email")    
+    end
+
     def signup_confirmation(user) 
     	@user = user   	
     	mail(:to => @user.email, :subject => "Conference-Butler - Signup Confirmation Email")          

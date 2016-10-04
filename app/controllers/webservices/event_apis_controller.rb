@@ -112,14 +112,14 @@ class Webservices::EventApisController < ApplicationController
 	# 	params.require(:attendee).permit(:title, :address, :company, :website, :email, :phone, :mobile, :approval_status)
 	# end
 
-	def find_user
-		if params[:user][:user_id]
-			@user = User.find_by_id(params[:user][:user_id])
-		    unless @user
-		     render_message 500, "Oops! User not found."
-		    end
-		else
-			render_message 500, "Sorry! You are not an authenticated user."
-	    end
-  	end
+	# def find_user
+	# 	if params[:user][:user_id]
+	# 		@user = User.find_by_id(params[:user][:user_id])
+	# 	    unless @user
+	# 	     render_message 500, "Oops! User not found."
+	# 	    end
+	# 	else
+	# 		render_message 500, "Sorry! You are not an authenticated user."
+	#     end
+ #  	end
 end

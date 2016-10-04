@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928054225) do
+ActiveRecord::Schema.define(version: 20161004071448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,18 @@ ActiveRecord::Schema.define(version: 20160928054225) do
 
   add_index "trendings", ["user_id"], name: "index_trendings_on_user_id", using: :btree
 
+  create_table "user_events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.boolean  "status",     default: false
+    t.string   "qr_image"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
+  add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
+
   create_table "user_invitations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "event_id"
@@ -415,6 +427,8 @@ ActiveRecord::Schema.define(version: 20160928054225) do
   add_foreign_key "social_logins", "users"
   add_foreign_key "statuses", "users"
   add_foreign_key "trendings", "users"
+  add_foreign_key "user_events", "events"
+  add_foreign_key "user_events", "users"
   add_foreign_key "user_invitations", "events"
   add_foreign_key "user_invitations", "users"
   add_foreign_key "videos", "users"

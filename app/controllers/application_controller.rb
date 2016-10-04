@@ -14,6 +14,28 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def find_user
+    if params[:user][:user_id]
+      @user = User.find_by_id(params[:user][:user_id])
+        unless @user
+         render_message 500,"Oops! User not found."
+        end
+    else
+      render_message 500, "Sorry! You are not an authenticated user."
+    end
+  end
+
+  def find_friend
+    if params[:user][:friend_id]
+      @friend = User.find_by_id(params[:user][:friend_id])
+        unless @friend
+         render_message 500, "Oops! Friend User not found."
+        end
+    else
+      render_message 500, "Sorry! You are not an authenticated user."
+    end
+  end
+  
   def authentication
     auth_token = request.headers[:token]
     unless auth_token

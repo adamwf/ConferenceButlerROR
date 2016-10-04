@@ -13,8 +13,11 @@ Rails.application.routes.draw do
       collection do
         post :sign_up
         post :sign_in
+        post :attendee_sign_in
+        post :forward_sign_in
         post :otp_confirm
         post :otp_resend 
+        post :otp_verification
         post :social_login
         post :profile
         post :update_user       

@@ -1,1 +1,73 @@
-sdfghjkygvhbjnm
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+        <meta name="author" content="">
+		<title>Forward Info</title>	
+		
+        <!-- Bootstrap Core CSS -->
+		 <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<!-- Web Fonts  -->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
+
+	</head>
+	<body>
+		<!--navbar-->
+		<% if current_attendee.present?%>
+			<nav class="navbar top-nav">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"><img src="/logoattendee.png" class="img-responsive" alt="" /></a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right top-nav-right">
+							<li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-file-text" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag(current_attendee.image.url(:thumb), :class => "img-circle")%> 	<%= current_attendee.user_name%><span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
+									<li><%= link_to "<i class='fa fa-sign-out'></i> Logout</a>".html_safe, attendee_central_logout_path, method: "delete" %></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-->
+			</nav>
+		<%end%>
+
+		<% flash.each do |key, value| %>
+		<%= content_tag(:div, value, class: "flash_notice hide", 'data-type' => "#{key}") %>
+		<% flash.discard(key)%>
+		<% end %>
+		
+		<%= yield %>
+
+		<% if current_attendee.present?%>
+			<footer class="main-footer white-a">
+				<div class="text-center">© Allright reserved 2016</div>
+			</footer>
+		<%end%>		
+	</body>
+</html>

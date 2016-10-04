@@ -1,14 +1,19 @@
+
+
 class GroupsController < ApplicationController
+
+
 	before_filter :find_user,except: [:update,:mute_group]
 
 	def create
-	  member_id=JSON.parse(params[:member_ids]).split("\"").flatten
+	  member_id= (params[:member_ids])
 		return render_message 500, "Please select atleast one member." if !member_id or member_id.length < 1
-		@group = @user.groups.build(group_name: params[:group_name],remote_group_image_url: params[:group_image])
+		@group = @user.groups.build(group_name: params[:group_name], group_image: params[:group_image])
 		members = User.where(id: member_id)
-		if @group.save 
+		if @group.save! 
 			members.each do |member|
-        group_memberships=@group.group_memberships.create(user_id: member.id)
+        p"=-=-=-=-=-#{(member.id).inspect}=-=-=-=-"
+        group = @group.group_memberships.create!(user_id: member.id)
     	end
       	render :json => { 
           :response_code => 200,

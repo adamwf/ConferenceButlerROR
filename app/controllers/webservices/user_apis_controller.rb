@@ -12,7 +12,7 @@
 	    	@otp.otp =  rand(1000..9999)
 	    	if @otp.save
 		    	UserMailer.send_otp(@otp).deliver_now
-			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:otp => @otp }
+			    render :json =>  {:responseCode => 200,:responseMessage =>"Your OTP successfully send to your account email, Please verify your OTP to create your account.",:user => @otp }
    			end
    		end
    	end
@@ -50,6 +50,15 @@
 		end
 	end
 
+	def otp_verification
+  		if @user.otp.eql?(params[:user][:otp])
+  			@user.update_attributes(email: params[:user][:new_email],otp: @otp)
+  			render_message 200,"You are successfully verify your OTP and change email successfully."
+		else
+	    	render_message 500, "Invalid OTP, Please try again."
+		end
+	end
+
 	def profile
 		data=""
 		if @user.social_code.eql?(nil)				
@@ -68,8 +77,8 @@
   	end
 
   	def sign_in
-	    if @user = User.find_by_user_name(params[:user][:user_name]) || @user = User.find_by_email(params[:user][:email].downcase)
-	        if (@user && @user.valid_password?(params[:user][:password]))
+	    if @user = User.find_by_user_name(params[:user][:email]) || User.find_by_email(params[:user][:email].downcase)
+	        if (@user.role.eql?("user") && @user.valid_password?(params[:user][:password]))
 		        @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type]).update(user_id: @user.id)
 	        	render :json =>  {:responseCode => 200,:responseMessage =>"User login successfully.",:user => @user}
 	      	else
@@ -80,6 +89,31 @@
 	    end
   	end
 
+  	def attendee_sign_in
+	    if @user = User.find_by_user_name(params[:user][:user_name]) || User.find_by_email(params[:user][:email].downcase)
+	        if (@user.role.eql?("attendee") && @user.valid_password?(params[:user][:password]))
+		        @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type]).update(user_id: @user.id)
+	        	render :json =>  {:responseCode => 200,:responseMessage =>"User login successfully.",:user => @user}
+	      	else
+	        	render_message 500,"Invalid Email or Password, Please try again."
+	      	end
+	    else
+	      render_message 500, "Invalid Email or Username, Please enter a valid email or Username."
+	    end
+  	end
+
+  	def forward_sign_in
+	    if @user = User.find_by_user_name(params[:user][:user_name]) || @user = User.find_by_email(params[:user][:email].downcase)
+	        if (@user.role.eql?("employee") && @user.valid_password?(params[:user][:password]))
+		        @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type]).update(user_id: @user.id)
+	        	render :json =>  {:responseCode => 200,:responseMessage =>"User login successfully.",:user => @user}
+	      	else
+	        	render_message 500,"Invalid Email or Password, Please try again."
+	      	end
+	    else
+	      render_message 500, "Invalid Email or Username, Please enter a valid email or Username."
+	    end
+  	end
  #  def social_login
 	# 	@user = User.find_by(email: params[:user][:email].downcase, provider: params[:user][:provider], u_id: params[:user][:u_id])
 	# 	if @user
@@ -153,8 +187,8 @@
 		if @user.valid?(params[:user][:email])
 			if params[:user][:new_email].eql?(params[:user][:email_confirmation])
 				@otp = rand(1000..9999)
-	    		if @user.update_attributes(email: params[:user][:new_email],otp: @otp)
-	  				UserMailer.send_otp(@user).deliver_now
+	    		if @user.update_attributes(otp: @otp)
+	  				UserMailer.verify_otp(@user, params[:user][:new_email]).deliver_now
 				  	render_message 200,"An OTP send to your new email successfully,please verify and logged in account."
 		    	else
 		      		render_message 500, "Your email can't be reset(#{@user.errors.full_messages.first}), please try again."
@@ -234,26 +268,6 @@
 	def social_user_params
 	    params.require(:user).permit(:first_name, :last_name, :user_name, :email, :password, :password_confirmation, :otp, :tc_accept, :image, :role, :address, :provider, :u_id, :phone, :hobbies, :relation_status, :children, :availability, :other_info, :profile_view_to_gab_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users)
 	end 
-	def find_user
-		if params[:user][:user_id]
-			@user = User.find_by_id(params[:user][:user_id])
-		    unless @user
-		     render_message 500,"Oops! User not found."
-		    end
-		else
-			render_message 500, "Sorry! You are not an authenticated user."
-	    end
-  	end
-  	def find_friend
-		if params[:user][:friend_id]
-			@friend = User.find_by_id(params[:user][:friend_id])
-		    unless @friend
-		     render_message 500, "Oops! Friend User not found."
-		    end
-		else
-			render_message 500, "Sorry! You are not an authenticated user."
-	    end
-  	end
   	def profile_status_params
   		params.require(:status).permit(:name, :email, :image, :phone, :address, :hobbies, :relation_status, :children, :availability, :other_info, :facebook, :google, :instagram, :linkedin, :twitter, :social_code)
   	end
