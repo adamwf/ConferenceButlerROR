@@ -1,7 +1,4 @@
-
-
 class GroupsController < ApplicationController
-
 
 	before_filter :find_user,except: [:update,:mute_group]
 
@@ -12,8 +9,15 @@ class GroupsController < ApplicationController
 		members = User.where(id: member_id)
 		if @group.save! 
 			members.each do |member|
-        p"=-=-=-=-=-#{(member.id).inspect}=-=-=-=-"
         group = @group.group_memberships.create!(user_id: member.id)
+        alert = @user.user_name + ' ' + 'added you in a group.'
+        activity = member.activities.create(activity_type: 'Added in group',item_id: @user.id,item_type: 'Group Admin', user_id: @user.id, message: alert)        
+        PushWorker.perform_async(member.id,alert,@user.id,'Group Admin',@user.user_name,activity.id)
+        if @trend = Trending.find_by_user_id(member.id)
+          @trend.update_attributes(count: @trend.count+1)
+        else 
+          @trend = Trending.create(user_id: member.id, count: 1)
+        end 
     	end
       	render :json => { 
           :response_code => 200,
@@ -88,7 +92,7 @@ class GroupsController < ApplicationController
 	def mute_group
     member = GroupMembership.find_by(group_id: params[:group_id], user_id: params[:member_id]) 
     if member
-    		member.update_attribute(:is_mute,true)
+    		member.update_attributes(is_mute: true)
     		render_message 200, "Group muted successfully for this user."
   	else
    	   render_message 500, "User not present in group."
@@ -124,8 +128,8 @@ class GroupsController < ApplicationController
  #  end
 
 	def search_group
-	  group_created=@user.groups
-	  group_joined=Group.where(id: GroupMembership.where(user_id: @user.id).pluck(:group_id))
+	  group_created = @user.groups
+	  group_joined = Group.where(id: GroupMembership.where(user_id: @user.id).pluck(:group_id))
 		render :json => { 
       :response_code => 200,
       :response_message => "list of groups.",

@@ -1,12 +1,8 @@
-<section class="main-block">
-			<div class="container">
-							<h3 class="page-header">Event list</h3>
-			<!-- end page-header -->
-			
-			<!-- begin row -->
+<% if current_attendee.role.eql?("organiser") %>
+	<section class="main-block">
+		<div class="container">
 			<div class="row">
-			    <!-- begin col-6 -->
-			    <div class="col-md-12">
+				<div class="col-md-12">
 					<ul class="nav nav-tabs link-msg">
 						<li class="active"><a href="#default-tab-1" data-toggle="tab">Events</a></li>
 						<li class=""><a href="#default-tab-2" data-toggle="tab">Attendees</a></li>
@@ -29,93 +25,27 @@
 											<th>Action</th>											
 										</tr>
 									</thead>
-									<% @user_events.each do |user_event|%>
-									<tbody>
-										<tr class="even">
-											<td>1</td>
-											<td><%= user_event.event.name %></td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>2</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>3</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>4</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>5</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>	
-										<tr class="odd">
-											<td>6</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>7</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>8</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>9</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>10</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>										
-									</tbody>
+									<% count = 0%>
+									<% @user_events.each do |id| %>
+										<% count = count+1%>
+										<tbody>
+											<tr class="even">
+												<td><%= count%></td>
+												<td><%= Event.find_by(id: id).try(:name) %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", id, true).count %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", id, false).count %></td>
+												<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
+											</tr>								
+										</tbody>
+									<%end%>
 								</table>
 								<div class="text-center">
-									<ul class="pagination pagination-sm m-t-0 m-b-10">
-										<li class="disabled"><a href="javascript:;">«</a></li>
-										<li class="active"><a href="javascript:;">1</a></li>
-										<li><a href="javascript:;">2</a></li>
-										<li><a href="javascript:;">3</a></li>
-										<li><a href="javascript:;">4</a></li>
-										<li><a href="javascript:;">5</a></li>
-										<li><a href="javascript:;">»</a></li>
-									</ul>
+									<!-- <ul class="pagination"> -->
+										<%= will_paginate @event_list %>
+									<!-- </ul> -->
 								</div>
 							</div>
-						</div>
+						</div>	
 						<div class="tab-pane fade" id="default-tab-2">
 							<div class="row">
 								<!-- begin col-6 -->
@@ -368,10 +298,11 @@
 										<button class="btn btn-primary m-r-5 m-b-5" type="button">Send Attendee Request To Manager</button>
 									</div>
 								</div>
-							</form>
-								
+							</form>			
+						</div>
 					</div>
-
 				</div>
-			</div>
-		</section>
+			</section>
+		</div>
+	</div>
+<%end%>

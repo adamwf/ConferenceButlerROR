@@ -56,6 +56,7 @@ gem 'momentjs-rails'
 gem "simple_calendar", "~> 2.0"
 gem 'alertify-rails'
 gem 'link_thumbnailer'
+gem 'active_admin_datetimepicker'
 # gem 'ransack'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

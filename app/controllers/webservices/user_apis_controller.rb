@@ -1,7 +1,7 @@
  class Webservices::UserApisController < ApplicationController
 	
-	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password]
-	before_filter :authentication, :except => [:sign_up,:otp_confirm, :otp_resend,:sign_in, :social_login, :forget_password]
+	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password, :attendee_sign_in, :forward_sign_in]
+	before_filter :authentication, :except => [:sign_up,:otp_confirm, :otp_resend,:sign_in, :social_login, :forget_password, :attendee_sign_in, :forward_sign_in]
 	before_filter :find_friend,only: [:privacy_status, :update_privacy_status]
 	
 	def sign_up

@@ -72,7 +72,7 @@ Rails.application.routes.draw do
 
   resource  :groups ,except: [:destroy] do
     collection do
-      get :group_list
+      post :group_list
       put :update
       post :mute_group
       post :search_group
