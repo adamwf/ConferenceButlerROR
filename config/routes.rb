@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+
  # root to: "admin/dashboard#index"
 
   devise_for :users
@@ -114,6 +115,7 @@ Rails.application.routes.draw do
     resources :messages
     resources :home
     resources :profiles
+    resources :groups
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

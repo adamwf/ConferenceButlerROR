@@ -9,20 +9,10 @@ class HandleDirectory::ProfilesController < HandleDirectory::BaseController
 	end
 
 	def new
-		@user = User.new
 	end
 
 	def create
-		@user = User.new(user_params)
-		@user.update(role: "employee")
-		if @user.save
-			UserMailer.account_confirmation(@user).deliver_now
-			flash[:notice] = "You are successfully create a employee."
-          	redirect_to handle_directory_home_index_path
-		else
-			redirect_to handle_directory_home_index_path
-			flash[:error] = @user.errors.full_messages
-		end
+		
 	end
 
 	def edit

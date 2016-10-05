@@ -7,7 +7,7 @@ class HandleDirectory::BaseController < ApplicationController
   	 current_handle_user ||= User.find(session[:handle_user_id]) if session[:handle_user_id]
    end
 
-   def require_user
+   def require_handle_user
   	 redirect_to '/handle_directory/login' unless current_handle_user
    end
 

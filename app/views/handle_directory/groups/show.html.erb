@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group.group_name %>
+</p>
+<p>
+  <strong>Owner</strong>
+  <%= @group.user.user_name %>
+</p>
+<p>
+  <strong>Image:</strong>
+  <%= @group.group_image %>
+</p>
+<%= link_to 'Edit', edit_handle_directory_group_path(@group) %> |
+<%= link_to 'Back', handle_directory_groups_path %>
