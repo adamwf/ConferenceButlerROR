@@ -15,6 +15,23 @@
     <%= f.label :group_name %><br>
     <%= f.text_field :group_name %>
   </div>
+  
+  <div class="field">
+    <%= f.label :group_image %><br>
+    <%= @group.group_image.present? ? image_tag(@group.group_image.url, :width => 140, :height => 140, :class => 'img-responsive img-thumbnail') : image_tag("/profile.png", :width => 140, :height => 140, :class => 'img-responsive img-thumbnail')%>
+    <%= f.file_field :group_image %>
+  </div>
+	
+	<label for="member_attributes">Members</label>
+	<ul>
+	  <% current_handle_user.friends.each do |friend| %>
+	    <li>
+	      <%= check_box_tag "group[member_ids][]", friend.id, f.object.group_memberships.pluck(:user_id).include?(friend.id) %>
+          <%= friend.user_name %>
+	    </li>
+	  <% end %>
+	</ul>
+	  
   <div class="actions">
     <%= f.submit %>
   </div>

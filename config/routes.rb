@@ -115,7 +115,13 @@ Rails.application.routes.draw do
     resources :messages
     resources :home
     resources :profiles
-    resources :groups
+    resources :groups do
+      member do
+        get :mute
+        get :unmute
+      end
+    end
+    resources :friends
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'
