@@ -164,18 +164,6 @@ ActiveRecord::Schema.define(version: 20161004071448) do
 
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
-  create_table "invitations", force: :cascade do |t|
-    t.integer  "sender_id"
-    t.integer  "reciever_id"
-    t.string   "status",      default: "pending"
-    t.integer  "event_id"
-    t.boolean  "mode",        default: true
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id", using: :btree
-
   create_table "messages", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "assoc_id"
@@ -338,16 +326,6 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
   add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
-  create_table "user_invitations", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "event_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "user_invitations", ["event_id"], name: "index_user_invitations_on_event_id", using: :btree
-  add_index "user_invitations", ["user_id"], name: "index_user_invitations_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                                  default: "",    null: false
     t.string   "encrypted_password",                     default: "",    null: false
@@ -400,8 +378,8 @@ ActiveRecord::Schema.define(version: 20161004071448) do
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "title"
-    t.text     "discription"
+    t.string   "title",       default: ""
+    t.text     "discription", default: ""
     t.boolean  "status",      default: true
     t.string   "category"
   end
@@ -416,7 +394,6 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users"
-  add_foreign_key "invitations", "events"
   add_foreign_key "messages", "rooms"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"
@@ -429,7 +406,5 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_foreign_key "trendings", "users"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
-  add_foreign_key "user_invitations", "events"
-  add_foreign_key "user_invitations", "users"
   add_foreign_key "videos", "users"
 end

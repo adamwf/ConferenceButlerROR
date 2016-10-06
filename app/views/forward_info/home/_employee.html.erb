@@ -16,7 +16,7 @@
 			<tbody>
 			  <tr>
 				<td><%= employee.user_name%></td>
-				<td>0</td>
+				<td><%=employee.profile_views.count%></td>
 				<td>0</td>
 				<td>0</td>
 				<td><a href="/forward_info/events/<%= employee.id%>" class="blue-a">Details</a></td>
