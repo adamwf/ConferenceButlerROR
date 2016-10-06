@@ -127,9 +127,10 @@ Rails.application.routes.draw do
     get '/login' => 'sessions#new'
     post '/login' => 'sessions#create'
     delete '/logout' => 'sessions#destroy'
-    # resources :messages
+    resources :messages
     resources :home
     resources :profiles
+    resources :events
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

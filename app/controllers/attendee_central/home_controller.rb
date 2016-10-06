@@ -22,9 +22,9 @@ class AttendeeCentral::HomeController < AttendeeCentral::BaseController
 		if @user.save
 			UserMailer.signup_confirmation(@user).deliver_now
 			flash[:notice] = "You are successfully registered!"
-          	redirect_to forward_info_home_index_path
+          	redirect_to attendee_central_home_index_path
 		else
-			redirect_to forward_info_home_index_path
+			redirect_to attendee_central_home_index_path
 			flash[:error] = @user.errors.full_messages
 		end
 	end

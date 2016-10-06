@@ -12,7 +12,7 @@
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="default-tab-1">
 							<div class="text-right attendee-cent-s">
-								<button class="btn btn-primary link-msg m-r-5 m-b-5" type="button"><a href="create-event.html">Create Event</a></button>
+								<%= link_to "Create Event", new_attendee_central_event_path, :class => "btn link-msg" %>
 							</div>
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped ">
@@ -26,22 +26,23 @@
 										</tr>
 									</thead>
 									<% count = 0%>
-									<% @user_events.each do |id| %>
+									<% @event_list.each do |event| %>
 										<% count = count+1%>
 										<tbody>
 											<tr class="even">
 												<td><%= count%></td>
-												<td><%= Event.find_by(id: id).try(:name) %></td>
-												<td><%= UserEvent.where("(event_id= ? AND status= ?)", id, true).count %></td>
-												<td><%= UserEvent.where("(event_id= ? AND status= ?)", id, false).count %></td>
+												<td><%= event.try(:name) %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, false).count %></td>
 												<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
 											</tr>								
 										</tbody>
 									<%end%>
 								</table>
+								<%= will_paginate @event_list %>
 								<div class="text-center">
 									<!-- <ul class="pagination"> -->
-										<%= will_paginate @event_list %>
+										
 									<!-- </ul> -->
 								</div>
 							</div>

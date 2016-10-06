@@ -39,7 +39,7 @@ ActiveAdmin.register Event do
 	      f.input :end_time,  as: :date_time_picker, datepicker_options: { min_date: Time.current}
 	      f.input :event_type, :as => :select, :collection => ["Without Signup", "With Signup"], include_blank: false #,:input_html => { :disabled => true }
 	      f.input :no_of_availability,label: "Number of Availability"
-	      f.input :user_id, :as => :select, :collection => User.where(role: "organizer")#.map(&:user_name)
+	      f.input :user_id, :as => :select, :collection => User.where(role: "organiser")#.map(&:user_name)
 	    end
 	    f.actions
 	end
