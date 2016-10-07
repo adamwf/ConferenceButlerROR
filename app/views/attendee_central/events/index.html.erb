@@ -1,0 +1,36 @@
+<% count = 0%>
+<div class="text-right attendee-cent-s">
+	<%= link_to "Create Event", new_attendee_central_event_path, :class => "btn link-msg" %>
+</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-striped ">
+		<thead>
+			<tr>
+				<th>S. No.</th>
+				<th>Event Name</th>
+				<th>Number of Attendees</th>
+				<th>Pending Attendees</th>
+				<th>Action</th>											
+			</tr>
+		</thead>
+		
+		<% @event_list.each do |event| %>
+			<% count = count+1%>
+			<tbody>
+				<tr class="even">
+					<td><%= count%></td>
+					<td><%= event.try(:name) %></td>
+					<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>
+					<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>
+					<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
+				</tr>								
+			</tbody>
+		<%end%>
+	</table>
+	<%= will_paginate @event_list %>
+	<div class="text-center">
+		<!-- <ul class="pagination"> -->
+			
+		<!-- </ul> -->
+	</div>
+</div>

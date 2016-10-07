@@ -75,35 +75,13 @@ class Webservices::RequestApisController < ApplicationController
 				@trend = Trending.create(user_id: @user.id, count: 1)
 			end
 			unless @user.social_code.try(:image).eql?(nil)
-				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:profile => @user.attributes.merge(:social_profile => @user.social_logins, :social_code => @user.social_code.try(:image))}
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => @user.social_code.try(:image))}
 	    	else
-	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:profile => @user.attributes.merge(:social_profile => @user.social_logins, :social_code => "").compact}
-	    	end
+	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => "").compact}
+	    	user
 	    else
 			render_message 500, "Unable to find profile details, Please try again."
 		end
 	end
-	# private
-
-	# def find_user
-	# 	if params[:user][:user_id]
-	# 		@user = User.find_by_id(params[:user][:user_id])
-	# 	    unless @user
-	# 	     render_message 500, "Oops! User not found."
-	# 	    end
-	# 	else
-	# 		render_message 500, "Sorry! You are not an authenticated user."
-	#     end
- #  	end
-
- #  	def find_friend
-	# 	if params[:user][:friend_id]
-	# 		@friend = User.find_by_id(params[:user][:friend_id])
-	# 	    unless @friend
-	# 	     render_message 500, "Oops! Friend User not found."
-	# 	    end
-	# 	else
-	# 		render_message 500, "Sorry! You are not an authenticated user."
-	#     end
- #  	end
+	
 end

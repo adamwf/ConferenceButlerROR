@@ -59,7 +59,7 @@ class Webservices::EventApisController < ApplicationController
 						@trend = Trending.create(user_id: @user.id, count: 1)
 					end
 				end
-				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:profile => @user.attributes.merge(:social_profile => @social_profile)}
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:user => @user.attributes.merge(:social_login => @social_profile)}
 	    	else
 			    render_message 500, "Oops! User not found."
 			end
@@ -81,7 +81,7 @@ class Webservices::EventApisController < ApplicationController
 
 	def trending
 		@trend = Trending.all.order("count desc").paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|profile| User.find_by(id: x)} }
+		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|profile| User.find_by(id: profile)}, :ads => Advertisement.find(Advertisement.pluck(:id).shuffle.first) }
 	end
 
 	def add_social_login

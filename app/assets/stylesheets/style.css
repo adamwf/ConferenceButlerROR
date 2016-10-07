@@ -49,7 +49,7 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 /*---Change Password--*/
 .detail-form .form-group{margin-bottom:20px;}
 .detail-form label{color:#252525;font-weight:500;word-wrap:break-word;}
-.detail-form .form-control{border-radius:0;box-shadow:none;height:auto;padding:8px 12px;}
+.detail-form .form-control{border-radius:0 !important;box-shadow:none;height:auto;padding:8px 12px;}
 .detail-form .form-control:focus {border-color: #8ee7ef;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(168, 236, 243);box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(168, 236, 243);}
 
 /*---Event Invitation---*/
@@ -327,8 +327,8 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
     color: #555555!important;
     cursor: default;
 }
-.table > tbody > tr > td,  .table > tfoot > tr > td{vertical-align:middle; padding:5px;}
-.table > thead > tr > th{background:#10181f; color:#fff; vertical-align:middle; padding:5px;}
+.table > tbody > tr > td,  .table > tfoot > tr > td{vertical-align:middle; padding: 8px 15px;}
+.table > thead > tr > th{background:#10181f; color:#fff; vertical-align:middle; padding: 8px 15px;}
 .nav.nav-tabs > li  > a:hover, .nav.nav-tabs > li  > a:focus{background-color: #f3f3f3!important; color: #555555!important;}
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {background: #f0f3f5;}
 .viewbtn-link{color:#00b7c8;}
@@ -377,3 +377,4 @@ table {border: 2px solid #DDDDDD !important;}
 .image-block > img {border: 4px solid #30C1DB;}
 .nav-tabs a {color: #FFFFFF !important;}
 .tab-cont-head {border-bottom: 1px solid #000000;color: #252525;margin: 0;padding: 20px 6px 8px !important;}
+.main-block .nav.nav-tabs{margin:0;}

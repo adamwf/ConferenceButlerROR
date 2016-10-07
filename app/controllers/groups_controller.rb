@@ -5,8 +5,9 @@ class GroupsController < ApplicationController
 	def create
 	  member_id= (params[:member_ids])
 		return render_message 500, "Please select atleast one member." if !member_id or member_id.length < 1
-		@group = @user.groups.build(group_name: params[:group_name], group_image: params[:group_image])
+		@group = @user.groups.build(group_name: params[:group_name], remote_group_image_url: params[:group_image])
 		members = User.where(id: member_id)
+    members << @user
 		if @group.save! 
 			members.each do |member|
         group = @group.group_memberships.create!(user_id: member.id)
@@ -30,45 +31,50 @@ class GroupsController < ApplicationController
 		end
 	end
 
-	def group_list
-	  count_1= group_chat.pluck(:read_by).size - group_chat.pluck(:read_by).flatten.count(@user.id.to_s)
-	  individual_chat =  Message.where("assoc_id = ? and is_group = ?", @user.id , false)
-	  count_2 = individual_chat.pluck(:read_by).size - individual_chat.pluck(:read_by).flatten.count(@user.id.to_s)
-		group_created = @user.groups
-		group_joined=Group.where(id: GroupMembership.where(user_id: @user.id).pluck(:group_id))
-    list =  (group_created + group_joined).uniq
-    array= Array.new
-    if list
-      list.each do |group|
-      	# message = Message.where("((sender_id = ? and assoc_id = ? ) or (sender_id = ? and assoc_id = ? ) and ( is_group = ? ))", @user.id,group.id,group.id, @user.id , true)#.order(:tstamp)
-      	message = Message.where(" (assoc_id = ? ) and ( is_group = ? )", group.id , true)#.order(:tstamp)
-        last_message = message.last
-        if message	       
-          unread_count = message.pluck(:read_by).size -  message.pluck(:read_by).flatten.count(@user.id.to_s)
-        end
-      	unread_messages = unread_count
-      	group = group.as_json(only: [:id,:group_name]).merge(group_image: group.group_image.url, 
-         is_owner: Group.find_by(id: group.id,
-         user_id: @user.id).present? ? true : false ,
-         group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id , :username , :photo]) ,
-         message_id: last_message.present? ? last_message.id : 0 ,
-         message: last_message.present? ? last_message.body.nil? ? "*Image-Icon*" : last_message.body : "" , 
-         created_timestamp:  last_message.present? ? last_message.created_timestamp.nil? ? "0000000000" : last_message.created_timestamp : "0000000000" , 
-         unread_messages: unread_messages
-        )
-      	array << group
-      end
-    else
-      array = []
-    end
-    render :json => { 
-      :response_code => 200,
-      :response_message => "List of groups.",
-      :total_unread => count_1+count_2,
-      # :group_list =>  (group_created+group_joined).map{|group| group.attributes.merge(id: group.id ,group_name:group.group_name ,group_image: group.group_image.url,is_owner: Group.find_by(id: group.id,user_id: @user.id).present? ? true : false ,group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id,:username,:photo]))},
-      :group_list => array.sort_by{|e| e[:created_timestamp].to_i}.reverse  
-    }    
-	end
+	# def group_list
+	#   count_1= group_chat.pluck(:read_by).size - group_chat.pluck(:read_by).flatten.count(@user.id.to_s)
+	#   individual_chat =  Message.where("assoc_id = ? and is_group = ?", @user.id , false)
+	#   count_2 = individual_chat.pluck(:read_by).size - individual_chat.pluck(:read_by).flatten.count(@user.id.to_s)
+	# 	group_created = @user.groups
+	# 	group_joined=Group.where(id: GroupMembership.where(user_id: @user.id).pluck(:group_id))
+ #    list =  (group_created + group_joined).uniq
+ #    array= Array.new
+ #    if list
+ #      list.each do |group|
+ #      	# message = Message.where("((sender_id = ? and assoc_id = ? ) or (sender_id = ? and assoc_id = ? ) and ( is_group = ? ))", @user.id,group.id,group.id, @user.id , true)#.order(:tstamp)
+ #      	message = Message.where(" (assoc_id = ? ) and ( is_group = ? )", group.id , true)#.order(:tstamp)
+ #        last_message = message.last
+ #        if message	       
+ #          unread_count = message.pluck(:read_by).size -  message.pluck(:read_by).flatten.count(@user.id.to_s)
+ #        end
+ #      	unread_messages = unread_count
+ #      	group = group.as_json(only: [:id,:group_name]).merge(group_image: group.group_image.url, 
+ #         is_owner: Group.find_by(id: group.id,
+ #         user_id: @user.id).present? ? true : false ,
+ #         group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id , :username , :photo]) ,
+ #         message_id: last_message.present? ? last_message.id : 0 ,
+ #         message: last_message.present? ? last_message.body.nil? ? "*Image-Icon*" : last_message.body : "" , 
+ #         created_timestamp:  last_message.present? ? last_message.created_timestamp.nil? ? "0000000000" : last_message.created_timestamp : "0000000000" , 
+ #         unread_messages: unread_messages
+ #        )
+ #      	array << group
+ #      end
+ #    else
+ #      array = []
+ #    end
+ #    render :json => { 
+ #      :response_code => 200,
+ #      :response_message => "List of groups.",
+ #      :total_unread => count_1+count_2,
+ #      # :group_list =>  (group_created+group_joined).map{|group| group.attributes.merge(id: group.id ,group_name:group.group_name ,group_image: group.group_image.url,is_owner: Group.find_by(id: group.id,user_id: @user.id).present? ? true : false ,group_members:  User.where(id: group.group_memberships.pluck(:user_id)).as_json(only: [:id,:username,:photo]))},
+ #      :group_list => array.sort_by{|e| e[:created_timestamp].to_i}.reverse  
+ #    }    
+	# end
+
+
+  def group_list
+    @user.groups
+  end
 	
 	def group_destroy
 		group= Group.find_by(id: params[:group_id],user_id: @user.id)
@@ -138,15 +144,15 @@ class GroupsController < ApplicationController
     } 
   end
 
-  private
-  	def find_user
-  		if params[:user][:user_id]
-  			@user = User.find_by_id(params[:user][:user_id])
-		    unless @user
-		     render_message 500,"Oops! User not found."
-		    end
-  		else
-  			render_message 500, "Sorry! You are not an authenticated user."
-  	  end
-  	end
+  # private
+  # 	def find_user
+  # 		if params[:user][:user_id]
+  # 			@user = User.find_by_id(params[:user][:user_id])
+		#     unless @user
+		#      render_message 500,"Oops! User not found."
+		#     end
+  # 		else
+  # 			render_message 500, "Sorry! You are not an authenticated user."
+  # 	  end
+  # 	end
 end

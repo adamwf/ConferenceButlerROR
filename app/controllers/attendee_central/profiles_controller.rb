@@ -17,6 +17,11 @@ class AttendeeCentral::ProfilesController < AttendeeCentral::BaseController
 		@user.update(role: "attendee")
 		@user.generate_auth_token
 		if @user.save!
+			@qr_image = SocialCode.generate_qr
+			@social_code = SocialCode.find_or_create_by!(user_id: @user.id)
+			@social_code.update_attributes(code: @qr_image["original_filename"], image: @qr_image["url"])
+			@user_event = @user.user_events.find_or_create_by(event_id: params[:user][:event_ids])
+			@user_event.update_attributes(status: true, qr_image: @qr_image["url"])
 			UserMailer.account_confirmation(@user,current_attendee).deliver_now
 			flash[:notice] = "You are successfully create a attendee."
           	redirect_to attendee_central_home_index_path

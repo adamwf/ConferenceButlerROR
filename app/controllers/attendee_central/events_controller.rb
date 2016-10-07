@@ -3,6 +3,12 @@ class AttendeeCentral::EventsController < AttendeeCentral::BaseController
 	before_filter :require_attendee
 
 	def index 
+		@user_events = UserEvent.all.order("created_at desc").map(&:event_id).uniq
+		@event_list =[]
+		@user_events.each do |id|
+			@event_list << Event.find(id)
+		end
+		@event_list = @event_list.paginate(:page => params[:page], :per_page => 10)
 	end
 
 	def new
