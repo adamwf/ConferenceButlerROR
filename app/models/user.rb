@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
   validates :other_info, length: { maximum: 300}
 
+  attr_accessor :new_email, :email_confirmation, :old_password
 
   def self.image_data(data)
     return nil unless data

@@ -20,4 +20,10 @@ module ApplicationHelper
 			
 	 #   end
 	end
+
+  def nav_action_class(actionName)
+      if params[:action] == actionName    
+      "active"
+      end
+  end
 end

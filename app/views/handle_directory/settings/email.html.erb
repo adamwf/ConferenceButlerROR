@@ -1,0 +1,37 @@
+<div class="container">
+	<h2>Account Settings</h2>
+</div>
+
+<div id="exTab2" class="container">
+	<%= render 'heading' %>
+	<div class="tab-content ">
+		<div class="tab-pane active">
+			<h3>Email</h3>
+			<%= form_for @user, :url => update_email_handle_directory_settings_path, :method => :post do |f| %>
+
+			<div class="field">
+				<%= f.label :email %>
+				<br>
+				<%= f.text_field :email %>
+			</div>
+
+			<div class="field">
+				<%= f.label :new_email %>
+				<br>
+				<%= f.text_field :new_email %>
+			</div>
+
+			<div class="field">
+				<%= f.label :email_confirmation %>
+				<br>
+				<%= f.text_field :email_confirmation %>
+			</div>
+
+			<div class="actions">
+				<%= f.submit "Save" %>
+			</div>
+			<% end %>
+
+		</div>
+	</div>
+</div>

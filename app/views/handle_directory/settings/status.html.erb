@@ -1,0 +1,29 @@
+<div class="container">
+	<h2>Account Settings</h2>
+</div>
+
+<div id="exTab2" class="container">
+	<%= render 'heading' %>
+	<div class="tab-content ">
+		<div class="tab-pane active">
+			<h3>Status</h3>
+			<%= form_for @user, :url => update_status_handle_directory_settings_path, :method => :post do |f| %>
+
+			<div>
+			    <%= f.radio_button :availability, true, :checked => true%>
+				<%= label :availability, "Opt-In" %>
+			</div>
+
+			<div>
+			    <%= f.radio_button :availability, false%>
+				<%= label :availability, "Opt-Out" %>
+			</div>
+			
+			<div class="actions">
+				<%= f.submit "Save" %>
+			</div>
+			<% end %>
+
+		</div>
+	</div>
+</div>

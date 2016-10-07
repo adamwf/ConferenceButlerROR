@@ -1,0 +1,39 @@
+<div class="container">
+	<h2>Account Settings</h2>
+</div>
+
+<div id="exTab2" class="container">
+	<%= render 'heading' %>
+	<div class="tab-content ">
+		<div class="tab-pane active">
+			<h3>Remind Me</h3>
+			<%= form_for @reminder, :url => update_remind_me_handle_directory_settings_path, :method => :post do |f| %>
+
+			<div>
+			    <%= f.radio_button :delay_time, "1", :checked => true%>
+				<%= label :delay_time, "1 Hours" %>
+			</div>
+
+			<div>
+			    <%= f.radio_button :delay_time, "2"%>
+				<%= label :delay_time, "2 Hours" %>
+			</div>
+			
+			<div>
+			    <%= f.radio_button :delay_time, "12"%>
+				<%= label :delay_time, "12 Hours", value: "12" %>
+			</div>
+
+			<div>
+				<%= f.radio_button :delay_time, "never", :value => "never"%>
+				<%= label :delay_time, "Never Remind Me", value: "never" %>
+			</div>
+			
+			<div class="actions">
+				<%= f.submit "Save" %>
+			</div>
+			<% end %>
+
+		</div>
+	</div>
+</div>
