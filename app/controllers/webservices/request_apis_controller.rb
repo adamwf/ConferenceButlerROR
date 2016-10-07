@@ -66,6 +66,23 @@ class Webservices::RequestApisController < ApplicationController
 		end
 	end
 
+
+	def profile_view
+		if  ProfileView.find_or_create_by(viewer_id: params[:viewer_id], user_id: @user.id)
+			if @trend = Trending.find_by_user_id(@user.id)
+				@trend.update_attributes(count: @trend.count+1)
+			else 
+				@trend = Trending.create(user_id: @user.id, count: 1)
+			end
+			unless @user.social_code.try(:image).eql?(nil)
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:profile => @user.attributes.merge(:social_profile => @user.social_logins, :social_code => @user.social_code.try(:image))}
+	    	else
+	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:profile => @user.attributes.merge(:social_profile => @user.social_logins, :social_code => "").compact}
+	    	end
+	    else
+			render_message 500, "Unable to find profile details, Please try again."
+		end
+	end
 	# private
 
 	# def find_user

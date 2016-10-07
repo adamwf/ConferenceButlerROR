@@ -57,6 +57,8 @@ gem "simple_calendar", "~> 2.0"
 gem 'alertify-rails'
 gem 'link_thumbnailer'
 gem 'active_admin_datetimepicker'
+# gem 'momentjs-rails'#, '~> 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.42'
 # gem 'ransack'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

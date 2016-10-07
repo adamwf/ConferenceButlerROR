@@ -40,7 +40,8 @@ Rails.application.routes.draw do
         post :accept_request
         post :reject_request
         post :pending_request
-        post :contact_list 
+        post :contact_list
+        post :profile_view 
       end
     end
     resources :event_apis do

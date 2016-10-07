@@ -1,6 +1,6 @@
 class AttendeeCentral::EventsController < AttendeeCentral::BaseController
 
-	before_filter :current_attendee
+	before_filter :require_attendee
 
 	def index 
 	end
@@ -11,14 +11,18 @@ class AttendeeCentral::EventsController < AttendeeCentral::BaseController
 
 	def create
 		@event = Event.new(event_params)
-		@event.update(role: "organiser")
-		@event.generate_auth_token
 		if @event.save
 			flash[:notice] = "You are create an event successfully."
-          	redirect_to attendee_central_home_index_path
+          	redirect_to attendee_central_home_index_path 
 		else
 			redirect_to attendee_central_home_index_path
 			flash[:error] = "You are unable create an event."
 		end
+	end
+
+	private
+
+	def event_params
+      params.require(:event).permit(:name,:location,:start_time,:end_time,:category,:event_type,:no_of_availability,:availability,:user_id)
 	end
 end

@@ -75,6 +75,8 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap3-datetimepicker-rails (4.17.42)
+      momentjs-rails (>= 2.8.1)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -347,6 +349,7 @@ DEPENDENCIES
   alertify-rails
   amistad
   bootstrap-sass (~> 3.3.6)
+  bootstrap3-datetimepicker-rails (~> 4.17.42)
   byebug
   cancan
   carrierwave

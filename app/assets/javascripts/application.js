@@ -18,7 +18,7 @@
 //= require bootstrap/dropdown
 //= require alertify
 //= require_tree .
-
+//= require bootstrap-datetimepicker
 
 
 

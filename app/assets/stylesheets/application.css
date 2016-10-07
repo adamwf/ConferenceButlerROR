@@ -14,11 +14,14 @@
  *= require_tree .
  *= require_self
  *= require fullcalendar
+ *= require bootstrap
+ *= require bootstrap-datetimepicker
  */
- @import "bootstrap-sprockets";
+@import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'alertify/core';
 @import 'alertify/themes/default';
+@import 'bootstrap-datetimepicker';
 
 .flash{
 	color:red;

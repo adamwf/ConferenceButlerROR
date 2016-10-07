@@ -1,3 +1,4 @@
+require 'will_paginate/array'
 class Webservices::EventApisController < ApplicationController
 	before_filter :find_user, only: [:notification_list, :generate_qr, :add_social_login, :profile_view]
 	before_filter :authentication
@@ -39,7 +40,7 @@ class Webservices::EventApisController < ApplicationController
 	def generate_qr
 		if @qr_image = SocialCode.generate_qr
 			@social_code = SocialCode.find_or_create_by!(user_id: @user.id)
-			@social_code.update_attributes(code: @qr_image["public_id"], image: @qr_image["url"])
+			@social_code.update_attributes(code: @qr_image["original_filename"], image: @qr_image["url"])
 			render :json =>  {:responseCode => 200,:responseMessage =>"Your QR Code created successfully.",:social_code => @social_code}
     	else
 		   render_message 500, "Sorry! Your QR code not generated, Please try again."
@@ -49,7 +50,7 @@ class Webservices::EventApisController < ApplicationController
 	def scan_qr
 		if @qr = SocialCode.find_by(code: params[:code])
 			@user = User.find_by_id(@qr.user_id)
-			@social_profile = SocialLogin.find_by_user_id(@qr.user_id)
+			@social_profile = SocialLogin.where(user_id: @qr.user_id)
 			if @user
 				unless ProfileView.find_or_create_by(viewer_id: params[:viewer_id], user_id: @user.id)
 					if @trend = Trending.find_by_user_id(@user.id)
@@ -58,7 +59,7 @@ class Webservices::EventApisController < ApplicationController
 						@trend = Trending.create(user_id: @user.id, count: 1)
 					end
 				end
-				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:profile => @user, :social_profile => @social_profile}
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are scan #{@user.user_name}'s QR Code successfully.",:profile => @user.attributes.merge(:social_profile => @social_profile)}
 	    	else
 			    render_message 500, "Oops! User not found."
 			end
@@ -68,16 +69,19 @@ class Webservices::EventApisController < ApplicationController
 	end
 
 	def profile_view
-		@profile = ProfileView.where(user_id: @user.id).map(&:viewer_id)
-		@profile.map do |x| 
-			@viewer = User.where(id: x)
+		@profile = ProfileView.where(user_id: @user.id)#.map(&:viewer_id)
+		@viewer=[]
+		@profile.map do |profile| 
+			@profile = profile
+			user = User.find_by(id: profile)
+			@viewer << user unless user.eql?(nil)
 		end
-		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.paginate(:page => params[:page], :per_page => 3) }
+		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.map {|viewer| viewer.attributes.merge(is_friend: viewer.friend_with?(@user), profile_view_time: @profile.updated_at.localtime).compact}.paginate(:page => params[:page], :per_page => 3) }
 	end
 
 	def trending
 		@trend = Trending.all.order("count desc").paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|x| User.find_by(id: x)} }
+		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|profile| User.find_by(id: x)} }
 	end
 
 	def add_social_login

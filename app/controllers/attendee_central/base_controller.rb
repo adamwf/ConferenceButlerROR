@@ -7,7 +7,7 @@ class AttendeeCentral::BaseController < ApplicationController
   	 current_attendee ||= User.find(session[:attendee_id]) if session[:attendee_id]
    end
 
-   def require_user
+   def require_attendee
   	 redirect_to '/attendee_central/login' unless current_attendee
    end
 

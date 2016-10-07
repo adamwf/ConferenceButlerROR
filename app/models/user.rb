@@ -12,8 +12,9 @@ class User < ActiveRecord::Base
   after_validation :geocode  
 
   has_many :devices, dependent: :destroy
-  has_many :social_logins, dependent: :destroy
-  has_many :events, dependent: :destroy
+  has_many :social_logins, dependent: :destroy 
+  has_many :user_events, dependent: :destroy
+  has_many :events, through: :user_events
   has_one  :social_code, dependent: :destroy
   has_many :videos, dependent: :destroy
   has_many :invitations , through: :user_invitations
@@ -24,19 +25,19 @@ class User < ActiveRecord::Base
   has_one  :trending, dependent: :destroy
   has_many :profile_views, dependent: :destroy
   has_one  :reminder, dependent: :destroy
-  has_many :notifications, :as => :notifiable, :dependent => :destroy 
-  has_many :groups,:dependent => :destroy
-  has_many :group_memberships, :through => :groups
+  has_many :notifications, :as => :notifiable, :dependent => :destroy
+  has_many :group_memberships,:dependent => :destroy 
+  has_many :groups, :through => :group_memberships  
   has_many :send_messages,:class_name => 'Message',:foreign_key => 'sender_id',:dependent => :destroy
   has_many :recieved_messages, -> { where(is_group: false) },:class_name => 'Message',:foreign_key => 'assoc_id',:dependent => :destroy
   has_many :group_messages, -> { where(is_group: true) },:class_name => 'Message',:foreign_key => 'assoc_id',:dependent => :destroy
 
 
   # validates :user_name, presence: true, uniqueness: true, length: { maximum: 20 },:format => {:with => /\A(^[A-Za-z][A-Za-z0-9.@_-]*$)\z/}
-  validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
-  validates :password, presence: true, length: { maximum: 20 }, on: :create
-  validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
-  validates :other_info, length: { maximum: 300}
+  # validates :email, presence: true, uniqueness: true, length: { maximum: 40 },:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,6})\z/i } 
+  # validates :password, presence: true, length: { maximum: 20 }, on: :create
+  # validates :password_confirmation, presence: true, length: { maximum: 20 }, on: :create
+  # validates :other_info, length: { maximum: 300}
 
 
   def self.image_data(data)

@@ -1,0 +1,112 @@
+<section class="main-block">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="nav nav-tabs link-msg">
+						<li class="active"><a href="#default-tab-1" data-toggle="tab">Events</a></li>
+						<li class=""><a href="#default-tab-2" data-toggle="tab">Attendees</a></li>
+						<li class=""><a href="#default-tab-3" data-toggle="tab">Requests</a></li>
+						<li class=""><a href="#default-tab-4" data-toggle="tab">Request to the Manager</a></li>
+					</ul>
+
+					<div class="tab-pane">
+						<div class="">
+							<%= form_for User.new, url: attendee_central_profiles_path do |f|%>
+								<h3 class="tab-cont-head">Create Attendee</h3>
+								<div class="detail-form m-t-40 m-b-40">
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Event Name</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.collection_select :event_ids, Event.where('start_time > ?', Time.current), :id, :name, {:prompt => 'Please select'}, {:class=>"form-control" ,id: "event_id"}%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">User Name*</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :user_name, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Company</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :company_name, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Address</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :address, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Website</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :company_website, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Email*</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :email, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Phone</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :phone, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Fax</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.text_field :fax, class: "form-control", required: true, placeholder: "Event Name"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Password*</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.password_field :password, class: "form-control", required: true, placeholder: "Password"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Confirm Password*</label>
+											<div class="col-sm-8 col-md-7">
+											  <%= f.password_field :password_confirmation, class: "form-control", required: true, placeholder: "Confirm Password"%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="text-center attendee-cent-s">
+											<button class="btn btn-primary m-r-5 m-b-5" type="submit">Save</button>
+										</div>
+									</div>
+								</div>
+							<%end%>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+			
