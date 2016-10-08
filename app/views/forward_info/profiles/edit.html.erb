@@ -6,13 +6,13 @@
 					<div class="box-head">
 						<h3>
 							<div class="pull-right">
-								<%= link_to "Back",  forward_info_profile_path, :class => "btn btn-edit" %>
+								<%= link_to "Back",  attendee_central_profile_path, :class => "btn btn-edit" %>
 							</div>
 							Edit Profile
 						</h3>
 					</div>
 					<div class="box-body">						
-						<div class="content-block">     															    <%= form_for @profile, url: forward_info_profile_path, class: "form-control" do |f| %>
+						<div class="content-block">     															    <%= form_for @profile, url: attendee_central_profile_path, class: "form-control" do |f| %>
 							<div class="detail-form">
 								<div class="form-group">
 									<div class="row">

@@ -1,6 +1,6 @@
 require 'will_paginate/array'
 class AttendeeCentral::HomeController < AttendeeCentral::BaseController
-	before_filter :require_attendee
+	# before_filter :require_attendee
 
 	def index 
 		@user_events = UserEvent.all.order("created_at desc").map(&:event_id).uniq

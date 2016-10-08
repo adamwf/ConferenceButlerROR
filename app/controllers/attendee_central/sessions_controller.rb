@@ -3,7 +3,7 @@ class AttendeeCentral::SessionsController < AttendeeCentral::BaseController
 	def create
     @user = User.find_by_email(params[:session][:email])|| User.find_by_user_name(params[:session][:username])
     if @user && @user.valid_password?(params[:session][:password])
-     	if @user.role.eql?("organizer")
+     	if @user.role.eql?("organiser")
         session[:attendee_id] = @user.id
          flash[:notice] = "You are successfully login!"
         redirect_to '/attendee_central'

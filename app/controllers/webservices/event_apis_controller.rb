@@ -1,6 +1,6 @@
 require 'will_paginate/array'
 class Webservices::EventApisController < ApplicationController
-	before_filter :find_user, only: [:notification_list, :generate_qr, :add_social_login, :profile_view]
+	before_filter :find_user, only: [:notification_list, :generate_qr, :add_social_login, :profile_view, :invitation_list]
 	before_filter :authentication
 
 	def home
@@ -22,7 +22,7 @@ class Webservices::EventApisController < ApplicationController
         		end
         	end
       	end
-		render :json =>  {:responseCode => 200,:responseMessage =>"Welcome to Conference Butler.",:feeds => @feeds}#.each{|x| x.compact}}
+		render :json =>  {:responseCode => 200,:responseMessage =>"Welcome to Conference Butler.",:feeds => @feeds, :total_pages => @feeds.total_pages}#.each{|x| x.compact}}
 	end
 
 	def notification_list
@@ -34,7 +34,7 @@ class Webservices::EventApisController < ApplicationController
 			notification_id = activity.user.id
 			activities << activity.attributes.merge(user_id: activity.user.id, user_name: user_name,notification_type: notification_type,notification_id: notification_id)
 		end	
-	  	render :json => {:responseCode => 200,:response_message => "Notification list fetched successfully.",:reviews => activities.sort_by{|x| x["created_at"]}.reverse }
+	  	render :json => {:responseCode => 200,:response_message => "Notification list fetched successfully.",:reviews => activities.sort_by{|x| x["created_at"]}.reverse, :total_pages => activities.total_pages }
 	end
 
 	def generate_qr
@@ -76,12 +76,12 @@ class Webservices::EventApisController < ApplicationController
 			user = User.find_by(id: profile)
 			@viewer << user unless user.eql?(nil)
 		end
-		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.map {|viewer| viewer.attributes.merge(is_friend: viewer.friend_with?(@user), profile_view_time: @profile.updated_at.localtime).compact}.paginate(:page => params[:page], :per_page => 3) }
+		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.map {|viewer| viewer.attributes.merge(is_friend: viewer.friend_with?(@user), profile_view_time: @profile.updated_at.localtime).compact}.paginate(:page => params[:page], :per_page => 3), :total_pages => @viewer.total_pages }
 	end
 
 	def trending
 		@trend = Trending.all.order("count desc").paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|profile| User.find_by(id: profile)}, :ads => Advertisement.find(Advertisement.pluck(:id).shuffle.first) }
+		render :json =>  {:responseCode => 200,:responseMessage =>"Top Trending profiles of Conference Butler is find successfully.",:trending_profiles => @trend.map(&:user_id).map{|profile| User.find_by(id: profile)}, :ads => Advertisement.find(Advertisement.pluck(:id).shuffle.first), :total_pages => @trend.total_pages }
 	end
 
 	def add_social_login
@@ -95,17 +95,33 @@ class Webservices::EventApisController < ApplicationController
 
 	def event_list
 		@event = Event.all.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:event_list => @event}
+		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:event_list => @event, :total_pages => @event.total_pages}
 	end
 
-	# def attendee_create
-	# 	@attendee = Attendee.create(attendee_params)
-	# 	if @attendee
-	# 		render :json =>  {:responseCode => 200,:responseMessage =>"Attendee has been created successfully with event name.",:attendee => @attendee}
- #    	else
-	# 	    render_message 500, @attendee.errors.full_messages.first
- #    	end
-	# end
+	def invitation_list
+		@invitation = Invitation.where(reciever_id: @user.id).paginate(:page => params[:page], :per_page => 10)
+		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:invitations => @invitation, :total_pages => @invitation.total_pages}
+	end
+
+	def accept_invitation
+		@invitation = Invitation.find_by(id: params[:user][:invitation_id])
+		if @invitation
+		  	@invitation.update_attributes(status: "accepted")
+		  	 render_message 200, "You are successfully accepted event invitation."
+		else
+		    render_message 500, "Invalid Invitation."
+		end
+	end
+
+	def decline_invitation
+	  	@invitation = Invitation.find_by(id: params[:user][:invitation_id])
+	  	if @invitation
+	  		@invitation.update_attributes(status: "rejected")
+	  	 	 render_message 200, "You are successfully declined event invitation."
+		else
+		    render_message 500, "Invalid Invitation."
+	  	end
+	end
 
 	private
 	def event_params

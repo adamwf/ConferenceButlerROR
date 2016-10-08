@@ -186,7 +186,8 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .btn-event:hover{background:#8bbbbb!important;color:#fff;border-color:#df2f0d;}
 .btn-handle-edit{background:#fff;color:#000!important;border:1px solid #df2f0d;padding:0px 4px;font-size:10px;text-decoration: none!important;border-radius: 30px!important;}
 .btn-handle-edit:hover{background:#8bbbbb!important;color:#fff;border-color:#df2f0d;}
-
+.btn-upload{position: relative;overflow: hidden;background:#00b7c8;border-radius:20px;padding:8px 22px;color:#fff!important;margin:0 0 0 40px;font-size:16px;}
+.btn-upload input[type=file] {position: absolute;top: 0;right: 0;min-width: 100%;min-height: 100%;font-size: 100px;text-align: right;filter: alpha(opacity=0);  opacity: 0;outline: none;background: white;cursor: inherit;display: block;}
 /*---color--*/
 .white-a,.white-a:hover{color:#fff;}
 .green-a,.green-a:hover{color:#42f54b;}

@@ -1,0 +1,225 @@
+		
+		<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head ">
+						<div class="pull-right">
+								<%= link_to "Back",  attendee_central_profile_path, :class => "btn btn-edit btn-handle-edit" %>
+							</div>
+						<h3>Edit Profile</h3>
+					</div>
+					<div class="box-body">
+						<div class="content-block detail-form-block">
+							<%= form_for @profile,url: attendee_central_profile_path, class: "form-control" do |f| %>
+								<div class="m-b-40">
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Profile Picture</label>
+											<div class="col-sm-8 col-md-7">
+												<div class="profile-pic">
+													<%= @profile.image.present? ? image_tag(@profile.image.url, :width => 140, :height => 140, :class => 'img-circle') : image_tag("/profile.png", :width => 140, :height => 140, :class => 'img-circle')%>
+													<span class="btn btn-upload">Upload<%= f.file_field :image%> </span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">First Name</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :first_name, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Last Name</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :last_name, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Phone</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :phone, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Email Address</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :email, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Address (optional)</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :address, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Hobbies</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_field :hobbies, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<label class="col-sm-4 col-md-3 control-label">Other info</label>
+											<div class="col-sm-8 col-md-7">
+												<%= f.text_area :other_info, class: 'form-control'%>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+												<div class="checkbox">												
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_requested_users%>
+													<!-- <span ></span></label> -->
+													<div class="checkbox-text">To have your Profile visible to those that request to Follow you and that you accept.</div>
+												</div>
+												<div class="checkbox">												
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_handle_directory_users%>
+													<!-- <span ></span></label> -->
+													<div class="checkbox-text">To have your Profile info appear in our Handle Directory of registered Users.</div>
+												</div>
+												<div class="checkbox">												
+													<!-- <label class="myCheckbox"> -->
+													<%= f.check_box :profile_view_to_gab_users%>  
+													<!-- <span ></span></label> -->
+													<div class="checkbox-text">To have your profile info appear to those users in your GAB-only.</div>
+												</div>
+												<div class="form-group">
+													<div class="row">
+														<div class="col-sm-offset-4 col-sm-8 col-md-offset-3 col-md-7">
+															<button type="submit" class="btn btn-upload">Save Changes</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<%end%>
+							<h3 class="tab-cont-head">Add your Social Profile</h3>
+							<div class="row">
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic1.png" alt="" /></a>
+										<a href=""><img src="/tick.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic2.png" alt="" /></a>
+										<a href=""><img src="/tick.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic3.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic4.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic5.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic6.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic7.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic8.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic9.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic10.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic11.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic12.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic13.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic14.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic15.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic16.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-3 col-md-2">
+									<div class="social_profile">
+										<a href="" class="m-r-20"><img src="/social_ic17.png" alt="" /></a>
+										<a href=""><img src="/add.png" alt="" /></a>
+									</div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-upload m-t-20">Create HandleQR<sup>TM</sup> so you can share your info with a scan </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>

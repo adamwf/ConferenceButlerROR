@@ -54,6 +54,9 @@ Rails.application.routes.draw do
         get :event_list
         post :add_social_login 
         post :profile_view 
+        post :invitation_list
+        post :accept_invitation
+        post :decline_invitation
       end
     end
   end

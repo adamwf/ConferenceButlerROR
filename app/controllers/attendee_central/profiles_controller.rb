@@ -5,10 +5,10 @@ class AttendeeCentral::ProfilesController < AttendeeCentral::BaseController
 	end
 
 	def show
+		@events = Event.all
 	end
 
 	def new
-		p"=-new=-=-=-=-#{params.inspect}=-=-=-=-=-=-=-"
 		@user = User.new
 	end
 

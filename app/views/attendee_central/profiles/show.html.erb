@@ -1,0 +1,75 @@
+
+		
+		<!--box-->
+		<section class="main-block">
+			<div class="container">
+				<div class="box">
+					<div class="box-head">
+						<h3>My Account</h3>
+					</div>
+					<div class="box-body">
+						<div class="account-detail">
+							<div class="detail-block">
+								<div class="detail-left xs-m-b-20">
+									<div class="profile clearfix">
+										<div class="profile-img">
+											<%= image_tag(current_attendee.image.try(:url), :class => "img-circle")%>
+										</div>
+										<div class="m-0 profile-info white-a">
+											<h3 class="f-w-700"><%= current_attendee.first_name.capitalize %> <%= current_attendee.last_name.capitalize %></h3>
+											<h4 class="f-w-700"><%= current_attendee.address %></h4>
+											<ul class="profile-list list-inline">
+												<li><a href="/attendee_central/profiles/<%= current_attendee.id %>/edit" class="white-a link-msg"><span class="m-r-10"><i class="fa fa-pencil"></i></span>Edit</a></li>
+												<li><a href="" class="green-a link-msg"><span class="m-r-10"><i class="fa fa-share"></i></span>Forward Profile</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="detail-right">
+									<ul class="social-icons list-inline">
+										<li><a href="https://accounts.google.com/ServiceLogin?service=oz&passive=1209600&continue=https://plus.google.com/?gpsrc%3Dogpy0%26tab%3DwX#identifier"><i class="fa fa-google-plus"></i></a></li>
+										<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+										<li><a href="https://www.linkedin.com/uas/login"><i class="fa fa-linkedin"></i></a></li>
+									</ul>
+								</div> -->
+							</div>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-sm-4 col-md-3 xs-m-b-20">
+									<h4 class="m-0 f-w-700">About</h4>
+									<div class="separator"></div>
+									<% current_attendee.social_logins.each do |social|%>
+										<ul class="m-0 p-0 mail-icons">
+											<% if social.provider == "facebook"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-facebook"></i></span><%= social.user_name%></a></li>
+											<%elsif social.provider == "linkedin"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-linkedin"></i></span><%= social.user_name%></a></li>
+											<%elsif social.provider == "twitter"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-twitter"></i></span><%= social.user_name%></a></li>
+											<%elsif social.provider == "instagram"%>
+												<li><a href=""><span class="m-r-10"><i class="fa fa-instagram"></i></span><%= social.user_name%></a></li>
+											<%end%>
+										</ul>
+									<%end%>
+									<div class="separator"></div>
+									<p class="text-muted"><%= current_attendee.other_info%>.</p>
+								</div>
+								<div class="col-sm-5 col-md-6 xs-m-b-20">
+									<%= render partial: "calender"%>	
+								</div>
+								<div class="col-sm-3 col-md-3">
+									<%if current_attendee.social_code.present? %>
+										<div class="qr-code">
+											<%= image_tag(current_attendee.social_code.try(:image), size: "250*250") %> 
+										</div>
+									<%end%>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		

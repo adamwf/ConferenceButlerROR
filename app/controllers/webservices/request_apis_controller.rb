@@ -58,11 +58,11 @@ class Webservices::RequestApisController < ApplicationController
 	
 	def contact_list
 		if params[:user][:keyword].eql?("")
-			render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contacts_list => @user.friends.order("#{params[:sort]} asc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
+			render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @user.friends.order("#{params[:sort]} asc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
 		else
 		   friends = @user.friendships.where("keyword LIKE ?", "%#{params[:user][:keyword]}%") & @user.friendships.where(pending: false)
 		    @friends = friends.map{|key| key.friend}		   	
-		   	render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contacts_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
+		   	render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
 		end
 	end
 
@@ -78,7 +78,7 @@ class Webservices::RequestApisController < ApplicationController
 				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => @user.social_code.try(:image))}
 	    	else
 	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => "").compact}
-	    	user
+	    	end
 	    else
 			render_message 500, "Unable to find profile details, Please try again."
 		end
