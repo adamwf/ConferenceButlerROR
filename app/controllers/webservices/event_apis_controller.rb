@@ -22,7 +22,7 @@ class Webservices::EventApisController < ApplicationController
         		end
         	end
       	end
-		render :json =>  {:responseCode => 200,:responseMessage =>"Welcome to Conference Butler.",:feeds => @feeds, :total_pages => @feeds.total_pages}#.each{|x| x.compact}}
+		render :json =>  {:responseCode => 200,:responseMessage =>"Welcome to Conference Butler.",:feeds => @feeds}#.each{|x| x.compact}}
 	end
 
 	def notification_list
@@ -34,7 +34,7 @@ class Webservices::EventApisController < ApplicationController
 			notification_id = activity.user.id
 			activities << activity.attributes.merge(user_id: activity.user.id, user_name: user_name,notification_type: notification_type,notification_id: notification_id)
 		end	
-	  	render :json => {:responseCode => 200,:response_message => "Notification list fetched successfully.",:reviews => activities.sort_by{|x| x["created_at"]}.reverse, :total_pages => activities.total_pages }
+	  	render :json => {:responseCode => 200,:response_message => "Notification list fetched successfully.",:reviews => activities.sort_by{|x| x["created_at"]}.reverse }
 	end
 
 	def generate_qr
@@ -76,7 +76,7 @@ class Webservices::EventApisController < ApplicationController
 			user = User.find_by(id: profile)
 			@viewer << user unless user.eql?(nil)
 		end
-		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.map {|viewer| viewer.attributes.merge(is_friend: viewer.friend_with?(@user), profile_view_time: @profile.updated_at.localtime).compact}.paginate(:page => params[:page], :per_page => 3), :total_pages => @viewer.total_pages }
+		render :json =>  {:responseCode => 200,:responseMessage =>"You are find successfully your profile viewer list.",:profile_viewer => @viewer.map {|viewer| viewer.attributes.merge(is_friend: viewer.friend_with?(@user), profile_view_time: @profile.updated_at.localtime).compact}.paginate(:page => params[:page], :per_page => 3) }
 	end
 
 	def trending
@@ -132,14 +132,5 @@ class Webservices::EventApisController < ApplicationController
 	# 	params.require(:attendee).permit(:title, :address, :company, :website, :email, :phone, :mobile, :approval_status)
 	# end
 
-	# def find_user
-	# 	if params[:user][:user_id]
-	# 		@user = User.find_by_id(params[:user][:user_id])
-	# 	    unless @user
-	# 	     render_message 500, "Oops! User not found."
-	# 	    end
-	# 	else
-	# 		render_message 500, "Sorry! You are not an authenticated user."
-	#     end
- #  	end
+	
 end
