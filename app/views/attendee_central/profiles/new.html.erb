@@ -2,17 +2,23 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<ul class="nav nav-tabs link-msg">
+					<%#= render partial: "/attendee_central/home/tab"%>
+					<!-- <ul class="nav nav-tabs link-msg">
 						<li class="active"><a href="#default-tab-1" data-toggle="tab">Events</a></li>
 						<li class=""><a href="#default-tab-2" data-toggle="tab">Attendees</a></li>
 						<li class=""><a href="#default-tab-3" data-toggle="tab">Requests</a></li>
 						<li class=""><a href="#default-tab-4" data-toggle="tab">Request to the Manager</a></li>
-					</ul>
+					</ul> -->
 
 					<div class="tab-pane">
 						<div class="">
+							<h3 class="tab-cont-head clearfix">
+								<div class="col-sm-6 col-xs-6">Create Attendee</div>
+								<div class="col-sm-6 col-xs-6 text-right attendee-cent-s">
+									<%= link_to "Attendee List", attendee_central_home_index_path, :class => "btn link-msg" %>
+								</div>
+							</h3>
 							<%= form_for User.new, url: attendee_central_profiles_path do |f|%>
-								<h3 class="tab-cont-head">Create Attendee</h3>
 								<div class="detail-form m-t-40 m-b-40">
 									<div class="form-group">
 										<div class="row">
@@ -35,7 +41,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Company</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :company_name, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.text_field :company_name, class: "form-control", required: true, placeholder: "Company Name"%>
 											</div>
 										</div>
 									</div>
@@ -43,7 +49,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Address</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :address, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.text_field :address, class: "form-control", required: true, placeholder: "Address"%>
 											</div>
 										</div>
 									</div>
@@ -51,7 +57,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Website</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :company_website, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.text_field :company_website, class: "form-control", required: true, placeholder: "Company Website"%>
 											</div>
 										</div>
 									</div>
@@ -59,7 +65,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Email*</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :email, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.email_field :email, class: "form-control", required: true, placeholder: "Email"%>
 											</div>
 										</div>
 									</div>
@@ -67,7 +73,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Phone</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :phone, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.text_field :phone, class: "form-control", required: true, placeholder: "Phone"%>
 											</div>
 										</div>
 									</div>
@@ -75,7 +81,7 @@
 										<div class="row">
 											<label class="col-sm-4 col-md-3 control-label">Fax</label>
 											<div class="col-sm-8 col-md-7">
-											  <%= f.text_field :fax, class: "form-control", required: true, placeholder: "Event Name"%>
+											  <%= f.text_field :fax, class: "form-control", required: true, placeholder: "Fax"%>
 											</div>
 										</div>
 									</div>

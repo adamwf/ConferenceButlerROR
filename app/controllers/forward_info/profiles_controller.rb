@@ -13,7 +13,7 @@ class ForwardInfo::ProfilesController < ForwardInfo::BaseController
 
 	def create
 		@user = User.new(user_params)
-		@user.update(role: "employee")
+		@user.update(role: "employee", reference_id: current_manager.id)
 		@user.generate_auth_token
 		if @user.save
 			UserMailer.account_confirmation(@user, current_manager).deliver_now

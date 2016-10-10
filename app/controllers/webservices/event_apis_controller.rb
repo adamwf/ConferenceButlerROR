@@ -107,7 +107,8 @@ class Webservices::EventApisController < ApplicationController
 		@invitation = Invitation.find_by(id: params[:user][:invitation_id])
 		if @invitation
 		  	@invitation.update_attributes(status: "accepted")
-		  	 render_message 200, "You are successfully accepted event invitation."
+		  	UserEvent.create(user_id: @invitation.reciever_id, event_id: @invitation.event_id, status: true)
+		  	render_message 200, "You are successfully accepted event invitation."
 		else
 		    render_message 500, "Invalid Invitation."
 		end

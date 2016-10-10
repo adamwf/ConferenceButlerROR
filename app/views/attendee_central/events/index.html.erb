@@ -6,7 +6,7 @@
 	<table class="table table-bordered table-striped ">
 		<thead>
 			<tr>
-				<th>S. No.</th>
+				<!-- <th>S. No.</th> -->
 				<th>Event Name</th>
 				<th>Number of Attendees</th>
 				<th>Pending Attendees</th>
@@ -18,7 +18,7 @@
 			<% count = count+1%>
 			<tbody>
 				<tr class="even">
-					<td><%= count%></td>
+					<!-- <td><%= count%></td> -->
 					<td><%= event.try(:name) %></td>
 					<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>
 					<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>

@@ -3,7 +3,7 @@ class ForwardInfo::HomeController < ForwardInfo::BaseController
 
 
 	def index 
-		@invitations = Invitation.all.order("created_at desc").paginate(:page => params[:page], :per_page => 3)
+		@invitations = Invitation.where(reciever_id: current_manager.id).order("created_at desc").paginate(:page => params[:page], :per_page => 3)
 		@employees = User.where(role: "employee").order("user_name asc")
 		@user = current_manager
 	end

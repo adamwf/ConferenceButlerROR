@@ -14,7 +14,7 @@ class AttendeeCentral::ProfilesController < AttendeeCentral::BaseController
 
 	def create
 		@user = User.new(user_params)
-		@user.update(role: "attendee")
+		@user.update(role: "attendee", reference_id: current_attendee.id)
 		@user.generate_auth_token
 		if @user.save!
 			@qr_image = SocialCode.generate_qr

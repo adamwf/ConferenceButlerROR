@@ -4,7 +4,8 @@
 		<div class="text-right attendee-cent-s">
 			<%= link_to "Add Attendee", new_attendee_central_profile_path, :class => "btn link-msg" %>
 		</div>
-		<% Event.all.map do |event| %>
+		<% @events = Event.all.order('created_at desc').paginate(:page => params[:page], :per_page => 10)%>
+		<% @events.map do |event| %>
 			<div id="accordion" class="panel-group attendee-accor-s">
 				
 				<div>
@@ -72,5 +73,6 @@
 				</div>	
 			</div>									
 		<%end%>
+		<%= will_paginate @events %>
 	</div>
 </div>	

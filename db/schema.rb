@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006154848) do
+ActiveRecord::Schema.define(version: 20161010102158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,18 @@ ActiveRecord::Schema.define(version: 20161006154848) do
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id", using: :btree
+
+  create_table "invite_managers", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "reciever_id"
+    t.string   "company_name"
+    t.string   "email"
+    t.integer  "event_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "invite_managers", ["event_id"], name: "index_invite_managers_on_event_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "sender_id"
@@ -399,6 +411,7 @@ ActiveRecord::Schema.define(version: 20161006154848) do
     t.boolean  "profile_view_to_requested_users"
     t.boolean  "profile_view_to_handle_directory_users"
     t.boolean  "profile_view_to_gab_users"
+    t.integer  "reference_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -427,6 +440,7 @@ ActiveRecord::Schema.define(version: 20161006154848) do
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "invitations", "events"
+  add_foreign_key "invite_managers", "events"
   add_foreign_key "messages", "rooms"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"

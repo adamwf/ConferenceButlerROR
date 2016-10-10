@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   after_validation :geocode  
 
   has_many :devices, dependent: :destroy
+  has_many :subordinates, class_name: "User",foreign_key: "reference_id" 
+  belongs_to :manager, class_name: "User"
   has_many :social_logins, dependent: :destroy 
   has_many :user_events, dependent: :destroy
   has_many :events, through: :user_events

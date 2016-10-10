@@ -3,12 +3,13 @@
 			<div class="row">
 			    <!-- begin col-6 -->
 			    <div class="col-md-12">
-					<ul class="nav nav-tabs">
+			    	<%#= render partial: "/attendee_central/home/tab"%>
+					<!-- <ul class="nav nav-tabs">
 						<li class="active"><a href="#default-tab-1" data-toggle="tab">Events</a></li>
 						<li class=""><a href="#default-tab-2" data-toggle="tab">Attendees</a></li>
 						<li class=""><a href="#default-tab-3" data-toggle="tab">Requests</a></li>
 						<li class=""><a href="#default-tab-4" data-toggle="tab">Request to the Manager</a></li>
-					</ul>
+					</ul> -->
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="default-tab-1">
 							
@@ -16,7 +17,7 @@
 									<h3 class="tab-cont-head clearfix">
 											<div class="col-sm-6 col-xs-6">Create Event</div>
 										<div class="col-sm-6 col-xs-6 text-right attendee-cent-s">
-											<%= link_to "Event List", attendee_central_events_path, :class => "btn link-msg" %>
+											<%= link_to "Event List", attendee_central_home_index_path, :class => "btn link-msg" %>
 											</div>
 										</h3>
 										<%= form_for Event.new, url:  attendee_central_events_path do |f|%>

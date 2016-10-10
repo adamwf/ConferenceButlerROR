@@ -1,5 +1,6 @@
+# require ActivitiesHelper
 class AttendeeCentral::BaseController < ApplicationController
-
+	include ActivitiesHelper
 	layout 'attendee_central'
    helper_method :current_attendee
    

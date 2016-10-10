@@ -135,6 +135,7 @@ Rails.application.routes.draw do
     resources :home
     resources :profiles
     resources :events
+    resources :invitations
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

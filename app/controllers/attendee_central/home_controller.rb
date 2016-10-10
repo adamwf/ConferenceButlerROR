@@ -1,6 +1,6 @@
 require 'will_paginate/array'
 class AttendeeCentral::HomeController < AttendeeCentral::BaseController
-	# before_filter :require_attendee
+	before_filter :require_attendee, except: [:new, :create]
 
 	def index 
 		@user_events = UserEvent.all.order("created_at desc").map(&:event_id).uniq
@@ -9,6 +9,8 @@ class AttendeeCentral::HomeController < AttendeeCentral::BaseController
 			@event_list << Event.find(id)
 		end
 		@event_list = @event_list.paginate(:page => params[:page], :per_page => 10)
+		@invitations = Invitation.where(reciever_id: current_attendee.id).paginate(:page => params[:page], :per_page => 10)
+		@_tab = params[:tab].present? ? params[:tab] : 1
 	end
 
 	def new
