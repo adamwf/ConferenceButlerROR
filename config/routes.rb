@@ -125,6 +125,7 @@ Rails.application.routes.draw do
     resources :friends
     resources :settings do
       collection do
+        post :update_advance
         get :password
         post :update_password
         get :email

@@ -2,6 +2,16 @@ class HandleDirectory::SettingsController < HandleDirectory::BaseController
   before_filter :require_handle_user
 
   def index
+    @user  = current_handle_user
+  end
+  
+  def update_advance
+    @user  = current_handle_user
+    if @user.update(user_params)
+      redirect_to handle_directory_settings_path, notice: 'Your setting has been updated successfully.'
+    else
+      redirect_to :back, notice: "Something went wrong, please try again."
+    end
   end
   
   def password
@@ -74,5 +84,11 @@ class HandleDirectory::SettingsController < HandleDirectory::BaseController
     end
     redirect_to :back, notice: 'Record was successfully updated.'
   end
+  
+  private
+  
+    def user_params
+      params.require(:user).permit(:profile_view_to_requested_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users)
+    end
 
 end

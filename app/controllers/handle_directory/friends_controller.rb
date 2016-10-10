@@ -17,4 +17,3 @@ class HandleDirectory::FriendsController < HandleDirectory::BaseController
   def show
   end
 end
- User.find(4).approve User.first

@@ -419,7 +419,7 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .request-a .myCheckbox{float:none;}
 .btn-add button{padding:5px 12px;}
 
-.in{width:30px; height:30px; border-radius:50%; display:inline-block; background: #49f141; border:3px solid #7a7a7a;}
-.out{width:30px; height:30px; border-radius:50%; display:inline-block; background: #f32323; border:3px solid #7a7a7a;}
+.in-out-block .in{width:30px; height:30px; border-radius:50%; display:inline-block; background: #49f141; border:3px solid #7a7a7a;}
+.in-out-block .out{width:30px; height:30px; border-radius:50%; display:inline-block; background: #f32323; border:3px solid #7a7a7a;}
 .txt-in-out{display:inline-block; vertical-align:top; margin:6px 0 0 0; font-weight:bold;}
 .in-out-block{padding-left:44% !important; display:block; text-align:left;}
