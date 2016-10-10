@@ -2,7 +2,7 @@
 <html>
 	<head>
 
-		<title>Forward Info</title>	
+		<title>Attendee Central</title>	
 		
 	</head>
 	<body class="login-bg">
@@ -11,10 +11,10 @@
 		<div class="login-box">
 			<div class="container">
 				<div class="login-logo">
-					<img src="/logo.png" alt="logo" />
+					<img src="/logoattendee.png" alt="logo" />
 				</div>		 
 				
-				<%= form_for User.new, url: forward_info_home_index_path do |f|%>
+				<%= form_for User.new, url: attendee_central_home_index_path do |f|%>
 
 					<div class="login-box-body">
 						<h1 class="login-heading text-center">Sign Up</h1>
@@ -25,19 +25,19 @@
 										<%= f.text_field :user_name, class: 'form-control', required: true, placeholder: "User Name"%>
 									</div>
 									<div class="form-group">
-										<%= f.text_field :company_name, class: 'form-control', required: true,placeholder: "Company Name" %>
+										<%= f.text_field :first_name, class: 'form-control', required: true,placeholder: "First Name" %>
 									</div>
 									<div class="form-group">
-										<%= f.text_field :company_website, class: 'form-control', required: true,placeholder: "Company Website"%>
+										<%= f.text_field :last_name, class: 'form-control', required: true,placeholder: "Last Name"%>
+									</div>
+									<div class="form-group">
+										<%= f.text_field :email, class: 'form-control', required: true,placeholder: "Email"%>
 									</div>
 									<div class="form-group">
 										<%= f.text_field :phone, class: 'form-control', required: true, placeholder: "Phone"%>
 									</div>
 									<div class="form-group">
 										<%= f.text_field :fax, class: 'form-control', required: true, placeholder: "Fax"%>
-									</div>
-									<div class="form-group">
-										<%= f.text_field :email, class: 'form-control', required: true,placeholder: "Email"%>
 									</div>
 									<div class="form-group">
 										<%= f.password_field :password, class: 'form-control', required: true, placeholder: "Password"%>

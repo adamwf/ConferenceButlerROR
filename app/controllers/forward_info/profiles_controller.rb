@@ -17,7 +17,7 @@ class ForwardInfo::ProfilesController < ForwardInfo::BaseController
 		@user.generate_auth_token
 		if @user.save
 			UserMailer.account_confirmation(@user, current_manager).deliver_now
-			flash[:notice] = "You are successfully create a employee."
+            flash[:notice] = "You are successfully create a employee."
           	redirect_to forward_info_home_index_path
 		else
 			redirect_to forward_info_home_index_path

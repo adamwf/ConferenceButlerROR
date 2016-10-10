@@ -7,6 +7,7 @@ class ForwardInfo::EventsController < ForwardInfo::BaseController
 
 	def show
 		@employee = User.find_by_id(params[:id])
+		# @viewer = @employee.profile_views
 	end
 
 	def edit

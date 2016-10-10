@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
   has_many :events, through: :user_events
   has_one  :social_code, dependent: :destroy
   has_many :videos, dependent: :destroy
-  has_many :invitations , through: :user_invitations
-  has_many :user_invitations , dependent: :destroy
+  has_many :user_invitations, dependent: :destroy
+  has_many :invitations, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :advertisements, dependent: :destroy
   has_many :activities, dependent: :destroy

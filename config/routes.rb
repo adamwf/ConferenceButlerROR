@@ -159,6 +159,19 @@ Rails.application.routes.draw do
     resources :events
     resources :invitations
     resources :friends
+    resources :settings do
+      collection do
+        post :update_advance
+        get :password
+        post :update_password
+        get :email
+        post :update_email
+        get :status
+        post :update_status
+        get :remind_me
+        post :update_remind_me
+      end
+    end
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

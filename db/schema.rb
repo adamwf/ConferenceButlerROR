@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20161010102158) do
 
   # These are extensions that must be enabled in order to support this database
@@ -120,14 +121,14 @@ ActiveRecord::Schema.define(version: 20161010102158) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "category"
     t.string   "event_type"
     t.integer  "no_of_availability"
-    t.boolean  "availability",       default: true
+    t.boolean  "availability"
     t.integer  "user_id"
   end
 
@@ -360,8 +361,8 @@ ActiveRecord::Schema.define(version: 20161010102158) do
   add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
   create_table "user_invitations", force: :cascade do |t|
-    t.integer  "user_id"
     t.integer  "event_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -422,8 +423,8 @@ ActiveRecord::Schema.define(version: 20161010102158) do
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "title"
-    t.text     "discription"
+    t.string   "title",       default: ""
+    t.text     "discription", default: ""
     t.boolean  "status",      default: true
     t.string   "category"
   end

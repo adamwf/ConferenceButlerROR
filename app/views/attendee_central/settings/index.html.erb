@@ -1,0 +1,57 @@
+<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head">
+				<h3>Account Settings</h3>
+			</div>
+			<div class="box-body">
+				<div class="content-a">
+					<%= render 'heading' %>
+					<div class="tab-content">
+						<div id="menu1" class="tab-pane fade in active">
+							<div class="advanced-setting-a">
+								<div class="txt-a">
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+								</div>
+								<%= form_for @user, :url => update_advance_handle_directory_settings_path, :method => :post do |f| %>
+								<div class="checkbox-block-a">
+									<div class="checkbox">
+										<label class="myCheckbox"> <%= f.check_box :profile_view_to_requested_users%> <span></span></label>
+										<div class="checkbox-text">
+											To have your Profile visible to those that request to Follow you and that you accept.
+										</div>
+									</div>
+									<div class="checkbox">
+										<label class="myCheckbox"> <%= f.check_box :profile_view_to_handle_directory_users%> <span></span></label>
+										<div class="checkbox-text">
+											To have your Profile info appear in our Handle Directory of registered Users.
+										</div>
+									</div>
+									<div class="checkbox">
+										<label class="myCheckbox"> <%= f.check_box :profile_view_to_gab_users%> <span></span></label>
+										<div class="checkbox-text">
+											To have your profile info appear to those users in your GAB-only.
+										</div>
+									</div>
+								</div>
+								<div class="txt-a">
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+								</div>
+								<div class="txt-a">
+									Lorem Ipsum is simply dummy text of the printing and typesetting.
+								</div>
+								<div class="txt-a">
+									Lorem Ipsum is simply dummy text of the printing.
+								</div>
+							</div>
+							<div class="offset-44">
+								<%= f.button "Save",:class => "btn btn-blue" %>
+							</div>
+							<%end%>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

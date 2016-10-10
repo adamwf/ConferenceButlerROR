@@ -8,7 +8,7 @@
 				<div class="content-a">
 					<div class="row">
 						<div class="col-md-12">
-							<%= form_tag(handle_directory_friends_path, :method => "get", id: "search-form", class: "form-group detail-form") do %>
+							<%= form_tag(attendee_central_friends_path, :method => "get", id: "search-form", class: "form-group detail-form") do %>
 								<div class="row">
 									<div class="col-sm-4 col-md-5 m-b-20">
   										<%= select_tag("search[order_by]", options_for_select([["First Name", "first_name"],["User Name","user_name"],["Email", "email"]], params[:search].present? ? params[:search][:order_by] : []), :class => 'form-control') %>

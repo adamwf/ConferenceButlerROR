@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'devise'
 gem 'cancan'
+#gem 'rack', '~> 1.6.0'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_skin'
 gem 'active_admin_theme'
@@ -38,6 +39,7 @@ gem "rails-erd"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq'
+ gem 'psych'
 gem 'unicorn'
 gem 'redis'
 gem 'gcm'

@@ -28,94 +28,35 @@
 											</div>
 											<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 											  <div class="panel-body">
+											  <% @employee.profile_views.each do |profile| %>
+											  		<% viewer = User.find(profile.viewer_id)%>
 												<div class="event-block">
 													<div class="row">
+
 														<div class="col-sm-8 col-md-8">
 															<div class="event-detail">
 																<div class="company-img">
 																	<img src="/img1.png" class="img-circle" alt="" />
 																</div>
 																<div class="company-info">
-																	<p class="f-w-600">John</p>
-																	<p>Company</p>
-																	<p>23:59 PM</p>
+																	<p class="f-w-600"><%=viewer.user_name%></p>
+																	<p><%=viewer.company_name%></p>
+																	<p><%=viewer.created_at.strftime("%I:%m %p")%></p>
 																</div>
 															</div>
 														</div>
+
 														<div class="col-sm-4 col-md-4">
 															<div class="event-btn">
-																<p class="f-w-600">New Street , Main lane 1234, Block A<p>
-																<p class="f-w-600">New Delhi</p>
+																<p ><%=viewer.address%><p>
+																<p class="f-w-600"><%=viewer.company_website%></p> 
+																<p>
 															</div>
 														</div>
+
 													</div>
 												</div>
-												<div class="event-block">
-													<div class="row">
-														<div class="col-sm-8 col-md-8">
-															<div class="event-detail">
-																<div class="company-img">
-																	<img src="/img1.png" class="img-circle" alt="" />
-																</div>
-																<div class="company-info">
-																	<p class="f-w-600">John</p>
-																	<p>Company</p>
-																	<p>23:59 PM</p>
-																</div>
-															</div>
-														</div>
-														<div class="col-sm-4 col-md-4">
-															<div class="event-btn">
-																<p class="f-w-600">New Street , Main lane 1234, Block A<p>
-																<p class="f-w-600">New Delhi</p>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="event-block">
-													<div class="row">
-														<div class="col-sm-8 col-md-8">
-															<div class="event-detail">
-																<div class="company-img">
-																	<img src="/img1.png" class="img-circle" alt="" />
-																</div>
-																<div class="company-info">
-																	<p class="f-w-600">John</p>
-																	<p>Company</p>
-																	<p>23:59 PM</p>
-																</div>
-															</div>
-														</div>
-														<div class="col-sm-4 col-md-4">
-															<div class="event-btn">
-																<p class="f-w-600">New Street , Main lane 1234, Block A<p>
-																<p class="f-w-600">New Delhi</p>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="event-block">
-													<div class="row">
-														<div class="col-sm-8 col-md-8">
-															<div class="event-detail">
-																<div class="company-img">
-																	<img src="/img1.png" class="img-circle" alt="" />
-																</div>
-																<div class="company-info">
-																	<p class="f-w-600">John</p>
-																	<p>Company</p>
-																	<p>23:59 PM</p>
-																</div>
-															</div>
-														</div>
-														<div class="col-sm-4 col-md-4">
-															<div class="event-btn">
-																<p class="f-w-600">New Street , Main lane 1234, Block A<p>
-																<p class="f-w-600">New Delhi</p>
-															</div>
-														</div>
-													</div>
-												</div>
+												<%end%>
 											  </div>
 											</div>
 										</div>

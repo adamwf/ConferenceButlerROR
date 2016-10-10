@@ -376,9 +376,10 @@ table {border: 2px solid #DDDDDD !important;}
 .image-block{margin-top:20px;}
 .image-block > img {border: 4px solid #30C1DB;}
 .nav-tabs a {color: #FFFFFF !important;}
-.nav-settings a {color: #000 !important;}
+.nav-settings a {color: #A0A0A0 !important;}
 .tab-cont-head {border-bottom: 1px solid #000000;color: #252525;margin: 0;padding: 20px 6px 8px !important;}
 .main-block .nav.nav-tabs{margin:0;}
+.tab-content {background-color: #fff;}
 
 /**********************************akanksha************************************************************/
 

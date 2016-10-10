@@ -7,6 +7,7 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs nav-justified box-nav" role="tablist">
 						<li role="presentation" class="active"><a href="#event" aria-controls="event" role="tab" data-toggle="tab">Event Invitations</a></li>
+
 						<li role="presentation"><a href="#pastdetail" aria-controls="pastdetail" role="tab" data-toggle="tab">Past Events Details</a></li>
 						<li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Change Password</a></li>
 					</ul>
@@ -20,7 +21,7 @@
 								<!-- <div> -->
 								<% @invitations.each do |invitation| %>
 
-									<% if invitation.event.time.to_date >= Date.today && invitation.status.eql?("pending") %>
+									<% if invitation.event.end_time.to_date >= Time.current && invitation.status.eql?("pending") %>
 									
 										<div class="event-block">
 											<div class="row">
@@ -31,11 +32,11 @@
 													</div>
 													<div class="event-detail">
 														<div class="event-left">Event  Organiser</div>
-														<div class="event-right"><%= invitation.event.organizer%></div>
+														<div class="event-right"><%= User.find_by(id:invitation.event.user_id).user_name%></div>
 													</div>
 													<div class="event-detail">
 														<div class="event-left">Event  Date & Time</div>
-														<div class="event-right"><%= invitation.event.time.strftime("%B %d at %I:%M %p")%></div>
+														<div class="event-right"><%= invitation.event.start_time.strftime("%B %d at %I:%M %p")%></div>
 													</div>
 													<div class="event-detail">
 														<div class="event-left">Event  Address</div>
