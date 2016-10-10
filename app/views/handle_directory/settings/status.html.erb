@@ -1,0 +1,39 @@
+<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head brown-bg">
+				<h3>Account Settings</h3>
+			</div>
+			<div class="box-body">
+				<div class="content-a">
+					<%= render 'heading' %>
+					<div class="tab-content">
+						<div id="menu4" class="tab-pane fade in active">
+							<div class="status-a">
+								<div class="txt-hdng">
+									Show status as availabele when online.
+								</div>
+							    <%= form_for @user, :url => update_status_handle_directory_settings_path, :method => :post, :html => {:class => 'radio-btn'} do |f| %>
+									<div class="radio-btn-inner">
+										<label>
+											<%= f.radio_button :availability, true, :checked => true%>
+											<span>Opt-in</span></label>
+									</div>
+									<div class="radio-btn-inner">
+										<label>
+											<%= f.radio_button :availability, false%>
+											<span>Opt-out</span></label>
+									</div>
+									<div class="offset-44">
+										<%= f.button "Save", :class => 'btn btn-black' %>
+									</div>
+								<%end%>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

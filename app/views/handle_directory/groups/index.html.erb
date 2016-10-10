@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Image</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= group.group_name %></td>
+        <td><%= group.user.user_name %></td>
+        <td><%= image_tag(group.group_image.url, :class => "img-responsive img-thumbnail") %></td>
+        <td><%= link_to 'Show', [:handle_directory, group] %></td>
+        <% if group.user == current_handle_user %>
+        	<td><%= link_to 'Edit', edit_handle_directory_group_path(group) %></td>
+        <%end%>
+        <td><%= link_to 'Destroy', [:handle_directory, group], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Group', new_handle_directory_group_path %>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+
+
  # root to: "admin/dashboard#index"
 
   devise_for :users
@@ -118,6 +120,26 @@ Rails.application.routes.draw do
     resources :messages
     resources :home
     resources :profiles
+    resources :groups do
+      member do
+        get :mute
+        get :unmute
+      end
+    end
+    resources :friends
+    resources :settings do
+      collection do
+        post :update_advance
+        get :password
+        post :update_password
+        get :email
+        post :update_email
+        get :status
+        post :update_status
+        get :remind_me
+        post :update_remind_me
+      end
+    end
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'
@@ -136,6 +158,7 @@ Rails.application.routes.draw do
     resources :profiles
     resources :events
     resources :invitations
+    resources :friends
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

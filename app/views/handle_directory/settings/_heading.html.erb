@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs nav-settings">
+	<li class="<%= nav_action_class('index')%>">
+	  <%= link_to 'Advance Setting', handle_directory_settings_path%>
+	</li>
+	<li class="<%= nav_action_class('password')%>">
+	   <%= link_to 'Change Password', password_handle_directory_settings_path%>
+	</li>
+	<li class="<%= nav_action_class('email')%>">
+	   <%= link_to 'Change Email', email_handle_directory_settings_path%>
+	</li>
+	<li class="<%= nav_action_class('status')%>">
+	  <%= link_to 'Status', status_handle_directory_settings_path%>
+	</li>
+	<li class="<%= nav_action_class('remind_me')%>">
+	   <%= link_to 'Remind me later', remind_me_handle_directory_settings_path%>
+	</li>
+</ul>

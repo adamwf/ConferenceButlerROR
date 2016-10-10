@@ -60,7 +60,7 @@ class Webservices::RequestApisController < ApplicationController
 		if params[:user][:keyword].eql?("")
 			render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @user.friends.order("#{params[:sort]} asc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
 		else
-		   friends = @user.friendships.where("keyword LIKE ?", "%#{params[:user][:keyword]}%") & @user.friendships.where(pending: false)
+		   friends = @user.friendships.where("keyword LIKE ? AND pending = ?", "%#{params[:user][:keyword]}%", false) & @user.friendships.where(pending: false)
 		    @friends = friends.map{|key| key.friend}		   	
 		   	render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
 		end

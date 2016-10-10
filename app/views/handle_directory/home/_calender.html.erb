@@ -4,7 +4,7 @@
   <% events.each do |event| %>
   	<%if event.end_time > Time.current %>
 	    <div>
-	     <a class="btn btn-event"<%= link_to "#{truncate(event.name, omision: "...", length: 8)}" %></a>
+	     <a class="btn btn-event"<%= link_to "#{truncate(event.name, omision: "...", length: 6)}" %></a>
 	    </div>
 	<%end%>
   <% end %>

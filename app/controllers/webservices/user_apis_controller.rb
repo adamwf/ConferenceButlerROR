@@ -244,18 +244,11 @@
 	end
 
 	def set_reminder
+		@reminder = Reminder.create(user: @user)
 		unless params[:delay_time].eql?("never")
-			if @user.reminder.eql?(nil)
-				Reminder.create(user: @user, delay_time: params[:delay_time], status: true)
-			else
-				@user.reminder.update_attributes(delay_time: params[:delay_time], status: true)
-			end
+			@reminder.update_attributes(delay_time: params[:delay_time], status: true)
 		else
-			if @user.reminder.eql?(nil)
-				Reminder.create(user: @user, delay_time: params[:delay_time], status: false)
-			else
-				@user.reminder.update_attributes(delay_time: params[:delay_time], status: false)
-			end
+			@reminder.update_attributes(delay_time: params[:delay_time], status: false)
 		end
 		@reminder = Reminder.find_by(user: @user)
 		render :json =>  {:responseCode => 200,:responseMessage =>"Your reminder has been find successfully.",:reminder => @reminder}

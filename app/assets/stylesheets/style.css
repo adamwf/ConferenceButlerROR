@@ -358,7 +358,6 @@ form input[type="text"], form input[type="password"], form input[type="email"], 
 .y-manual-confm .btn.btn-default{background: #ca0d0d!important;border-color: #ca0d0d!important;color:#fff;}
 .y-mtb{margin:10px 0;}
 
-
 form input[type="text"], form input[type="password"], form input[type="email"], form input[type="number"], form input[type="url"], form input[type="tel"], form input[type="date"], form textarea {
     border: 1px solid #B1B1B1 !important;border-radius: 30px!important;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
     font-size: 0.95em;outline: medium none;padding: 8px 10px 7px;width: 100%;}
@@ -377,5 +376,73 @@ table {border: 2px solid #DDDDDD !important;}
 .image-block{margin-top:20px;}
 .image-block > img {border: 4px solid #30C1DB;}
 .nav-tabs a {color: #FFFFFF !important;}
+.nav-settings a {color: #000 !important;}
 .tab-cont-head {border-bottom: 1px solid #000000;color: #252525;margin: 0;padding: 20px 6px 8px !important;}
 .main-block .nav.nav-tabs{margin:0;}
+
+/**********************************akanksha************************************************************/
+
+/*---handle-sccount-setting---*/
+.content-a{padding:20px;}
+.content-a .tab-content{background:transparent; border:0;}
+.content-a .nav-tabs{background:transparent;}
+.content-a .nav-tabs a{color: #000;}
+.content-a .nav.nav-tabs > li  > a:hover{ border-color:#fff #fff #ddd;}
+.content-a .nav.nav-tabs > li  > a:hover, .content-a .nav.nav-tabs > li  > a:focus{background-color:#fff !important;}
+.content-a .nav-tabs > li.active > a, .content-a .nav-tabs > li.active > a:focus, .content-a .nav-tabs > li.active > a:hover{background:#fff !important; border-color: #dddddd #dddddd rgba(0, 0, 0, 0) !important;}
+.credit-card-info-block{padding:0 30px;}
+.group-2{display:inline-block;}
+.btn-black{background-color: #000; color: #fff; padding:8px 30px;}
+.btn-black:hover, .btn-black:focus{color: #fff;}
+.radio-btn-inner{margin:25px 0;}
+.radio-btn .radio-btn-inner label{font-weight:500;}
+.radio-btn .radio-btn-inner label span{padding-left:30px; display:inline-block; vertical-align:top;}
+.radio-btn .radio-btn-inner label input{width:16px; height:16px;}
+.offset-44{padding-left:44px;}
+.txt-hdng{font-weight:600;}
+.txt-a{line-height:25px; margin:0 0 16px;}
+.advanced-setting-a .checkbox-text{margin: 0 0 20px 35px;}
+
+/*---handle-feeds---*/
+.video-block{border:1px solid #dfe1e5;}
+.feed-inner-blocks{border:1px solid #dfe1e5;}
+.feed-txt-block{padding: 15px 20px 15px;}
+.date-time-block-a span{font-size:14px;}
+.date-time-block-a{margin:0 0 10px 0;}
+.video-block .feed-heading{padding:0 10px 0 0;}
+.video-block .feed-txt{padding:0 0 0 5px;}
+.feed-heading{font-weight:600; line-height:25px; font-size:16.3px; margin:0 0 10px 0;}
+.feed-txt{font-weight:500; font-size:15.3px; line-height:25px; margin:0 0 10px 0;}
+.social-icon-a{display:inline-block; vertical-align:top;}
+.social-icon-a img{margin:5px 0 0 0;}
+.social_profile-a{padding:15px 0;}
+.social_profile-a .checkbox{margin:0;}
+.social_profile-a .checkbox-text{margin: 0 0 0px 30px; font-size:16px; font-weight:normal;}
+.profile-detail-block{display:table;}
+.detail-a{display:table-cell; vertical-align:middle; width:40%;}
+.remove-a{display:table-cell; vertical-align:middle; width:40%;}
+.profile-detail-block{padding:3px 0;}
+.profile-img-blk-a img{border-radius:50%;}
+.manage-info-block{margin:1% 5%;}
+.profile-main-block{margin:0 0 0.8em;}
+.btns-a button{width:160px;}
+
+/*---Add friend to chat---*/
+.user-block .block-a{display:block; padding:15px 0; border-bottom:1px solid #7a7a7a;}
+.user-block .request-a{display:inline-block; vertical-align:top; float:none;}
+.user-block .request-a.middle-a{padding-left:10px; width:62%;}
+.user-block .request-a.middle-a .rqst-heading{font-size:16px; margin:0; color: #4a4a4a; font-weight:600;}
+.user-block .request-a.right-a{width:115px;}
+.profile-a{width:75px; border-radius:10px; border:1px solid #c1c1c1; overflow:hidden; border:3px solid #a6a6a6;}
+.profile-a img{width:100%; height:auto;}
+.link-a, .link-a:hover{display:block; font-size:16px; text-decoration:none; margin:6px 0; color: #00bbcb; text-decoration:none;}
+.username-a{font-size:16px; color: #4a4a4a; font-weight:500;}
+.request-a .checkbox{margin:0;}
+.request-a .myCheckbox{float:none;}
+.btn-add button{padding:5px 12px;}
+
+.in-out-block .in{width:30px; height:30px; border-radius:50%; display:inline-block; background: #49f141; border:3px solid #7a7a7a;}
+.in-out-block .out{width:30px; height:30px; border-radius:50%; display:inline-block; background: #f32323; border:3px solid #7a7a7a;}
+.txt-in-out{display:inline-block; vertical-align:top; margin:6px 0 0 0; font-weight:bold;}
+.in-out-block{padding-left:44% !important; display:block; text-align:left;}
+
