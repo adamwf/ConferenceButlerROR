@@ -3,9 +3,10 @@ class ForwardInfo::HomeController < ForwardInfo::BaseController
 
 
 	def index 
-		@invitations = Invitation.all.order("created_at desc").paginate(:page => params[:page], :per_page => 3)
-		@employees = User.where(role: "employee").order("user_name asc")
 		@user = current_manager
+		@invitations = Invitation.where(reciever_id: @user.id).order("created_at desc").paginate(:page => params[:page], :per_page => 3)
+		p"=-=-=-=-=-=#{@invitations.inspect}-=-=-=-=-=-=-"
+		@employees = User.where(role: "employee").order("user_name asc")
 	end
 	
 	def show
@@ -19,6 +20,7 @@ class ForwardInfo::HomeController < ForwardInfo::BaseController
 	def create
 		@user = User.new(user_params)
 		@user.update(role: "manager")
+		@user.generate_auth_token
 		if @user.save
 			UserMailer.signup_confirmation(@user).deliver_now
 			flash[:notice] = "You are successfully registered!"

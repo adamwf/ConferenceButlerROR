@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004071448) do
+ActiveRecord::Schema.define(version: 20161007112123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 20161004071448) do
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
+  create_table "forward_profiles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "forward_profiles", ["user_id"], name: "index_forward_profiles_on_user_id", using: :btree
+
   create_table "friendships", force: :cascade do |t|
     t.integer "friendable_id"
     t.integer "friend_id"
@@ -163,6 +172,16 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   end
 
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "reciever_id"
+    t.string   "status",      default: "pending"
+    t.integer  "event_id"
+    t.boolean  "mode",        default: true
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
 
   create_table "messages", force: :cascade do |t|
     t.integer  "sender_id"
@@ -326,6 +345,16 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
   add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
+  create_table "user_invitations", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_invitations", ["event_id"], name: "index_user_invitations_on_event_id", using: :btree
+  add_index "user_invitations", ["user_id"], name: "index_user_invitations_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                                  default: "",    null: false
     t.string   "encrypted_password",                     default: "",    null: false
@@ -391,6 +420,7 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_foreign_key "attendees", "users"
   add_foreign_key "devices", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "forward_profiles", "users"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users"
@@ -406,5 +436,7 @@ ActiveRecord::Schema.define(version: 20161004071448) do
   add_foreign_key "trendings", "users"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
+  add_foreign_key "user_invitations", "events"
+  add_foreign_key "user_invitations", "users"
   add_foreign_key "videos", "users"
 end

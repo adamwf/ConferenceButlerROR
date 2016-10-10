@@ -40,7 +40,8 @@ Rails.application.routes.draw do
         post :accept_request
         post :reject_request
         post :pending_request
-        post :contact_list 
+        post :contact_list
+        post :profile_view 
       end
     end
     resources :event_apis do
@@ -72,7 +73,7 @@ Rails.application.routes.draw do
 
   resource  :groups ,except: [:destroy] do
     collection do
-      get :group_list
+      post :group_list
       put :update
       post :mute_group
       post :search_group
@@ -127,9 +128,10 @@ Rails.application.routes.draw do
     get '/login' => 'sessions#new'
     post '/login' => 'sessions#create'
     delete '/logout' => 'sessions#destroy'
-    # resources :messages
+    resources :messages
     resources :home
     resources :profiles
+    resources :events
     get '/passwords/forget_password' => 'passwords#forget_password'
     post '/passwords/reset_password' => 'passwords#reset_password'#, via: [:get, :post]
     post 'passwords/change_password/:id' => 'passwords#change_password'

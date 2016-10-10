@@ -1,12 +1,9 @@
-<section class="main-block">
-			<div class="container">
-							<h3 class="page-header">Event list</h3>
-			<!-- end page-header -->
-			
-			<!-- begin row -->
+<% count = 0%>
+<% if current_attendee.role.eql?("organiser") %>
+	<section class="main-block">
+		<div class="container">
 			<div class="row">
-			    <!-- begin col-6 -->
-			    <div class="col-md-12">
+				<div class="col-md-12">
 					<ul class="nav nav-tabs link-msg">
 						<li class="active"><a href="#default-tab-1" data-toggle="tab">Events</a></li>
 						<li class=""><a href="#default-tab-2" data-toggle="tab">Attendees</a></li>
@@ -16,7 +13,7 @@
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="default-tab-1">
 							<div class="text-right attendee-cent-s">
-								<button class="btn btn-primary link-msg m-r-5 m-b-5" type="button"><a href="create-event.html">Create Event</a></button>
+								<%= link_to "Create Event", new_attendee_central_event_path, :class => "btn link-msg" %>
 							</div>
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped ">
@@ -29,193 +26,130 @@
 											<th>Action</th>											
 										</tr>
 									</thead>
-									<% @user_events.each do |user_event|%>
-									<tbody>
-										<tr class="even">
-											<td>1</td>
-											<td><%= user_event.event.name %></td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>2</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>3</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>4</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>5</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>	
-										<tr class="odd">
-											<td>6</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>7</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>8</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="even">
-											<td>9</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>
-										<tr class="odd">
-											<td>10</td>
-											<td>Loram Ipsum dolor</td>
-											<td>30</td>
-											<td>5</td>
-											<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
-										</tr>										
-									</tbody>
+									
+									<% @event_list.each do |event| %>
+										<% count = count+1%>
+										<tbody>
+											<tr class="even">
+												<td><%= count%></td>
+												<td><%= event.try(:name) %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, true).count %></td>
+												<td><%= UserEvent.where("(event_id= ? AND status= ?)", event.id, false).count %></td>
+												<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
+											</tr>								
+										</tbody>
+									<%end%>
 								</table>
+								<%= will_paginate @event_list %>
 								<div class="text-center">
-									<ul class="pagination pagination-sm m-t-0 m-b-10">
-										<li class="disabled"><a href="javascript:;">«</a></li>
-										<li class="active"><a href="javascript:;">1</a></li>
-										<li><a href="javascript:;">2</a></li>
-										<li><a href="javascript:;">3</a></li>
-										<li><a href="javascript:;">4</a></li>
-										<li><a href="javascript:;">5</a></li>
-										<li><a href="javascript:;">»</a></li>
-									</ul>
+									<!-- <ul class="pagination"> -->
+										
+									<!-- </ul> -->
 								</div>
 							</div>
-						</div>
+						</div>	
 						<div class="tab-pane fade" id="default-tab-2">
 							<div class="row">
 								<!-- begin col-6 -->
 								<div class="col-md-12">
-								<div class="text-right attendee-cent-s">
-									<button class="btn btn-primary m-r-5 m-b-5" type="button"><a href="attendee-add-attendee.html">Add Attendee</button>
-								</div>
+									<div class="text-right attendee-cent-s">
+										<%= link_to "Add Attendee", new_attendee_central_profile_path, :class => "btn link-msg" %>
+									</div>
+									<% Event.all.map do |event| %>
 									<div id="accordion" class="panel-group attendee-accor-s">
-									
-									<div>
-										<div class="event-detail">
-											<div class="event-left y-e1">Event Name</div>
-											<div class="event-right y-e2">Lorem ipsum dolor sit am</div>
+										
+										<div>
+											<div class="event-detail">
+												<div class="event-left y-e1">Event Name</div>
+												<div class="event-right y-e2"><%= event.name %></div>
+											</div>
+											<div class="event-detail">
+												<div class="event-left y-e1">Organiser</div>
+												<div class="event-right y-e2"><%= User.find_by(id: event.user_id).user_name%></div>
+											</div>
+											<div class="event-detail">
+												<div class="event-left y-e1">Event Date & Time</div>
+												<div class="event-right y-e2"><%= event.start_time %></div>
+											</div>
+											<div class="event-detail">
+												<div class="event-left y-e1">Address</div>
+												<div class="event-right y-e2"><%= event.location %></div>
+											</div>
 										</div>
-										<div class="event-detail">
-											<div class="event-left y-e1">Date Of Creation</div>
-											<div class="event-right y-e2">John Ronald</div>
-										</div>
-										<div class="event-detail">
-											<div class="event-left y-e1">Date</div>
-											<div class="event-right y-e2">12-Dec-2016</div>
-										</div>
-										<div class="event-detail">
-											<div class="event-left y-e1">Address</div>
-											<div class="event-right y-e2">John Ronald</div>
-										</div>
-									</div>
-									
-									<div class="panel panel-inverse overflow-hidden">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<a href="#collapseOne" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
-													<i class="fa fa-plus-circle pull-right"></i> 
-													List Of Attendee
-												</a>
-											</h3>
-										</div>
-										<div class="panel-collapse collapse" id="collapseOne" aria-expanded="false" style="height: 0px;">
-											<div class="panel-body">
-												<div class="attendee-ul-s">
-													<ul>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-													</ul>
+										
+										<div class="panel panel-inverse overflow-hidden">
+											<div class="panel-heading">
+												<h3 class="panel-title">
+													<a href="#collapseOne" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
+														<i class="fa fa-plus-circle pull-right"></i> 
+														List Of Attendee
+													</a>
+												</h3>
+											</div>
+											<div class="panel-collapse collapse" id="collapseOne" aria-expanded="false" style="height: 0px;">
+												<div class="panel-body">
+													<div class="attendee-ul-s">
+														<ul>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+														</ul>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="panel panel-inverse overflow-hidden">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
-													<i class="fa fa-plus-circle pull-right"></i> 
-													Pending Attendee
-												</a>
-											</h3>
-										</div>
-										<div class="panel-collapse collapse" id="collapseTwo" aria-expanded="false">
-											<div class="panel-body">
-												<div class="attendee-ul-s">
-													<ul>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-													</ul>
+										<div class="panel panel-inverse overflow-hidden">
+											<div class="panel-heading">
+												<h3 class="panel-title">
+													<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
+														<i class="fa fa-plus-circle pull-right"></i> 
+														Pending Attendee
+													</a>
+												</h3>
+											</div>
+											<div class="panel-collapse collapse" id="collapseTwo" aria-expanded="false">
+												<div class="panel-body">
+													<div class="attendee-ul-s">
+														<ul>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+														</ul>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="panel panel-inverse overflow-hidden">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<a href="#collapseThree" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
-													<i class="fa fa-plus-circle pull-right"></i> 
-													List Of Attendee
-												</a>
-											</h3>
-										</div>
-										<div class="panel-collapse collapse" id="collapseThree" aria-expanded="false">
-											<div class="panel-body">
-												<div class="attendee-ul-s">
-													<ul>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-														<li>Attendee Name</li>
-													</ul>
+										<div class="panel panel-inverse overflow-hidden">
+											<div class="panel-heading">
+												<h3 class="panel-title">
+													<a href="#collapseThree" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="false">
+														<i class="fa fa-plus-circle pull-right"></i> 
+														List Of Attendee
+													</a>
+												</h3>
+											</div>
+											<div class="panel-collapse collapse" id="collapseThree" aria-expanded="false">
+												<div class="panel-body">
+													<div class="attendee-ul-s">
+														<ul>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+															<li>Attendee Name</li>
+														</ul>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
+									<%end%>
 									<div class="panel panel-inverse overflow-hidden">
 										<div class="panel-heading">
 											<h3 class="panel-title">
@@ -368,10 +302,11 @@
 										<button class="btn btn-primary m-r-5 m-b-5" type="button">Send Attendee Request To Manager</button>
 									</div>
 								</div>
-							</form>
-								
+							</form>			
+						</div>
 					</div>
-
 				</div>
-			</div>
-		</section>
+			</section>
+		</div>
+	</div>
+<%end%>

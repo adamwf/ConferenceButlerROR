@@ -1,7 +1,7 @@
  class Webservices::UserApisController < ApplicationController
 	
-	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password]
-	before_filter :authentication, :except => [:sign_up,:otp_confirm, :otp_resend,:sign_in, :social_login, :forget_password]
+	before_filter :find_user,except: [:sign_up, :sign_in, :otp_confirm, :otp_resend, :social_login, :forget_password, :attendee_sign_in, :forward_sign_in]
+	before_filter :authentication, :except => [:sign_up,:otp_confirm, :otp_resend,:sign_in, :social_login, :forget_password, :attendee_sign_in, :forward_sign_in]
 	before_filter :find_friend,only: [:privacy_status, :update_privacy_status]
 	
 	def sign_up
@@ -90,7 +90,7 @@
   	end
 
   	def attendee_sign_in
-	    if @user = User.find_by_user_name(params[:user][:user_name]) || User.find_by_email(params[:user][:email].downcase)
+	    if @user = User.find_by_user_name(params[:user][:email]) || User.find_by_email(params[:user][:email].downcase)
 	        if (@user.role.eql?("attendee") && @user.valid_password?(params[:user][:password]))
 		        @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type]).update(user_id: @user.id)
 	        	render :json =>  {:responseCode => 200,:responseMessage =>"User login successfully.",:user => @user}
@@ -103,7 +103,7 @@
   	end
 
   	def forward_sign_in
-	    if @user = User.find_by_user_name(params[:user][:user_name]) || @user = User.find_by_email(params[:user][:email].downcase)
+	    if @user = User.find_by_user_name(params[:user][:email]) || @user = User.find_by_email(params[:user][:email].downcase)
 	        if (@user.role.eql?("employee") && @user.valid_password?(params[:user][:password]))
 		        @device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type]).update(user_id: @user.id)
 	        	render :json =>  {:responseCode => 200,:responseMessage =>"User login successfully.",:user => @user}
@@ -138,10 +138,11 @@
 		else
 			@user = User.new(social_user_params)
 			@user.generate_auth_token
-			@user.update_attributes(password: params[:user][:u_id], password_confirmation: params[:user][:u_id], remote_image_url: params[:user][:image])
+			@user.update_attributes!(password: params[:user][:u_id], password_confirmation: params[:user][:u_id])#, remote_image_url: params[:user][:image])
 	  		if @user.save
 	    		@device = Device.find_or_create_by(device_id: params[:device_id], device_type: params[:device_type], user_id: @user.id)
 	  			UserMailer.signup_confirmation(@user).deliver_now
+	  			render :json =>  {:responseCode => 200,:responseMessage =>"Your account created successfully.",:user => @user }
 			else
 		    	render_message 500, @user.errors.full_messages.first
 			end

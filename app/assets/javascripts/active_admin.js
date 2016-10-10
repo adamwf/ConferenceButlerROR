@@ -2,6 +2,9 @@
 //= require custom
 //= require heatmap
 //= require gmaps-heatmap
+//=require jquery-ui
+//= require active_admin_datetimepicker
+
 // $(document).ready(function(){
 
 
@@ -96,3 +99,42 @@
 //     }
 
 // });
+$(document).ready(function(){
+    if ($('#event_event_type :selected').text() =='Without Signup'){
+      $("#event_no_of_availability_input").hide();
+    }
+    else if($('#event_event_type :selected').text() =='With Signup')
+    {
+      $("#event_no_of_availability_input").show();
+    }
+
+    $("#event_event_type").change(function(){
+        var a=$(this).find('option:selected').text();
+        if(a == 'Without Signup')
+        {
+            $("#event_no_of_availability_input").hide();
+        }
+        else if (a == 'With Signup')
+        {
+            $("#event_no_of_availability_input").show();
+        }  
+    });
+    
+    var start_time = false;
+    $("#event_start_time").datetimepicker({
+        onChangeDateTime: function (selectedDate) {
+            end_time = $("#event_end_time").val('');
+        }
+    });
+    $("#event_end_time").datetimepicker({
+        onChangeDateTime: function (selectedDate) {
+            start_time = $("#event_start_time").val();
+            end_time = $("#event_end_time").val();
+        
+            if (start_time >= end_time) {
+                alert("Please select a valid time.")
+                $("#event_end_time").val('');
+            }
+        }
+    });
+});

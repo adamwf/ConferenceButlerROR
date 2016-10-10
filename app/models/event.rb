@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
 	has_many :invitations, dependent: :destroy
-	# def start_time
- #        self.time  #Where 'start' is a attribute of type 'Date' accessible through MyModel's relationship
- #    end
+	has_many :user_events, dependent: :destroy
+	has_many :users, through: :user_events
+
 end

@@ -78,7 +78,7 @@ ActiveAdmin.register User do
         f.input :password_confirmation
       end
       f.input :address
-      f.input :role, :as => :select, :collection =>['organizer', 'manager','employee','attendee','user'] 
+      f.input :role, :as => :select, :collection =>['organiser', 'manager','employee','attendee','user'], include_blank: false  
       f.input :image
       f.input :tc_accept
     end
