@@ -1,29 +1,74 @@
-<p id="notice"><%= notice %></p>
+<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head brown-bg">
+				<h3>Add friends to chat</h3>
+			</div>
+			<div class="box-body">
+				<div class="content-a">
+					<div class="row">
+						<div class="col-md-12">
+							<%= form_tag(handle_directory_friends_path, :method => "get", id: "search-form", class: "form-group detail-form") do %>
+								<div class="row">
+									<div class="col-sm-4 col-md-5 m-b-20">
+  										<%= select_tag("search[order_by]", options_for_select([["First Name", "first_name"],["User Name","user_name"],["Email", "email"]], params[:search].present? ? params[:search][:order_by] : []), :class => 'form-control') %>
+									</div>
+									<div class="col-sm-4 col-md-5 m-b-20">
+										<%= text_field_tag "search[keyword]", params[:search].present? ? params[:search][:keyword] : "", placeholder: "Keyword" %>
+									</div>
+									<div class="col-sm-4 col-md-2 text-center">
+										<%= button_tag "Search", :class => 'btn btn-black' %>
+									</div>
+								</div>
+							<%end%>
+						</div>
 
-<h1>Listing Friends</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @friends.each do |friend| %>
-      <tr>
-        <td><%= friend.user_name %></td>
-        <td><%= friend.email %></td>
-        <td><%= friend.phone %></td>
-        <td><%= friend.address %></td>
-        <td></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+						<% @friends.each_slice(5) do |friends| %>
+							<div class="col-md-6 col-sm-12">
+								<div class="user-block">
+									<% friends.each do |friend| %>
+									<div class="block-a clearfix">
+										<div class="request-a left-a">
+											<div class="profile-a"> 
+												<%= image_tag(friend.image_url)%>
+											</div>
+										</div>
+										<div class="request-a middle-a">
+											<div class="profile-detail">
+												<h4 class="rqst-heading"><%= friend.user_name%></h4>
+												<a class="link-a" href="#"><%= friend.email%></a>
+												<div class="username-a">
+													<%= friend.phone%>
+												</div>
+											</div>
+										</div>
+										<div class="request-a right-a text-center">
+											<div class="add-block text-right">
+												<div class="in-out-a clearfix">
+													<label class="in-out-block">
+														<% if friend.availability? %>
+															 <span class="in"></span> <span class="txt-in-out">In</span> 
+														<%else%>
+															<span class="out"></span><span class="txt-in-out">Out</span>
+														<%end%>
+													</label>
+												</div>
+												<div class="btn-add m-t-10">
+													<button class="btn btn-black" type="button">
+														Message
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<%end%>
+								</div>
+							</div>
+						<%end%>	
+					</div>
+				   <%= will_paginate @friends %>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
