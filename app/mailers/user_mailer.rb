@@ -31,4 +31,10 @@ class UserMailer < ApplicationMailer
         @current_user = current_user   
         mail(:to => @user.email, :subject => "Conference-Butler - Account Confirmation Email")          
     end 
+
+    def request_invite(invitation)
+
+        @invitation = invitation
+        mail(:to => @invitation.email, :subject => "Conference-Butler - Event request invitation Email")
+    end
 end

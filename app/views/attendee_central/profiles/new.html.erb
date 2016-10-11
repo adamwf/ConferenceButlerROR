@@ -15,7 +15,7 @@
 							<h3 class="tab-cont-head clearfix">
 								<div class="col-sm-6 col-xs-6">Create Attendee</div>
 								<div class="col-sm-6 col-xs-6 text-right attendee-cent-s">
-									<%= link_to "Attendee List", attendee_central_home_index_path, :class => "btn link-msg" %>
+									<%= link_to "Attendee List", attendee_central_home_index_path(tab: 2), :class => "btn link-msg" %>
 								</div>
 							</h3>
 							<%= form_for User.new, url: attendee_central_profiles_path do |f|%>

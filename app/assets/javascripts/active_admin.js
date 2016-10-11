@@ -1,7 +1,4 @@
 //= require active_admin/base
-//= require custom
-//= require heatmap
-//= require gmaps-heatmap
 //=require jquery-ui
 //= require active_admin_datetimepicker
 

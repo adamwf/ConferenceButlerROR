@@ -46,6 +46,7 @@ gem 'gcm'
 gem 'grocer'
 gem "em-websocket"
 gem 'httparty'
+gem 'jquery-ui-rails'
 
 # gem 'quickblox'
 # Use Unicorn as the app server

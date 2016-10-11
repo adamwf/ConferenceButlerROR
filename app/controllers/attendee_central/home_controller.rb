@@ -8,8 +8,8 @@ class AttendeeCentral::HomeController < AttendeeCentral::BaseController
 		@user_events.each do |id|
 			@event_list << Event.find(id)
 		end
-		@event_list = @event_list.paginate(:page => params[:page], :per_page => 10)
-		@invitations = Invitation.where(reciever_id: current_attendee.id).paginate(:page => params[:page], :per_page => 10)
+		@event_list = @event_list.paginate(:page => params[:page], :per_page => 4)
+		@invitations = Invitation.where(reciever_id: current_attendee.id).paginate(:page => params[:page], :per_page => 1)
 		@_tab = params[:tab].present? ? params[:tab] : 1
 	end
 

@@ -94,13 +94,13 @@ class Webservices::EventApisController < ApplicationController
 	end
 
 	def event_list
-		@event = Event.all.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:event_list => @event, :total_pages => @event.total_pages}
+		@event = Event.all.order("created_at desc")#.paginate(:page => params[:page], :per_page => 10)
+		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:event_list => @event}#, :total_pages => @event.total_pages}
 	end
 
 	def invitation_list
-		@invitation = Invitation.where(reciever_id: @user.id).paginate(:page => params[:page], :per_page => 10)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:invitations => @invitation, :total_pages => @invitation.total_pages}
+		@invitation = Invitation.where('reciever_id = ? AND status = ?', @user.id, "pending").paginate(:page => params[:page], :per_page => 10)
+		render :json =>  {:responseCode => 200,:responseMessage =>"Event list find successfully.",:invitations => @invitation.map{|invitation| invitation.attributes.merge(:event => invitation.event)}, :total_pages => @invitation.total_pages}
 	end
 
 	def accept_invitation

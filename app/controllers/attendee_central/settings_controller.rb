@@ -88,7 +88,7 @@ class AttendeeCentral::SettingsController < AttendeeCentral::BaseController
   private
   
     def user_params
-      params.require(:user).permit(:profile_view_to_requested_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users)
+      params.require(:user).permit(:profile_view_to_requested_users, :profile_view_to_handle_directory_users, :profile_view_to_gab_users, :profile_display_within_search_engine)
     end
 
 end

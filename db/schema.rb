@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20161010102158) do
+ActiveRecord::Schema.define(version: 20161011073743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,14 +120,14 @@ ActiveRecord::Schema.define(version: 20161010102158) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "category"
     t.string   "event_type"
     t.integer  "no_of_availability"
-    t.boolean  "availability"
+    t.boolean  "availability",       default: true
     t.integer  "user_id"
   end
 
@@ -315,9 +314,11 @@ ActiveRecord::Schema.define(version: 20161010102158) do
     t.string   "u_id"
     t.string   "user_name"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.boolean  "login_status"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "login_status", default: false
+    t.string   "email"
+    t.string   "image"
   end
 
   add_index "social_logins", ["user_id"], name: "index_social_logins_on_user_id", using: :btree
@@ -361,8 +362,8 @@ ActiveRecord::Schema.define(version: 20161010102158) do
   add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
   create_table "user_invitations", force: :cascade do |t|
-    t.integer  "event_id"
     t.integer  "user_id"
+    t.integer  "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -413,6 +414,7 @@ ActiveRecord::Schema.define(version: 20161010102158) do
     t.boolean  "profile_view_to_handle_directory_users"
     t.boolean  "profile_view_to_gab_users"
     t.integer  "reference_id"
+    t.boolean  "profile_display_within_search_engine"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -423,8 +425,8 @@ ActiveRecord::Schema.define(version: 20161010102158) do
     t.integer  "user_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "title",       default: ""
-    t.text     "discription", default: ""
+    t.string   "title"
+    t.text     "discription"
     t.boolean  "status",      default: true
     t.string   "category"
   end

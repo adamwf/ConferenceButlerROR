@@ -42,37 +42,98 @@
 							<% @event_attendee.each do |attendee| %>
 								<div class="attendee-ul-s">
 									<ul>
-										<li><%= attendee%></li>
+										<li></li>
 									</ul>
 								</div>
 							<%end%>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-inverse overflow-hidden">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							<a href="#collapseTwo" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle accordion-toggle-styled collapsed" aria-expanded="true">
-								<i class="fa fa-plus-circle pull-right"></i> 
-								Pending Attendee
-							</a>
-						</h3>
-					</div>
-					<% @pending_attendee = UserEvent.where('event_id =? AND status =?', event.id, false)%>
-					<div class="panel-collapse collapse" id="collapseTwo" aria-expanded="true">
-						<div class="panel-body">
-							<% @pending_attendee.each do |attendee| %>
-								<div class="attendee-ul-s">
-									<ul>
-										<li><%= attendee%></li>
-									</ul>
-								</div>
-							<%end%>
-						</div>
-					</div>
-				</div>	
+
+
+
+
 			</div>									
 		<%end%>
 		<%= will_paginate @events %>
 	</div>
 </div>	
+<div class="container">
+    <div class="row">
+         <h1 class="page-header">Bootstrap Multiple Expand/Collapse</h1>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="pull-right"> <a id="expandAll" href="#" class="btn btn-default" role="button">Expand All</a>
+
+                <a id="collapseAll" href="#" class="btn btn-default" role="button">Collapse All</a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="">
+                                Collapsible Group Item #1
+                              </a>
+                            </h4>
+
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                            moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                            wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                            vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                            synth nesciunt you probably haven't heard of them accusamus labore sustainable
+                            VHS.</div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="">
+                                Collapsible Group Item #2
+                              </a>
+                            </h4>
+
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                            moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                            wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                            vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                            synth nesciunt you probably haven't heard of them accusamus labore sustainable
+                            VHS.</div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="">
+                                Collapsible Group Item #3
+                              </a>
+                            </h4>
+
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                            moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                            wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                            vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                            synth nesciunt you probably haven't heard of them accusamus labore sustainable
+                            VHS.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -254,6 +254,22 @@
 		render :json =>  {:responseCode => 200,:responseMessage =>"Your reminder has been find successfully.",:reminder => @reminder}
 	end
 
+	def get_settings
+	    if @user
+	     	render :json =>  {:responseCode => 200,:responseMessage =>"Your account settings are fetched successfully.",:register_user => @user.profile_view_to_handle_directory_users, :gab_only => @user.profile_view_to_gab_users, :search_engine => @user.profile_display_within_search_engine}
+		else
+		    render_message 500, "You are unable to fetch account settings, Please try again."
+	    end
+	end
+
+	def set_settings
+	    if @user.update_attributes(profile_view_to_handle_directory_users: params[:user][:profile_view_to_handle_directory_users], profile_view_to_gab_users: params[:user][:profile_view_to_gab_users], profile_display_within_search_engine: params[:user][:profile_display_within_search_engine])
+	     	render_message 200,"Your account settings are updated successfully."
+		else
+		    render_message 500, "You are not able to update account settings, Please try again."
+	    end
+	end
+
   	private
 	def user_params
 		params[:user][:image] = User.image_data(params[:user][:image].to_s.gsub("\\r\\n","")) if params[:user][:image]

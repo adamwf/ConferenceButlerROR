@@ -34,6 +34,8 @@ Rails.application.routes.draw do
         post :update_privacy_status
         post :get_reminder
         post :set_reminder
+        post :get_settings
+        post :set_settings
       end
     end
     resources :request_apis do
@@ -43,7 +45,8 @@ Rails.application.routes.draw do
         post :reject_request
         post :pending_request
         post :contact_list
-        post :profile_view 
+        post :profile_view
+        post :terms 
       end
     end
     resources :event_apis do
@@ -157,7 +160,11 @@ Rails.application.routes.draw do
     resources :home
     resources :profiles
     resources :events
-    resources :invitations
+    resources :invitations do
+      collection do
+        post :manual
+      end
+    end
     resources :friends
     resources :settings do
       collection do

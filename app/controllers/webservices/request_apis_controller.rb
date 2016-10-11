@@ -1,7 +1,7 @@
 class Webservices::RequestApisController < ApplicationController
-	before_filter :find_user,except: []
-	before_filter :find_friend,except: [:pending_request, :contact_list]
-    before_filter :authentication
+	before_filter :find_user,except: [:terms]
+	before_filter :find_friend,except: [:pending_request, :contact_list,:terms]
+    before_filter :authentication,except: [:terms]
     
 	def send_request
 		if @user.friend_with?(@friend)
@@ -84,4 +84,8 @@ class Webservices::RequestApisController < ApplicationController
 		end
 	end
 	
+	def terms
+		@terms = StaticPage.find_by(title: "Terms & Conditions")
+		render :json => {:responseCode => 200,:responseMessage => "Terms & Conditions fetched successfully.",:terms => @terms.as_json(only: [:id,:content])}
+	end
 end

@@ -16,6 +16,7 @@
  *= require fullcalendar
  *= require bootstrap
  *= require bootstrap-datetimepicker
+  *= require jquery-ui
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
