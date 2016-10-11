@@ -9,4 +9,7 @@ class Advertisement < ActiveRecord::Base
   validates :discription, presence: true, length: { maximum: 250 }
   # validates :user_id, presence: true
   # validates :priority, presence: true#, uniqueness: true
+  
+   scope :published, -> {where(:status => true)}
+   scope :home, -> {where(:status => true)}
 end

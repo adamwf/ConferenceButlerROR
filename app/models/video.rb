@@ -7,4 +7,7 @@ class Video < ActiveRecord::Base
   validates :content, presence: true
   validates :discription, presence: true, length: { maximum: 250 }
   # validates :user_id, presence: true
+  
+   scope :published, -> {where(:status => true)}
+   scope :home, -> {where(:status => true)}
 end

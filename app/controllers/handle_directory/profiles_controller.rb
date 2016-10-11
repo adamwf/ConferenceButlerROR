@@ -5,7 +5,8 @@ class HandleDirectory::ProfilesController < HandleDirectory::BaseController
 	end
 
 	def show
-	    @profile = User.find_by_id(params[:id])
+	  @events = Event.all
+    @user = current_handle_user
 	end
 
 	def new

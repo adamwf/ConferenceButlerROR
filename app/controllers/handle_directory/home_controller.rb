@@ -1,11 +1,10 @@
 class HandleDirectory::HomeController < HandleDirectory::BaseController
 	before_filter :require_handle_user, except: [:new, :create]
 
-	# layout 'handle_directory'
-
 	def index 
-		@events = Event.all
-		@user = current_handle_user
+	  @posts = Post.home.published
+	  @videos = Video.home.published
+	  @advertisements = Advertisement.home.published
 	end
 
 	def new

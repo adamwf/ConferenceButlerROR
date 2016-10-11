@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
 
 
+  namespace :handle_directory do
+  get 'notifications/index'
+  end
+
  # root to: "admin/dashboard#index"
 
   devise_for :users
@@ -127,6 +131,7 @@ Rails.application.routes.draw do
       end
     end
     resources :friends
+    resources :notifications
     resources :settings do
       collection do
         post :update_advance
