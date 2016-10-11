@@ -1,4 +1,4 @@
-class CreateUserInvitations < ActiveRecord::Migration
+``class CreateUserInvitations < ActiveRecord::Migration
   def change
     create_table :user_invitations do |t|
       t.references :event, index: true, foreign_key: true
