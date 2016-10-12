@@ -215,13 +215,13 @@
 		end		
 	end
 
-	def privacy_status
-		@status = ProfileShowStatus.find_by(user_id: @user.id)
-		render :json =>  {:responseCode => 200,:responseMessage =>"Privacy status has been find successfully.",:privacy_status => @status.attributes.merge(:is_friend => @user.friend_with?(@friend))}
-	end
+	# def privacy_status
+	# 	@status = ProfileShowStatus.find_by(user_id: @user.id)
+	# 	render :json =>  {:responseCode => 200,:responseMessage =>"Privacy status has been find successfully.",:privacy_status => @status.attributes.merge(:is_friend => @user.friend_with?(@friend))}
+	# end
 
 	def get_privacy_status
-		@status = ProfileShowStatus.find_by(user_id: @user.id)
+		@status = ProfileShowStatus.find_or_create_by(user_id: @user.id)
 		render :json =>  {:responseCode => 200,:responseMessage =>"Privacy status has been find successfully.",:privacy_status => @status}
 	end
 
@@ -263,7 +263,7 @@
 	end
 
 	def set_settings
-	    if @user.update_attributes(profile_view_to_handle_directory_users: params[:user][:profile_view_to_handle_directory_users], profile_view_to_gab_users: params[:user][:profile_view_to_gab_users], profile_display_within_search_engine: params[:user][:profile_display_within_search_engine])
+	    if @user.update_attributes(profile_view_to_handle_directory_users: params[:user][:register_user], profile_view_to_gab_users: params[:user][:gab_only], profile_display_within_search_engine: params[:user][:search_engine])
 	     	render_message 200,"Your account settings are updated successfully."
 		else
 		    render_message 500, "You are not able to update account settings, Please try again."

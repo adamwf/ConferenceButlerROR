@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011073743) do
+ActiveRecord::Schema.define(version: 20161012072828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -410,11 +410,11 @@ ActiveRecord::Schema.define(version: 20161011073743) do
     t.string   "children"
     t.boolean  "availability",                           default: true
     t.text     "other_info"
-    t.boolean  "profile_view_to_requested_users"
-    t.boolean  "profile_view_to_handle_directory_users"
-    t.boolean  "profile_view_to_gab_users"
     t.integer  "reference_id"
-    t.boolean  "profile_display_within_search_engine"
+    t.boolean  "profile_view_to_requested_users",        default: true
+    t.boolean  "profile_view_to_handle_directory_users", default: true
+    t.boolean  "profile_view_to_gab_users",              default: true
+    t.boolean  "profile_display_within_search_engine",   default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

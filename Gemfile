@@ -39,7 +39,7 @@ gem "rails-erd"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq'
- gem 'psych'
+gem 'psych'
 gem 'unicorn'
 gem 'redis'
 gem 'gcm'
