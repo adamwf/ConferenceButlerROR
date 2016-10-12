@@ -1,5 +1,117 @@
-<h1>New Group</h1>
+<section class="main-block">
+	<div class="container">
+		<div class="box">
+			<div class="box-head brown-bg">
+				<h3>Add friends to Group</h3>
+			</div>
+			<div class="box-body">
+				<div class="content-a">
+					<div class="row">
+						<div class="col-md-12">
+							<%= form_tag(new_handle_directory_group_path, :method => "get", id: "search-form", class: "form-group detail-form") do %>
+							<div class="row">
+								<div class="col-sm-4 col-md-5 m-b-20">
+									<%= select_tag("search[order_by]", options_for_select([["First Name", "first_name"],["User Name","user_name"],["Email", "email"]], params[:search].present? ? params[:search][:order_by] : []), :class => 'form-control') %>
+								</div>
+								<div class="col-sm-4 col-md-5 m-b-20">
+									<%= text_field_tag "search[keyword]", params[:search].present? ? params[:search][:keyword] : "", placeholder: "Keyword" %>
+								</div>
+								<div class="col-sm-4 col-md-2 text-center">
+									<%= button_tag "Search", :class => 'btn btn-black' %>
+								</div>
+							</div>
+							<%end%>
 
-<%= render 'form' %>
+						</div>
+						<%= form_for([:handle_directory, @group]) do |f| %>
+						<% @friends.each_slice(5) do |friends| %>
+						<div class="col-md-6 col-sm-12">
+							<div class="user-block">
+								<% friends.each do |friend| %>
+								<div class="block-a clearfix">
+									<div class="request-a left-a">
+										<div class="profile-a">
+											<%= image_tag(friend.image_url)%>
+										</div>
+									</div>
+									<div class="request-a middle-a">
+										<div class="profile-detail">
+											<h4 class="rqst-heading"><%= friend.user_name%></h4>
+											<a class="link-a" href="#"><%= friend.email%></a>
+											<div class="username-a">
+												<%= friend.phone%>
+											</div>
+										</div>
+									</div>
+									<div class="request-a right-a text-center">
+										<div class="add-block">
+											<div class="checkbox clearfix">
+												<label class="myCheckbox"> <%= check_box_tag "group[member_ids][]", friend.id %> <span></span></label>
+											</div>
+											<!-- <div class="btn-add m-t-10">
+											<button class="btn btn-black" type="button">
+											Add to group
+											</button>
+											</div> -->
+										</div>
+									</div>
+								</div>
+								<%end%>
+							</div>
+						</div>
+						<%end%>
+						<!-- Modal -->
+						<div id="groupModal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
 
-<%= link_to 'Back', handle_directory_groups_path %>
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											&times;
+										</button>
+										<h4 class="modal-title">Modal Header</h4>
+									</div>
+									<div class="modal-body">
+
+										<div class="field">
+											<%= f.label :group_name %>
+											<br>
+											<%= f.text_field :group_name %>
+										</div>
+
+										<div class="field">
+											<%= f.label :group_image %>
+											<br>
+											<%= @group.group_image.present? ? image_tag(@group.group_image.url, :width => 140, :height => 140, :class => 'img-responsive img-thumbnail') : image_tag("/profile.png", :width => 140, :height => 140, :class => 'img-responsive img-thumbnail')%>
+											<%= f.file_field :group_image %>
+										</div>
+										 	<%= f.hidden_field :user_id, :value => current_handle_user.id %>
+										<div class="actions">
+											<%= f.submit %>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">
+											Close
+										</button>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<%end%>
+					</div>
+				</div>
+
+				<div class="btn-add m-t-10">
+					<button class="btn btn-black" type="button" data-toggle="modal" data-target="#groupModal">
+						Add to group
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
