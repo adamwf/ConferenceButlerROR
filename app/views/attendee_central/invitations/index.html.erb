@@ -21,7 +21,7 @@
 					<td><%= count%></td>
 					<td><%= invitation.event.name%></td>
 					<td><%= User.find_by(id: invitation.sender_id).user_name%></td>
-					<td><a href="#" class="btn btn-link viewbtn-link m-b-5">View</a></td>
+					<td><a href="/attendee_central/invitations/<%= invitation.id %>" class="btn btn-link viewbtn-link m-b-5">View</a></td>
 				</tr>
 									
 			</tbody>

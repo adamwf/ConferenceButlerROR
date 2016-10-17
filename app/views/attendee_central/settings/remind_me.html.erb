@@ -10,7 +10,7 @@
 					<div class="tab-content">
 						<div id="menu3" class="tab-pane fade  in active">
 							<div class="remind-me-later-a">
-								<%= form_for @reminder, :url => update_remind_me_handle_directory_settings_path, :method => :post, :html => {:class => 'radio-btn'} do |f| %>
+								<%= form_for @reminder, :url => update_remind_me_attendee_central_settings_path, :method => :post, :html => {:class => 'radio-btn'} do |f| %>
 									<div class="radio-btn-inner">
 										<label>
 											<%= f.radio_button :delay_time, "1", :checked => true%>

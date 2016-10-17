@@ -14,9 +14,17 @@
 									<div class="profile clearfix">
 										<div class="profile-img">
 											<%= image_tag(current_attendee.image.try(:url), :class => "img-circle")%>
+											<label class="in-out-block">
+												<% if current_attendee.availability? %>
+													 <span class="in"></span> <span class="txt-in-out"></span> 
+												<%else%>
+													<span class="out"></span><span class="txt-in-out"></span>
+												<%end%>
+											</label>
 										</div>
 										<div class="m-0 profile-info white-a">
-											<h3 class="f-w-700"><%= current_attendee.first_name.capitalize %> <%= current_attendee.last_name.capitalize %></h3>
+											<h3 class="f-w-700"><%= current_attendee.first_name.capitalize %> <%= current_attendee.last_name.capitalize %> </h3>
+												
 											<h4 class="f-w-700"><%= current_attendee.address %></h4>
 											<ul class="profile-list list-inline">
 												<li><a href="/attendee_central/profiles/<%= current_attendee.id %>/edit" class="white-a link-msg"><span class="m-r-10"><i class="fa fa-pencil"></i></span>Edit</a></li>

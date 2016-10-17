@@ -8,6 +8,7 @@ class AttendeeCentral::InvitationsController < AttendeeCentral::BaseController
 	end
 
 	def show
+		@invitation = Invitation.find_by(id: params[:id])
 	end
 
 	def new
@@ -28,6 +29,26 @@ class AttendeeCentral::InvitationsController < AttendeeCentral::BaseController
 	
 	def manual
 		@invitations = Invitation.where(reciever_id: current_attendee.id)
+	end
+
+	def accept_invitation
+		@invitation = Invitation.find_by_id(params[:id])
+		if @invitation
+		  	@invitation.update_attributes(status: "accepted")
+		  	 redirect_to attendee_central_invitations_path,:notice => 'Event invitation accepted.'
+		else
+		    flash[:error] = "Sorry! You are unable to accept, try again."
+		end
+	end
+
+	def decline_invitation
+	  	@invitation = Invitation.find_by_id(params[:id])
+	  	if @invitation
+	  		@invitation.update_attributes(status: "rejected")
+	  	 	redirect_to attendee_central_invitations_path,:notice => 'Event invitation rejected.'
+	  	else
+	    	flash[:error] = "Sorry! You are unable to reject, try again."
+	  	end
 	end
 	private
 	def invite_params

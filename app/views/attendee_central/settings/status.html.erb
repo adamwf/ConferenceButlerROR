@@ -13,7 +13,7 @@
 								<div class="txt-hdng">
 									Show status as availabele when online.
 								</div>
-							    <%= form_for @user, :url => update_status_handle_directory_settings_path, :method => :post, :html => {:class => 'radio-btn'} do |f| %>
+							    <%= form_for @user, :url => update_status_attendee_central_settings_path, :method => :post, :html => {:class => 'radio-btn'} do |f| %>
 									<div class="radio-btn-inner">
 										<label>
 											<%= f.radio_button :availability, true, :checked => true%>

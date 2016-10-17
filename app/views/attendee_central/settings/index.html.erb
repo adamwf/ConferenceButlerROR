@@ -13,22 +13,22 @@
 								<div class="txt-a">
 									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
 								</div>
-								<%= form_for @user, :url => update_advance_handle_directory_settings_path, :method => :post do |f| %>
+								<%= form_for @user, :url => update_advance_attendee_central_settings_path, :method => :post do |f| %>
 								<div class="checkbox-block-a">
 									<div class="checkbox">
-										<label class="myCheckbox"> <%= f.check_box :profile_view_to_requested_users%> <span></span></label>
+										<%= f.check_box :profile_view_to_requested_users, :class => "myCheckbox"%> <span></span>
 										<div class="checkbox-text">
 											To have your Profile visible to those that request to Follow you and that you accept.
 										</div>
 									</div>
 									<div class="checkbox">
-										<label class="myCheckbox"> <%= f.check_box :profile_view_to_handle_directory_users%> <span></span></label>
+										<%= f.check_box :profile_view_to_handle_directory_users, :class => "myCheckbox"%> <span></span>
 										<div class="checkbox-text">
 											To have your Profile info appear in our Handle Directory of registered Users.
 										</div>
 									</div>
 									<div class="checkbox">
-										<label class="myCheckbox"> <%= f.check_box :profile_view_to_gab_users%> <span></span></label>
+										<%= f.check_box :profile_view_to_gab_users, :class => "myCheckbox"%> <span></span>
 										<div class="checkbox-text">
 											To have your profile info appear to those users in your GAB-only.
 										</div>

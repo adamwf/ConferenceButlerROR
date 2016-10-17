@@ -10,7 +10,7 @@ class AttendeeCentral::SettingsController < AttendeeCentral::BaseController
     if @user.update(user_params)
       redirect_to handle_directory_settings_path, notice: 'Your setting has been updated successfully.'
     else
-      redirect_to :back, notice: "Something went wrong, please try again."
+      redirect_to :back, error: "Unable to update settings info, please try again."
     end
   end
   
@@ -22,17 +22,17 @@ class AttendeeCentral::SettingsController < AttendeeCentral::BaseController
     @user  = current_attendee
     if @user.valid_password?(params[:user][:old_password])
       if params[:user][:password].eql?(params[:user][:password_confirmation])
-        if @user.update_attributes(password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
+        if @user.update_attributes!(password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
           reset_session
-          redirect_to email_handle_directory_settings_path, notice: 'Your Password has been reset successfully,please logged in account.'
+          redirect_to email_attendee_central_settings_path, notice: 'Your Password has been reset successfully,please logged in account.'
         else
           redirect_to :back, notice: "Your password can't be reset, please try again."
         end
       else
-        redirect_to :back, notice: "Your new password and confirm password doesn't match, please try again."
+        redirect_to :back, error: "Your new password and confirm password doesn't match, please try again."
       end
     else
-      redirect_to :back, notice: "Your old password has not been matched."
+      redirect_to :back, error: "Your old password has not been matched."
     end  
   end
 
@@ -49,13 +49,13 @@ class AttendeeCentral::SettingsController < AttendeeCentral::BaseController
           reset_session
           redirect_to email_handle_directory_settings_path, notice: 'An OTP send to your new email successfully,please verify and logged in account.'
         else
-          redirect_to :back, notice: 'Error occur while changing email, please try again.'
+          redirect_to :back, error: 'Error occur while changing email, please try again.'
         end
       else
-        redirect_to :back, notice: "Your new email and confirm email doesn't match together, please try again."
+        redirect_to :back, error: "Your new email and confirm email doesn't match together, please try again."
       end
     else
-      redirect_to :back, notice: "Your old email is not valid."
+      redirect_to :back, error: "Your old email is not valid."
     end  
   end
 
@@ -65,9 +65,9 @@ class AttendeeCentral::SettingsController < AttendeeCentral::BaseController
   
   def update_status
     if current_attendee.update_attributes(availability: params[:user][:availability])
-      redirect_to :back, notice: 'Your availability status has been updated successfully.'
+      redirect_to status_attendee_central_settings_path, notice: 'Your availability status has been updated successfully.'
     else
-      redirect_to :back, alert: 'Unable to update availability status.'
+      redirect_to :back, error: 'Unable to update availability status.'
     end
   end
 

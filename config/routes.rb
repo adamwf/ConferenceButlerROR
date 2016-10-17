@@ -164,6 +164,10 @@ Rails.application.routes.draw do
       collection do
         post :manual
       end
+      member do 
+       post 'accept_invitation'
+       post 'decline_invitation'
+      end
     end
     resources :friends
     resources :settings do

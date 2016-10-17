@@ -19,7 +19,15 @@
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Event Name</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">Media Live Seminar</div>
+										<div class="profile-detail"><%= @invitation.event.name%></div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-sm-4 col-md-3 control-label">Event Name</label>
+									<div class="col-sm-8 col-md-7">
+										<div class="profile-detail"><%= @invitation.event.location%></div>
 									</div>
 								</div>
 							</div>
@@ -27,23 +35,23 @@
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Attendee's Name</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">MMLL Group of Company</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).user_name%></div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Title</label>
 									<div class="col-sm-8 col-md-7">
 										<div class="profile-detail">Lorem Ipsum Dollar sallore</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Company</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">MMLL Group of Company</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).company_name%></div>
 									</div>
 								</div>
 							</div>
@@ -51,7 +59,7 @@
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Address</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">Main street-1123,Califonia</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).address%></div>
 									</div>
 								</div>
 							</div>
@@ -59,31 +67,31 @@
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Email</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">user@email.com</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).email%></div>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="row">
-									<label class="col-sm-4 col-md-3 control-label">Work Ph.</label>
+									<label class="col-sm-4 col-md-3 control-label">Phone</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">+91 9876555455</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).phone%></div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="row">
 									<label class="col-sm-4 col-md-3 control-label">Mobile Ph</label>
 									<div class="col-sm-8 col-md-7">
-										<div class="profile-detail">+91 987655545</div>
+										<div class="profile-detail"><%= User.find_by(id: @invitation.sender_id).user_name%></div>
 									</div>
 								</div>
-							</div>												
+							</div>	 -->											
 						</div>	
 						<div class="form-group">
 								<div class="attendee-cent-s y-manual-confm">
-									<button class="btn btn-primary m-r-5 m-b-5" type="button">Allow the attendee in the Event </button>
-									<button class="btn btn-default m-r-5 m-b-5" type="button">Decline the attendee in the Event </button>
+									<%= link_to "<span class='m-r-10'><i class='fa fa-check'></i></span>Allow the attendee in the Event</a>".html_safe, accept_invitation_attendee_central_invitation_path(@invitation.id), method: :post, :class => "btn btn-invite m-r-5 m-b-5"%>
+									<%= link_to "<span class='m-r-10'><i class='fa fa-times'></i></span>Decline the attendee in the Event</a>".html_safe, decline_invitation_attendee_central_invitation_path(@invitation.id), method: :post, :class => "btn btn-default m-r-5 m-b-5"%>
 								</div>
 						</div>
 					</div>
@@ -93,3 +101,5 @@
 		</div>
 	</div>
 </section>
+
+														

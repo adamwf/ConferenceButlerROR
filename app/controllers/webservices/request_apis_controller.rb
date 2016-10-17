@@ -68,16 +68,16 @@ class Webservices::RequestApisController < ApplicationController
 
 
 	def profile_view
-		if  ProfileView.find_or_create_by(viewer_id: params[:viewer_id], user_id: @user.id)
-			if @trend = Trending.find_by_user_id(@user.id)
+		if  ProfileView.find_or_create_by(viewer_id: @user.id, user_id: @friend.id)
+			if @trend = Trending.find_by_user_id(@friend.id)
 				@trend.update_attributes(count: @trend.count+1)
 			else 
-				@trend = Trending.create(user_id: @user.id, count: 1)
+				@trend = Trending.create(user_id: @friend.id, count: 1)
 			end
-			unless @user.social_code.try(:image).eql?(nil)
-				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => @user.social_code.try(:image))}
+			unless @friend.social_code.try(:image).eql?(nil)
+				render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@friend.user_name}'s profile successfully.",:user => @friend.attributes.merge(:social_login => @friend.social_logins, :social_code => @friend.social_code.try(:image))}
 	    	else
-	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@user.user_name}'s profile successfully.",:user => @user.attributes.merge(:social_login => @user.social_logins, :social_code => "").compact}
+	    		render :json =>  {:responseCode => 200,:responseMessage =>"You are find #{@friend.user_name}'s profile successfully.",:user => @friend.attributes.merge(:social_login => @friend.social_logins, :social_code => "").compact}
 	    	end
 	    else
 			render_message 500, "Unable to find profile details, Please try again."
