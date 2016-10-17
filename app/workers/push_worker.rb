@@ -8,7 +8,9 @@ class PushWorker
     user.devices.each do |device|
 
       @activity = Activity.find(activity_id) unless activity_id == 0
-    
+      if @activity
+        user.notifications.create(notification_type: @activity.activity_type, user_id: @activity.item_id, content: @activity.message )       
+      end
       if @activity and (@activity.activity_type == "friend_request")
         nt = "friend_request"
       end

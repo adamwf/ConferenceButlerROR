@@ -16,6 +16,7 @@
 //= require moment 
 //= require fullcalendar
 //= require bootstrap/dropdown
+//= require bootstrap/modal
 //= require alertify
 //= require_tree .
 //= require bootstrap-datetimepicker
@@ -23,6 +24,7 @@
 
 
 $(document).ready(function(){
+	$('#full-width').modal('toggle');
 	$("[class^=flash_notice]").each(function(){
 		if ($(this).html() != ''){
 			alertify.dismissAll();

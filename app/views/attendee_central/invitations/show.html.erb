@@ -91,7 +91,7 @@
 						<div class="form-group">
 								<div class="attendee-cent-s y-manual-confm">
 									<%= link_to "<span class='m-r-10'><i class='fa fa-check'></i></span>Allow the attendee in the Event</a>".html_safe, accept_invitation_attendee_central_invitation_path(@invitation.id), method: :post, :class => "btn btn-invite m-r-5 m-b-5"%>
-									<%= link_to "<span class='m-r-10'><i class='fa fa-times'></i></span>Decline the attendee in the Event</a>".html_safe, decline_invitation_attendee_central_invitation_path(@invitation.id), method: :post, :class => "btn btn-default m-r-5 m-b-5"%>
+									<%= link_to "<span class='m-r-10'><i class='fa fa-times'></i></span>Decline the attendee in the Event</a>".html_safe, decline_invitation_attendee_central_invitation_path(@invitation.id), method: :post, :class => "btn btn-decline1"%>
 								</div>
 						</div>
 					</div>

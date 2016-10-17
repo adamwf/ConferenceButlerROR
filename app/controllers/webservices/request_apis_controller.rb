@@ -45,7 +45,7 @@ class Webservices::RequestApisController < ApplicationController
 			@user.remove_friendship(@friend)
 			alert = @user.user_name+' '+'rejected your request.'
 	 		activity = @friend.activities.find_or_create_by(activity_type: 'friend_request',item_id: @user.id,item_type: 'User', user_id: @user.id, message: alert)
-		    PushWorker.perform_async(@friend.id,alert,@user.id,'User',@user.user_name,activity.id)
+		    # PushWorker.perform_async(@friend.id,alert,@user.id,'User',@user.user_name,activity.id)
 			render_message 200, "You rejected #{@friend.first_name}'s request successfully."
 		else
 			render_message 500, "You don't have any friend request."
@@ -53,16 +53,22 @@ class Webservices::RequestApisController < ApplicationController
 	end
 
 	def pending_request
-		render :json => {:responseCode => 200,:responseMessage => "Pending invitations fetched successfully.",:pending_invitations => @user.pending_invited_by.order("created_at desc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}}
+		@pending_request = @user.pending_invited_by.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
+		render :json => {:responseCode => 200,:responseMessage => "Pending invitations fetched successfully.",:pending_invitations => @pending_request.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url)}, :total_pages => @pending_request.total_pages}
 	end
 	
 	def contact_list
 		if params[:user][:keyword].eql?("")
-			render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @user.friends.order("#{params[:sort]} asc").paginate(:page => params[:page], :per_page => 10).map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
+			@friends = @user.friends.order("#{params[:sort]} asc").paginate(:page => params[:page], :per_page => 10)
+			render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}, :total_pages => @friends.total_pages}
 		else
 		   friends = @user.friendships.where("keyword LIKE ? AND pending = ?", "%#{params[:user][:keyword]}%", false) & @user.friendships.where(pending: false)
-		    @friends = friends.map{|key| key.friend}		   	
-		   	render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
+		    @friends = friends.map{|key| key.friend}.paginate(:page => params[:page], :per_page => 10)
+		    unless @friends.empty?
+		   		render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}, :total_pages => @friends.total_pages}
+		 	else
+		    	render :json => {:responseCode => 200,:responseMessage => "Your contact(GAB) list fetched successfully.",:contact_list => @friends.sort_by {|friend| friend[:first_name]}.map{|user| user.attributes.merge(:mutual_friend_count => user.common_friends_with(@user).count, :image =>  user.image.url, :social_logins => user.social_logins.map(&:user_name))}}
+		    end
 		end
 	end
 

@@ -1,0 +1,2 @@
+module HandleDirectory::NotificationsHelper
+end
