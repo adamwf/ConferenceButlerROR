@@ -6,7 +6,7 @@ class ForwardInfo::HomeController < ForwardInfo::BaseController
 		@user = current_manager
 		@invitations = Invitation.where(reciever_id: @user.id).order("created_at desc").paginate(:page => params[:page], :per_page => 3)
 		p"=-=-=-=-=-=#{@invitations.inspect}-=-=-=-=-=-=-"
-		@employees = User.where(role: "employee").order("user_name asc")
+		@employees = User.all.order("user_name asc").paginate(:page => params[:page], :per_page => 2)
 	end
 	
 	def show

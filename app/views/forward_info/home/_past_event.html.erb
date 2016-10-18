@@ -1,60 +1,67 @@
 <div class="detail-form">
-	<div class="form-group">
-		<div class="row">
-			<label class="col-sm-4 col-md-3 control-label f-w-700">Location of the Event</label>
-			<div class="col-sm-6 col-md-4">
-			  <select class="form-control">
-				<option></option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-			  </select>
-			</div>
-		</div>
-	</div>
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-4 col-md-3 control-label f-w-700">Location of the Event</label>
+            <div class="col-sm-6 col-md-4">
+              
+              <select class="form-control">
+            
+                <%location_dropdown.each do |x|%>
+                <option><%=x%> </option>
+                <%end%>
+               </select>
+            </div>
+        </div>
+    </div>
 </div>
-	<% @invitations = Invitation.where("reciever_id = ? AND status = ?",current_manager , "accepted")%>
-  	<% @invitation = @invitations.each {|x| x.event.end_time <  Time.current} %>
-  	<% @invitation.each do |event| %>
+    <% @invitations = Invitation.where("reciever_id = ? AND status = ?",current_manager , "accepted")%>
+    <% @invitations.each do |invitation| %>
+    <h3 class="event-name"><%=invitation.event.name if invitation.event.end_time < Time.current %>
 
-		<h3 class="event-name"><%=event.event.name%></h3>
-		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			<div class="panel panel-default custom-panel">
-				<div class="panel-heading" role="tab" id="headingOne">
-				  <h4 class="panel-title">
-					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="f-w-700">
-					  Profile Forwards/Handle QR's scanned on 03/03/2016
-					</a>
-				  </h4>
-				</div>
-				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-				  <div class="panel-body">
-					<div class="event-block">
-						<div class="row">
-							<div class="col-sm-8 col-md-8">
-								<div class="event-detail">
-									<div class="company-img">
-										<img src="/img1.png" class="img-circle" alt="" />
-									</div>
-									<div class="company-info">
+</h3>
+    <%end%>
 
-										<p class="f-w-600">John</p>
-										<p>Company</p>
-										<p>23:59 PM</p>
-										
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4 col-md-4">
-								<div class="event-btn">
-									<p class="f-w-600">New Street , Main lane 1234, Block A<p>
-									<p class="f-w-600">New Delhi</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				  </div>
-				</div>
-			</div>
-		</div>
-	<%end%>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default custom-panel">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="f-w-700">
+                      Profile Forwards/Handle QR's scanned on 03/03/2016
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                      <%current_manager.profile_views.each do |profile| %>
+                      <% viewer = User.find(profile.viewer_id)%>
+                    <div class="event-block">
+                        <div class="row">
+                            <div class="col-sm-8 col-md-8">
+                                <div class="event-detail">
+                                    <div class="company-img">
+                                        <img src="/img1.png" class="img-circle" alt="" />
+                                    </div>
+                                    <div class="company-info">
+
+                                        <p class="f-w-600"><%=viewer.user_name%></p>
+                                        <p><%=viewer.company_name%></p>
+                                        <p><%=viewer.created_at.strftime("%I:%m %p")%></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="event-btn">
+                                    <p class="f-w-600"><%=viewer.address%><p>
+                                    <p class="f-w-600"><%=viewer.company_website%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <%end%>
+                </div>
+            </div>
+        </div>
+  
