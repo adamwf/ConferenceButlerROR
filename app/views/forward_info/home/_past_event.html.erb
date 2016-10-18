@@ -17,6 +17,7 @@
     <% @invitations = Invitation.where("reciever_id = ? AND status = ?",current_manager , "accepted")%>
     <% @invitations.each do |invitation| %>
     <h3 class="event-name"><%=invitation.event.name if invitation.event.end_time < Time.current %>
+
 </h3>
     <%end%>
 
