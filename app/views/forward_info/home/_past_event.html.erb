@@ -3,22 +3,23 @@
         <div class="row">
             <label class="col-sm-4 col-md-3 control-label f-w-700">Location of the Event</label>
             <div class="col-sm-6 col-md-4">
+              
               <select class="form-control">
-                <option>select</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
+            
+                <%location_dropdown.each do |x|%>
+                <option><%=x%> </option>
+                <%end%>
+               </select>
             </div>
         </div>
     </div>
 </div>
     <% @invitations = Invitation.where("reciever_id = ? AND status = ?",current_manager , "accepted")%>
-        <% @invitations.each do |invitation| %>
-       
-        <h3 class="event-name"><%=invitation.event.name if invitation.event.end_time < Time.current %>
+    <% @invitations.each do |invitation| %>
+    <h3 class="event-name"><%=invitation.event.name if invitation.event.end_time < Time.current %>
 </h3>
     <%end%>
+
 
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default custom-panel">

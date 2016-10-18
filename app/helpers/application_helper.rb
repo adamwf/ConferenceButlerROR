@@ -20,4 +20,17 @@ module ApplicationHelper
 			
 	 #   end
 	end
+
+	def location_dropdown
+	  a = []
+      @invitations = Invitation.where("reciever_id = ? AND status = ?",current_manager , "accepted")
+      @invitations.each do |invitation| 
+        invitation.event.location if invitation.event.end_time < Time.current
+      
+         a << invitation.event.location if invitation.event.end_time < Time.current 
+        end
+        return a.uniq
+	end
+
+
 end
